@@ -1,0 +1,1 @@
+export const buttonColor = '#232D3F';
