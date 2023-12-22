@@ -1,1 +1,7 @@
-export const buttonColor = '#232D3F';
+
+
+export const url = () => {
+
+}
+
+export const PRIMARY_COLOR = "#232D3F"
