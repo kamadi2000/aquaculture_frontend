@@ -19,6 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { Button } from '@mui/material';
+import { OuterFrame } from '../components/outerFrameComponent';
 
 interface Data {
     id: number;
@@ -314,6 +315,7 @@ export default function ClientTable() {
     );
 
     return (
+        <OuterFrame>
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -401,5 +403,6 @@ export default function ClientTable() {
         label="Dense padding"
       /> */}
         </Box>
+        </OuterFrame>
     );
 }
