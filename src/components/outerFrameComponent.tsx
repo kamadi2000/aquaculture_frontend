@@ -1,4 +1,4 @@
-import { Children, useState } from "react"
+import { useState } from "react"
 import { NavBar } from "./navBarComponent"
 import SidePanel from "./sidePanelComponent";
 import { Box, styled } from "@mui/material";

@@ -74,10 +74,9 @@ type SidePanelProps = {
 }
 
 const sidePanelList = [
-    {id : 1, name : "Dashboard", Icon : DashboardIcon, navigate : "/dashboard"},
-    {id : 2, name : "Clients", Icon : Face6Icon, navigate : "/clientView"},
-    {id : 3, name : "Fish farms", Icon : SailingIcon, navigate : "/fishFarmView"},
-    {id : 4, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
+    {id : 1, name : "Clients", Icon : Face6Icon, navigate : "/clientView"},
+    {id : 2, name : "Fish farms", Icon : SailingIcon, navigate : "/fishFarmView"},
+    {id : 3, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
 ]
 
 export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanelProps) {

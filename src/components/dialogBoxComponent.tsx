@@ -25,7 +25,9 @@ type dialogBoxProps = {
 }
 
 export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps) {
-  const data = { id: 1, name: "Negombo", barge: true, "cages": 4, longitude: 7.154696182201173, latitude: 79.82769246817494 }
+  const data = { 
+    id: 1, name: "Negombo", barge: true, "cages": 4, longitude: 7.154696182201173, latitude: 79.82769246817494,
+     workerList : [ 'a','b','c','d','e'] }
 
   const handleClose = () => {
     setOpen(false);
@@ -60,6 +62,9 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
           </Typography>
           <Typography gutterBottom>
             The GPS location is {data.longitude}, {data.latitude}.
+          </Typography>
+          <Typography gutterBottom>
+            Workers : {(data.workerList).map(worker => worker) }
           </Typography>
           <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126670.33644594673!2d79.77585073436786!3d7.189611414426807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f39db11564ad%3A0xd21cb7b1950901f3!2sDungalpitiya%20Beach!5e0!3m2!1sen!2slk!4v1703581046661!5m2!1sen!2slk"

@@ -5,6 +5,7 @@ import WorkerTable from "../views/workerView"
 import { FishFarm } from "../views/fishFarmView"
 import { OuterFrame } from "../components/outerFrameComponent"
 import { AddFishFarm } from "../views/addFishFarmForm"
+import { ClientInfo } from "../components/clientInfoComponent"
 
 export const Allroutes = () => {
     return(
@@ -15,6 +16,7 @@ export const Allroutes = () => {
             <Route path="/fishFarmView" element={<FishFarm/>}></Route>
             <Route path="/outerframe" element={<OuterFrame/>}></Route>
             <Route path="/clientView/addFishfarm" element={<AddFishFarm/>}></Route>
+            <Route path="/clientView/fishfarm" element={<ClientInfo/>}></Route>
         </Routes>
     )
 }

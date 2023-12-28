@@ -1,7 +1,3 @@
-
-
-export const url = () => {
-
-}
-
-export const PRIMARY_COLOR = "#232D3F"
+export const BACKEND_URL = "https://localhost:7160/api"
+export const clients = "clients"
+export const fishfarms = "fishfarms"

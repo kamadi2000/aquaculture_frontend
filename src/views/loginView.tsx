@@ -1,18 +1,22 @@
 import styled from "@emotion/styled";
-import { Button, Stack, TextField, ThemeProvider, createTheme } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
-import { orange } from "@mui/material/colors";
-import { PRIMARY_COLOR } from "../utils/constants";
-import { light } from "@mui/material/styles/createPalette";
+import { useAuth } from "../hooks/auth";
 
 export const Login = () => {
-    
-    const [name, setName] = useState('');
+    const { handleLogin } = useAuth();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleClick = () => {
+        const user = { email: email, password: password }
+        return (
+            handleLogin(user)    
+        )
+    }
     
     return (
-        <>
-        
+        <>       
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}} >
             <DIV>
                 <Stack
@@ -23,12 +27,12 @@ export const Login = () => {
                 >
                     <h1>Login</h1>
                     <TextField
-                        id="Name"
-                        label="Name"
+                        id="email"
+                        label="email"
                         size="small"
-                        value={name}
+                        value={email}
                         onChange={(event) => {
-                            setName(event.target.value);
+                            setEmail(event.target.value);
                         }}
                     />
 
@@ -43,7 +47,7 @@ export const Login = () => {
                         }}
                     />
 
-                   <Button variant="contained" color="primary">Login</Button>
+                   <Button onClick={handleClick} variant="contained" color="primary">Login</Button>
 
                 </Stack>
             </DIV>
