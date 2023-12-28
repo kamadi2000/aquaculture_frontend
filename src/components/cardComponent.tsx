@@ -30,11 +30,11 @@ export default function MediaCard({id, name, barge, cages, handleClick}:mediaCar
           {barge? "The fish farm has a barge." : "The fish farm doesn't have a barge"}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-            The fish farm consist of {cages} number od cages.
+            The fish farm consist of {cages} number of cages.
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => handleClick(id)} size="small">More Info..</Button>
+        <Button onClick={() => handleClick(id)} size="small">See on map</Button>
       </CardActions>
     </Card>
   );

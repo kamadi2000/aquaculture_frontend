@@ -19,14 +19,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 type dialogBoxProps = {
-    id : number;
-    open : boolean;
-    setOpen : (R : boolean) => void
+  id: number;
+  open: boolean;
+  setOpen: (R: boolean) => void
 }
 
-export default function CustomizedDialogs({ id, open, setOpen} : dialogBoxProps) {
+export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps) {
+  const data = { id: 1, name: "Negombo", barge: true, "cages": 4, longitude: 7.154696182201173, latitude: 79.82769246817494 }
 
-  
   const handleClose = () => {
     setOpen(false);
   };
@@ -39,7 +39,7 @@ export default function CustomizedDialogs({ id, open, setOpen} : dialogBoxProps)
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+          {data.name}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -54,20 +54,23 @@ export default function CustomizedDialogs({ id, open, setOpen} : dialogBoxProps)
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+        <Typography gutterBottom>
+            {data.barge ? "This fish farm has a barge." : "This fish farm does not have a barge."}
+            The fish farm consists of 3 cages.
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            The GPS location is {data.longitude}, {data.latitude}.
           </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+          <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126670.33644594673!2d79.77585073436786!3d7.189611414426807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f39db11564ad%3A0xd21cb7b1950901f3!2sDungalpitiya%20Beach!5e0!3m2!1sen!2slk!4v1703581046661!5m2!1sen!2slk"
+           width="400" 
+           height="300" 
+           style={{ border :'0'}}
+           allowFullScreen={false} 
+           loading="lazy" 
+           referrerPolicy="no-referrer-when-downgrade">
+
+           </iframe>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

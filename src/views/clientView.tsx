@@ -20,42 +20,43 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { Button } from '@mui/material';
 import { OuterFrame } from '../components/outerFrameComponent';
+import profileIcon from '../assets/images/profileImage.png'
+import ClientDialog from '../components/clientDialogComponent';
+import { useNavigate } from 'react-router-dom';
 
 interface Data {
     id: number;
     fishfarm: number;
-    profile: number;
+    profile: string;
     name: string;
 }
 
 function createData(
     id: number,
+    profile: string,
     name: string,
     fishfarm: number,
-    profile: number,
 ): Data {
     return {
         id,
+        profile,
         name,
-        fishfarm,
-        profile
+        fishfarm    
     };
 }
 
 const rows = [
-    createData(1, 'Cupcake', 305, 3.7),
-    createData(2, 'Donut', 452, 25.0),
-    createData(3, 'Eclair', 262, 16.0),
-    createData(4, 'Frozen yoghurt', 159, 6.0),
-    createData(5, 'Gingerbread', 356, 16.0),
-    createData(6, 'Honeycomb', 408, 3.2),
-    createData(7, 'Ice cream sandwich', 237, 9.0),
-    createData(8, 'Jelly Bean', 375, 0.0),
-    createData(9, 'KitKat', 518, 26.0),
-    createData(10, 'Lollipop', 392, 0.2),
-    createData(11, 'Marshmallow', 318, 0),
-    createData(12, 'Nougat', 360, 19.0),
-    createData(13, 'Oreo', 437, 18.0),
+    createData(1,'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', 'Ann', 305),
+    createData(2,'../assets/images/profileImage.png', 'Mary', 305),
+    createData(3,'../assets/images/profileImage.png', 'Nat', 10),
+    createData(4,'../assets/images/profileImage.png', 'Ash', 305),
+    createData(5,'../assets/images/profileImage.png', 'Akiko', 2),
+    createData(6,'../assets/images/profileImage.png', 'Esh', 305),
+    createData(7,'../assets/images/profileImage.png', 'Edward', 40),
+    createData(8,'../assets/images/profileImage.png', 'Ann', 3),
+    createData(9,'../assets/images/profileImage.png', 'Ann', 10),
+    createData(10,'../assets/images/profileImage.png', 'Ann', 5)
+    
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -110,21 +111,21 @@ const headCells: readonly HeadCell[] = [
         label: 'Id',
     },
     {
+        id: 'profile',
+        numeric: false,
+        disablePadding: true,
+        label: 'Profile picture',
+    },
+    {
         id: 'name',
         numeric: false,
         disablePadding: true,
         label: 'Name',
-    },
-    {
-        id: 'profile',
-        numeric: true,
-        disablePadding: false,
-        label: 'Profile picture',
-    },
+    },  
     {
         id: 'fishfarm',
         numeric: true,
-        disablePadding: false,
+        disablePadding: true,
         label: 'Number of fish farms',
     },
     
@@ -157,14 +158,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            'aria-label': 'select all desserts',
+                            'aria-label': 'select all',
                         }}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
+                        align={headCell.numeric ? 'right' : 'center'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -222,7 +223,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    Clients
                 </Typography>
             )}
             {numSelected > 0 ? (
@@ -248,6 +249,7 @@ export default function ClientTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [open, setOpen] = React.useState(false)
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -266,6 +268,9 @@ export default function ClientTable() {
         }
         setSelected([]);
     };
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
 
     const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
         const selectedIndex = selected.indexOf(id);
@@ -313,16 +318,17 @@ export default function ClientTable() {
             ),
         [order, orderBy, page, rowsPerPage],
     );
-
+    const navigate = useNavigate();
     return (
         <OuterFrame>
+            <ClientDialog open={open} setOpen={setOpen}/>
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
+                        aria-labelledby="clientTable"
                         size={dense ? 'small' : 'medium'}
                     >
                         <EnhancedTableHead
@@ -366,11 +372,19 @@ export default function ClientTable() {
                                         >
                                             {row.id}
                                         </TableCell>
-                                        <TableCell align="right">{row.profile}</TableCell>
-                                        <TableCell align="right">{row.name}</TableCell>
+                                        <TableCell align="center">
+                                            <img 
+                                                style={{
+                                                    borderRadius : '50%',
+                                                    height : 40, 
+                                                    width : 40,
+                                                    alignSelf : 'center'}} 
+                                                src={profileIcon}/>
+                                        </TableCell>
+                                        <TableCell align="center">{row.name}</TableCell>
                                         <TableCell align="right">{row.fishfarm}</TableCell>
-                                        <TableCell align="right">
-                                            <Button variant='contained'>Add Fish farm</Button>
+                                        <TableCell align="center">
+                                            <Button onClick={() => navigate('/clientView/addFishfarm')} variant='contained'>Add Fish farm</Button>
                                             <Button>See more infor..</Button>
                                         </TableCell>
                                     </TableRow>
