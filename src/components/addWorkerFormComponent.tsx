@@ -1,19 +1,21 @@
 import { Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "./outerFrameComponent"
 import { useState } from "react"
+import { useWorker } from "../hooks/worker";
 
 export const WorkerForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [age, setAge] = useState<number|null>(null);
     const [picture, setPicture] = useState('');
-    const [position, setPosition] = useState('')
+    const [position, setPosition] = useState('');
+    const { handleAddWorker} = useWorker()
     const handleChange = (event: SelectChangeEvent) => {
         setPosition(event.target.value);
     };
-    const handleAddWorker = () => {
+    const handleAddWorkerClick = () => {
         const Worker = { name : name, email : email, age : age, picture : picture, position : position}
-        console.log({Worker})
+        handleAddWorker(Worker)
     }
     return (
         <OuterFrame>
@@ -84,7 +86,7 @@ export const WorkerForm = () => {
                 </FormControl>
 
 
-                <Button onClick={handleAddWorker} variant="contained" color="primary">Add</Button>
+                <Button onClick={handleAddWorkerClick} variant="contained" color="primary">Add</Button>
 
             </Stack>
         </OuterFrame>

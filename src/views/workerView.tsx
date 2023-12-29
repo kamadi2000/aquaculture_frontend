@@ -7,30 +7,22 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/outerFrameComponent';
 import { Button, Typography } from '@mui/material';
-import { useState } from 'react';
-import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
-import { clients } from '../utils/constants';
-import FormDialog from '../components/addClientDialogComponent';
+import {  workers } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { useWorker } from '../hooks/worker';
 
-interface User {
+interface Worker {
     id : number,
     name : string,
-    fishfarmId : number
+    age : number
 }
 export default function WorkerTable() {
-    const [ open, setOpen] = useState(false)
-    const { handleGetClient } = useClient();
+    const { handleGetWorker } = useWorker();
     const navigate = useNavigate();
-    const { data, isLoading,isError, error } = useQuery(clients, handleGetClient);
-    const handleAddClientClick = () => {
-        setOpen(true)
-    }
-    const worker = [
-        {id : 1, name : 'mary',fishfarmId : 2},
-        {id : 2, name : 'ann',fishfarmId : 1},
-        {id : 3, name : 'john',fishfarmId : 2}]
+    const { data, isLoading,isError, error } = useQuery(workers, handleGetWorker);
+
+    
     return (
         <OuterFrame>
             <Typography
@@ -57,7 +49,7 @@ export default function WorkerTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {worker.map((worker: User) => (
+                        {data?.data.map((worker: Worker) => (
                             <TableRow
                                 key={worker.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -66,7 +58,7 @@ export default function WorkerTable() {
                                     {worker.id}
                                 </TableCell>
                                 <TableCell align="right">{worker.name}</TableCell>
-                                <TableCell align="right">{worker.fishfarmId}</TableCell>
+                                <TableCell align="right">{worker.age}</TableCell>
                                 <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">View</Button></TableCell>
                                 {/* <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained"></Button></TableCell> */}
                                 <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">Delete</Button></TableCell>

@@ -8,7 +8,7 @@ import { useQuery } from "react-query"
 import { fishfarms } from "../utils/constants"
 import { useNavigate } from "react-router-dom"
 
-interface FishfarmCard {
+export interface FishfarmCard {
     id : number,
     name : string,
     has_barge : boolean,

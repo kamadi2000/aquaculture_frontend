@@ -1,8 +1,13 @@
 import axios from "axios"
 import { BACKEND_URL, clients } from "../utils/constants"
 import { useMutation, useQuery, useQueryClient } from "react-query"
+import { IAddFishFarmData } from "../components/stepperComponent"
 
 let token = localStorage.getItem("token")
+type FishFormDataProps = {
+    id? : string,
+    fishFarmData : IAddFishFarmData
+}
 
 export const useClient = () => {
     const url = BACKEND_URL + "/Client"
@@ -14,7 +19,15 @@ export const useClient = () => {
         }
     })}
 
+    const addClientFishfarm = ({ id, fishFarmData} : FishFormDataProps) => { 
+        return axios.post( `${url}${id}`, fishFarmData,{
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        }) }
+
     const { mutate : addClientMutate } = useMutation(addClient)
+    const { mutate : addClientFishfarmMutate } = useMutation(addClientFishfarm)
     
     const handleAddClient = (client : object) => {
         return addClientMutate(client, {
@@ -32,8 +45,16 @@ export const useClient = () => {
             }
         })
     }
+
+    const handleAddFishFarm = (d : FishFormDataProps) => {
+        return addClientFishfarmMutate(d, {
+            onSuccess : (data) => console.log(data),
+            onError : (data) => console.log(data)
+        })
+    }
     return {
         handleAddClient,
-        handleGetClient
+        handleGetClient,
+        handleAddFishFarm
     }
 }

@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import { AddFishFarmStep } from './AddFishFarmStepComponent';
 import AddWorkersStepTable from './AddWorkerStepComponent';
 import { Alert } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useClient } from '../hooks/client';
 
 const steps = ['Select fish farm', 'Add workers', 'Finish'];
 
@@ -18,6 +20,9 @@ export interface IAddFishFarmData {
 
 
 export default function StepperComponent() {
+  const navigate = useNavigate();
+  const { clientId } = useParams();
+  const { handleAddFishFarm } = useClient()
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [formData, setFormData] = React.useState<IAddFishFarmData>({fishfarmId : null,workersIdList : []})
@@ -32,6 +37,7 @@ export default function StepperComponent() {
   const handleNext = () => {
     if (activeStep === 2){
       onFinish()
+      
     }
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -67,7 +73,7 @@ export default function StepperComponent() {
   };
 
   const onFinish = () => {
-    console.log(formData)
+    // handleAddFishFarm(clientId,)
   }
 
   return (
@@ -96,12 +102,13 @@ export default function StepperComponent() {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
+          {/* <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
-          </Typography>
+          </Typography> */}
+          <Alert severity="success">Successfully completed.</Alert>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={() => navigate('/clientView')}>Return to clientView</Button>
           </Box>
         </React.Fragment>
       ) : (
@@ -123,14 +130,14 @@ export default function StepperComponent() {
               </Button>
             )}
             <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+              {activeStep === steps.length -1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
         </React.Fragment>
       )}
       
       {activeStep === 0 ? (<AddFishFarmStep formData={formData} setFormData={setFormData}/>) : (
-        activeStep === 1 ? <AddWorkersStepTable formData={formData} setFormData={setFormData} /> : <Alert severity="success">Successfully completed.</Alert>
+        activeStep === 1 ? <AddWorkersStepTable formData={formData} setFormData={setFormData} /> : ''
       )
         
       }
