@@ -2,8 +2,14 @@ import { Grid, Typography } from "@mui/material"
 import { useState } from "react";
 import CustomizedDialogs from "./dialogBoxComponent";
 import MediaCard from "./cardComponent";
+import { IAddFishFarmData } from "./stepperComponent";
+import Checkbox from '@mui/material/Checkbox';
 
-export const AddFishFarmStep = () => {
+type AddFishFarmProps = {
+    formData : IAddFishFarmData
+    setFormData : (props : IAddFishFarmData) => void
+}
+export const AddFishFarmStep = ({formData, setFormData} : AddFishFarmProps) => {
     const [open, setOpen] = useState(false);
     const [id, setId] = useState(0);
     const data = [
@@ -18,13 +24,20 @@ export const AddFishFarmStep = () => {
         setId(Id)
         setOpen(true);
     }
+    const handleSelect = (id : number) => {
+        setFormData({...formData,fishfarmId : formData.fishfarmId === id ? null : id})
+
+    }
     return(
         <>
         <CustomizedDialogs id={id} open={open} setOpen={setOpen} />
                 <Grid container spacing={4} direction="row" justifyContent="center" alignItems="center">
                     {data.map((fishfarmCard) =>
                         <Grid item xs={12} sm={6} md={3}>
+                            <div>
+                                <Checkbox checked={formData.fishfarmId === fishfarmCard.id} onChange={() => handleSelect(fishfarmCard.id)}/>
                             <MediaCard id={fishfarmCard.id} name={fishfarmCard.name} barge={fishfarmCard.barge} cages={fishfarmCard.cages} handleClick={handleClick} />
+                            </div>
                         </Grid>
                     )}
                 </Grid>

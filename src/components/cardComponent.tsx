@@ -5,6 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import liard from '../assets/images/logo512.png';
+import { url } from 'inspector';
 
 type mediaCardProps = {
     id : number;
@@ -19,7 +20,7 @@ export default function MediaCard({id, name, barge, cages, handleClick}:mediaCar
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={liard}
+        image='https://srilankainstatours.com/wp-content/uploads/2023/02/Fisherman-in-Mannar-bay-Sri-Lanka-Things-to-do-in-Mannar.webp'
         title="green iguana"
       />
       <CardContent>
@@ -34,7 +35,7 @@ export default function MediaCard({id, name, barge, cages, handleClick}:mediaCar
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => handleClick(id)} size="small">See on map</Button>
+        <Button onClick={() => handleClick(id)} size="small">See more info..</Button>
       </CardActions>
     </Card>
   );

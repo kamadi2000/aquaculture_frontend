@@ -7,17 +7,17 @@ let token = localStorage.getItem("token")
 export const useClient = () => {
     const url = BACKEND_URL + "/Client"
     const queryClient = useQueryClient();
-    
+
     const addClient = (client : object) => { return axios.post(url, client, {
         headers : {
             'Authorization' : `Bearer ${token}`
         }
     })}
 
-    const { mutate : ADDCLIENT } = useMutation(addClient)
+    const { mutate : addClientMutate } = useMutation(addClient)
     
     const handleAddClient = (client : object) => {
-        return ADDCLIENT(client, {
+        return addClientMutate(client, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(clients)
                 console.log(data)},

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
+import { IAddFishFarmData } from './stepperComponent';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -33,8 +34,14 @@ const rows = [
   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
+type AddWorkerProps = {
+  formData: IAddFishFarmData
+  setFormData: (props: IAddFishFarmData) => void
+}
 
-export default function AddWorkersStepTable() {
+export default function AddWorkersStepTable({ formData, setFormData }: AddWorkerProps) {
+
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -47,6 +54,11 @@ export default function AddWorkersStepTable() {
         }}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+        rowSelectionModel={formData.workersIdList as GridRowSelectionModel}
+        onRowSelectionModelChange={(ids) => {
+          setFormData({ ...formData, workersIdList: ids as number[] })
+          console.log(ids)
+        }}
       />
     </div>
   );

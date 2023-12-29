@@ -32,6 +32,9 @@ export const useFishfarm = () => {
             }
         })
     }
+    const handleAddClientFishFarm = () => {
+        
+    }
     return {
         handleAddFishfarm,
         handleGetFishfarm

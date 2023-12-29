@@ -12,6 +12,7 @@ import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
 import { clients } from '../utils/constants';
 import FormDialog from '../components/addClientDialogComponent';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
     id : number,
@@ -20,6 +21,7 @@ interface User {
 export default function ClientTable() {
     const [ open, setOpen] = useState(false)
     const { handleGetClient } = useClient();
+    const navigate = useNavigate();
     const { data, isLoading,isError, error } = useQuery(clients, handleGetClient);
     const handleAddClientClick = () => {
         setOpen(true)
@@ -59,8 +61,10 @@ export default function ClientTable() {
                                     {client.id}
                                 </TableCell>
                                 <TableCell align="right">{client.name}</TableCell>
-                                <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">View</Button></TableCell>
-                                <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">Add fishfarm</Button></TableCell>
+                                <TableCell align="right">
+                                    <Button onClick={() => navigate(`/clientView/${client.id}/fishfarm`)} style={{ justifyItems: 'right' }} variant="contained">View</Button></TableCell>
+                                <TableCell align="right">
+                                    <Button onClick={() => navigate(`/clientView/${client.id}/addFishfarm`)} style={{ justifyItems: 'right' }} variant="contained">Add fishfarm</Button></TableCell>
                                 <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">Delete</Button></TableCell>
                                 <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">Edit</Button></TableCell>
 

@@ -11,15 +11,16 @@ import { Alert } from '@mui/material';
 
 const steps = ['Select fish farm', 'Add workers', 'Finish'];
 
-type StepperComponentProps = {
-    AddFishFarmStep : any;
-    AddWorkersStep? : () => void;
+export interface IAddFishFarmData {
+  fishfarmId : number | null 
+  workersIdList : number[]
 }
+
 
 export default function StepperComponent() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
-
+  const [formData, setFormData] = React.useState<IAddFishFarmData>({fishfarmId : null,workersIdList : []})
   const isStepOptional = (step: number) => {
     return step === 1;
   };
@@ -29,6 +30,9 @@ export default function StepperComponent() {
   };
 
   const handleNext = () => {
+    if (activeStep === 2){
+      onFinish()
+    }
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -61,6 +65,10 @@ export default function StepperComponent() {
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  const onFinish = () => {
+    console.log(formData)
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -121,8 +129,8 @@ export default function StepperComponent() {
         </React.Fragment>
       )}
       
-      {activeStep === steps.length -3 ? (<AddFishFarmStep/>) : (
-        activeStep === steps.length -2 ? <AddWorkersStepTable/> : <Alert severity="success">Successfully completed.</Alert>
+      {activeStep === 0 ? (<AddFishFarmStep formData={formData} setFormData={setFormData}/>) : (
+        activeStep === 1 ? <AddWorkersStepTable formData={formData} setFormData={setFormData} /> : <Alert severity="success">Successfully completed.</Alert>
       )
         
       }
