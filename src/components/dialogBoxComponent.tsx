@@ -8,6 +8,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { useFishfarm } from '../hooks/fishfarm';
+import { useQuery } from 'react-query';
+import { fishfarms } from '../utils/constants';
+import { ListItem, Stack } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -23,25 +27,32 @@ type dialogBoxProps = {
   open: boolean;
   setOpen: (R: boolean) => void
 }
+type WorkerProps = {
+  id : number;
+  name : string
+}
 
 export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps) {
-  const data = { 
-    id: 1, name: "Negombo", barge: true, "cages": 4, longitude: 7.154696182201173, latitude: 79.82769246817494,
-     workerList : [ 'a','b','c','d','e'] }
-
+  const { handleGetByFishfarmId } = useFishfarm();
+  
+  const { data, isLoading } = useQuery([fishfarms, id], () => handleGetByFishfarmId(id))
+  console.log(data?.data.workers)
+  
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <React.Fragment>
+      
       <BootstrapDialog
+        maxWidth='md'
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          {data.name}
+        <DialogTitle sx={{ m: 0, paddingRight: 50 }} id="customized-dialog-title">
+          {data?.data.name}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -56,26 +67,21 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-        <Typography gutterBottom>
-            {data.barge ? "This fish farm has a barge." : "This fish farm does not have a barge."}
-            The fish farm consists of 3 cages.
+          {(data?.data.workers).length === 0 ? 
+          <Typography>
+            No workers in the fish farm
           </Typography>
-          <Typography gutterBottom>
-            The GPS location is {data.longitude}, {data.latitude}.
+          :
+          (data?.data.workers).map((worker : WorkerProps) => 
+          <Stack direction='row' spacing={3}>
+            <Typography>
+            {worker.id}
           </Typography>
-          <Typography gutterBottom>
-            Workers : {(data.workerList).map(worker => worker) }
+          <Typography>
+            {worker.name}
           </Typography>
-          <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126670.33644594673!2d79.77585073436786!3d7.189611414426807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f39db11564ad%3A0xd21cb7b1950901f3!2sDungalpitiya%20Beach!5e0!3m2!1sen!2slk!4v1703581046661!5m2!1sen!2slk"
-           width="400" 
-           height="300" 
-           style={{ border :'0'}}
-           allowFullScreen={false} 
-           loading="lazy" 
-           referrerPolicy="no-referrer-when-downgrade">
-
-           </iframe>
+          </Stack>)}
+          
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

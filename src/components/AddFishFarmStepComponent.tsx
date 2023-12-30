@@ -36,12 +36,16 @@ export const AddFishFarmStep = ({ formData, setFormData }: AddFishFarmProps) => 
                     <Grid item xs={12} sm={6} md={3}>
                         <div>
                             <Checkbox checked={formData.fishfarmId === fishfarmCard.id} onChange={() => handleSelect(fishfarmCard.id)} />
-                            <MediaCard
-                                id={fishfarmCard.id}
-                                name={fishfarmCard.name}
-                                barge={fishfarmCard.has_barge}
-                                cages={fishfarmCard.num_of_cages}
-                                handleClick={handleClick} />
+                            <Grid item xs={12} sm={6} md={3}>
+                            <MediaCard 
+                            id={fishfarmCard.id} 
+                            name={fishfarmCard.name} 
+                            barge={fishfarmCard.has_barge} 
+                            cages={fishfarmCard.num_of_cages}
+                            longitude={fishfarmCard.longitude}
+                            latitude={fishfarmCard.latitude} 
+                            handleClick={handleClick} />
+                        </Grid>
                         </div>
                     </Grid>
                 )}

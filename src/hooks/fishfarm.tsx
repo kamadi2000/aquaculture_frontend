@@ -1,11 +1,13 @@
 import axios from "axios"
 import { BACKEND_URL, fishfarms } from "../utils/constants"
 import { useMutation, useQueryClient } from "react-query"
+import { useNavigate } from "react-router-dom"
 
 let token = localStorage.getItem("token")
 
 export const useFishfarm = () => {
     const url = BACKEND_URL + "/FishFarm"
+    const navigate = useNavigate()
     const queryClient = useQueryClient();
     
     const addFishfarm = (fishfarm : object) => { return axios.post(url, fishfarm, {
@@ -33,7 +35,8 @@ export const useFishfarm = () => {
         return addFarmMutate(fishfarm, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
-                console.log(data)},
+                console.log(data)
+                navigate('/fishFarmView')},
             onError : (data) => console.log(data)
         })
     }
@@ -46,7 +49,7 @@ export const useFishfarm = () => {
         })
     }
     const handleGetByFishfarmId = (id : number) => {
-        return axios.get(`${url}${id}`, {
+        return axios.get(`${url}/${id}`, {
             headers : {
                 'Authorization' : `Bearer ${token}`
             }

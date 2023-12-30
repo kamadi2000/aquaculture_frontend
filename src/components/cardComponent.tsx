@@ -12,10 +12,12 @@ type mediaCardProps = {
     name : string;
     barge : boolean;
     cages : number;
+    longitude : number;
+    latitude : number;
     handleClick : (id : number) => void ;
 }
 
-export default function MediaCard({id, name, barge, cages, handleClick}:mediaCardProps) {
+export default function MediaCard({id, name, barge, cages, longitude, latitude, handleClick}:mediaCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -33,9 +35,12 @@ export default function MediaCard({id, name, barge, cages, handleClick}:mediaCar
         <Typography variant="body2" color="text.secondary">
             The fish farm consist of {cages} number of cages.
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+            Location is ({longitude},{latitude})
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => handleClick(id)} size="small">See more info..</Button>
+        <Button onClick={() => handleClick(id)} size="small">See Workers</Button>
       </CardActions>
     </Card>
   );
