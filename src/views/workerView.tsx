@@ -84,7 +84,8 @@ export default function WorkerTable() {
                                 <TableCell align="right">
                                     <Button onClick={() => handleView(worker.id)} style={{ justifyItems: 'right' }} variant="contained">View</Button></TableCell>
                                 <TableCell align="right"><Button onClick={() => handleDelete(worker.id)} style={{ justifyItems: 'right' }} variant="contained">Delete</Button></TableCell>
-                                <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">Edit</Button></TableCell>
+                                <TableCell align="right">
+                                    <Button onClick={() => navigate(`/workerView/${worker.id}/editWorkerform`)} style={{ justifyItems: 'right' }} variant="contained">Edit</Button></TableCell>
 
                             </TableRow>
                         ))}

@@ -28,16 +28,8 @@ type ViewWorkerProps = {
 
 export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
     const { handleGetWorkerById } = useWorker();
-
-    // const [workerData, setWorkerData ] = React.useState({id : null, name : null, age : null, email : null, position : null})
     const { data, isLoading } = useQuery([workers, id], () => handleGetWorkerById(id))
         
-    // React.useEffect(() => {
-    //     console.log(data)
-    //     console.log('hi')
-    //     setWorkerData(data?.data)
-    // },[workerId])
-
     const handleClose = () => {
         setOpen(false);
     };

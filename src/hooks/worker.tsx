@@ -69,6 +69,7 @@ export const useWorker = () => {
         return editWorkerMutate(worker, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(workers)
+                navigate('/workerView')
                 console.log(data)},
             onError : (data) => console.log(data)
         })

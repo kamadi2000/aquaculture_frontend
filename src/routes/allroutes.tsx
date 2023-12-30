@@ -7,7 +7,8 @@ import { OuterFrame } from "../components/outerFrameComponent"
 import { AddFishFarm } from "../views/addFishFarmForm"
 import { ClientInfo } from "../components/clientInfoComponent"
 import { FishfarmForm } from "../components/addFishfarmFormComponent"
-import { WorkerForm } from "../components/addWorkerFormComponent"
+import { WorkerForm } from "../views/addWorkerForm"
+import { EditWorkerForm } from "../views/editWorkerForm"
 
 export const Allroutes = () => {
     return(
@@ -21,6 +22,7 @@ export const Allroutes = () => {
             <Route path="/clientView/:clientId/fishfarm" element={<ClientInfo/>}></Route>
             <Route path="/fishFarmView/fishfarmform" element={<FishfarmForm/>}></Route>
             <Route path="/workerView/workerform" element={<WorkerForm/>}></Route>
+            <Route path="/workerView/:workerId/editWorkerform" element={<EditWorkerForm/>}></Route>
         </Routes>
     )
 }
