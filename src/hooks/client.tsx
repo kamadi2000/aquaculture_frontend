@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query"
 import { IAddFishFarmData } from "../components/stepperComponent"
 
 let token = localStorage.getItem("token")
+
 type FishFormDataProps = {
     id? : string,
     fishFarmData : IAddFishFarmData
@@ -18,9 +19,8 @@ export const useClient = () => {
             'Authorization' : `Bearer ${token}`
         }
     })}
-
     const addClientFishfarm = ({ id, fishFarmData} : FishFormDataProps) => { 
-        return axios.post( `${url}${id}`, fishFarmData,{
+        return axios.post( `${url}/${id}`, fishFarmData,{
             headers : {
                 'Authorization' : `Bearer ${token}`
             }
@@ -46,8 +46,8 @@ export const useClient = () => {
         })
     }
 
-    const handleAddFishFarm = (d : FishFormDataProps) => {
-        return addClientFishfarmMutate(d, {
+    const handleAddFishFarm = ({ id, fishFarmData} : FishFormDataProps) => {
+        return addClientFishfarmMutate({ id, fishFarmData}, {
             onSuccess : (data) => console.log(data),
             onError : (data) => console.log(data)
         })

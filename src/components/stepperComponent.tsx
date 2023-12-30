@@ -73,7 +73,7 @@ export default function StepperComponent() {
   };
 
   const onFinish = () => {
-    // handleAddFishFarm(clientId,)
+    handleAddFishFarm({id : clientId, fishFarmData : formData})
   }
 
   return (

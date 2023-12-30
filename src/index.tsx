@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
     <BrowserRouter>
+    <ConfirmProvider>
     <App />
+    </ConfirmProvider>
     </BrowserRouter> 
     </QueryClientProvider> 
   </React.StrictMode>

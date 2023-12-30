@@ -2,6 +2,7 @@ import { Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeE
 import { OuterFrame } from "./outerFrameComponent"
 import { useState } from "react"
 import { useWorker } from "../hooks/worker";
+import { useNavigate } from "react-router-dom";
 
 export const WorkerForm = () => {
     const [name, setName] = useState('');
@@ -9,7 +10,8 @@ export const WorkerForm = () => {
     const [age, setAge] = useState<number|null>(null);
     const [picture, setPicture] = useState('');
     const [position, setPosition] = useState('');
-    const { handleAddWorker} = useWorker()
+    const { handleAddWorker} = useWorker();
+    const navigate = useNavigate();
     const handleChange = (event: SelectChangeEvent) => {
         setPosition(event.target.value);
     };

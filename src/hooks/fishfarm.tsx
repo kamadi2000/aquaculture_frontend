@@ -13,11 +13,24 @@ export const useFishfarm = () => {
             'Authorization' : `Bearer ${token}`
         }
     })}
+    const editFishfarm = (fishfarm : object) => { return axios.put(url, fishfarm, {
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    })}
+    const deleteFishfarm = (id : number) => { return axios.post(`${url}${id}`, {
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    })}
+    
 
-    const { mutate : ADDCLIENT } = useMutation(addFishfarm)
+    const { mutate : addFarmMutate } = useMutation(addFishfarm)
+    const { mutate : editFishfarmMutate } = useMutation(editFishfarm)
+    const { mutate : deleteFishfarmMutate } = useMutation(deleteFishfarm)
     
     const handleAddFishfarm = (fishfarm : object) => {
-        return ADDCLIENT(fishfarm, {
+        return addFarmMutate(fishfarm, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
                 console.log(data)},
@@ -32,11 +45,36 @@ export const useFishfarm = () => {
             }
         })
     }
-    const handleAddClientFishFarm = () => {
-        
+    const handleGetByFishfarmId = (id : number) => {
+        return axios.get(`${url}${id}`, {
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        })
     }
+
+    const handleEditFishfarm = (fishfarm : object) => {
+        return editFishfarmMutate(fishfarm, {
+            onSuccess : (data) => {
+                queryClient.invalidateQueries(fishfarms)
+                console.log(data)},
+            onError : (data) => console.log(data)
+        })
+    }
+    const handleDelFishfarm = (id : number) => {
+        return deleteFishfarmMutate(id, {
+            onSuccess : (data) => {
+                queryClient.invalidateQueries(fishfarms)
+                console.log(data)},
+            onError : (data) => console.log(data)
+        })
+    }
+    
     return {
         handleAddFishfarm,
-        handleGetFishfarm
+        handleGetFishfarm,
+        handleGetByFishfarmId,
+        handleDelFishfarm,
+        handleEditFishfarm
     }
 }

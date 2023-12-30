@@ -2,9 +2,7 @@ import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { IAddFishFarmData } from './stepperComponent';
 import { useWorker } from '../hooks/worker';
 import { useQuery } from 'react-query';
-import { workers } from '../utils/constants';
-import { KeySharp } from '@mui/icons-material';
-import { useState } from 'react';
+import { positionEnumMap, workers } from '../utils/constants';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -16,9 +14,10 @@ const columns: GridColDef[] = [
     type: 'number',
     width: 90,
   },
-  { field: 'position', headerName: 'Position', width: 130 },
+  { field: 'position', headerName: 'Position', width: 130, valueGetter : (params) => positionEnumMap[params.value as number] },
   { field: 'picture', headerName: 'Picture', width: 130 }
 ];
+
 
 type AddWorkerProps = {
   formData: IAddFishFarmData
