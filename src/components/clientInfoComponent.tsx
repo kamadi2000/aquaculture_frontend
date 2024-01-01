@@ -1,9 +1,9 @@
-import { Grid, Typography } from "@mui/material"
+import { Button, Grid, Stack, Typography } from "@mui/material"
 import MediaCard from "../components/cardComponent"
 import CustomizedDialogs from "../components/dialogBoxComponent"
 import { useState } from "react"
 import { OuterFrame } from "../components/outerFrameComponent"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { FishfarmCard } from "../views/fishFarmView"
 import { clients, fishfarms } from "../utils/constants"
 import { useFishfarm } from "../hooks/fishfarm"
@@ -25,8 +25,8 @@ export const ClientInfo = () => {
     return (
         <>
         <OuterFrame>
-            {id && <CustomizedDialogs id={id} open={open} setOpen={setOpen} />}
-            <Grid container spacing={4} direction="row" justifyContent="center" alignItems="center">
+        {id && <CustomizedDialogs id={id} open={open} setOpen={setOpen} />}
+                        <Grid container spacing={4} direction="row" justifyContent="center" alignItems="center">
                 {(data?.data.fishFarms)?.length == 0 ? 
                 <Typography gutterBottom sx={{padding : 6}}>No fish farm are owned by this client.</Typography>
                 :(
@@ -39,6 +39,8 @@ export const ClientInfo = () => {
                     cages={fishfarmCard.num_of_cages}
                     longitude={fishfarmCard.longitude}
                     latitude={fishfarmCard.latitude} 
+                    imageName={fishfarmCard.imageName}
+                    imageSrc={fishfarmCard.imageSrc}
                     handleClick={handleClick} />
                 </Grid>
                 )

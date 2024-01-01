@@ -43,6 +43,8 @@ export const AddFishFarmStep = ({ formData, setFormData }: AddFishFarmProps) => 
                             cages={fishfarmCard.num_of_cages}
                             longitude={fishfarmCard.longitude}
                             latitude={fishfarmCard.latitude} 
+                            imageName={fishfarmCard.imageName}
+                            imageSrc={fishfarmCard.imageSrc}
                             handleClick={handleClick} />
                         
                         </div>

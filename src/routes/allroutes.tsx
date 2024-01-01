@@ -6,7 +6,7 @@ import { FishFarm } from "../views/fishFarmView"
 import { OuterFrame } from "../components/outerFrameComponent"
 import { AddFishFarm } from "../views/addClientFishFarm"
 import { ClientInfo } from "../components/clientInfoComponent"
-import { FishfarmForm } from "../views/addFishfarmFormComponent"
+import { FishfarmForm } from "../views/addFishfarmForm"
 import { WorkerForm } from "../views/addWorkerForm"
 import { EditWorkerForm } from "../views/editWorkerForm"
 

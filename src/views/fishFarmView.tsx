@@ -14,7 +14,9 @@ export interface FishfarmCard {
     has_barge : boolean,
     num_of_cages : number,
     longitude : number,
-    latitude : number
+    latitude : number,
+    imageName : string|null,
+    imageSrc : string
 }
 export const FishFarm = () => {
     const [open, setOpen] = useState(false);
@@ -52,6 +54,8 @@ export const FishFarm = () => {
                             cages={fishfarmCard.num_of_cages}
                             longitude={fishfarmCard.longitude}
                             latitude={fishfarmCard.latitude} 
+                            imageName={fishfarmCard.imageName}
+                            imageSrc={fishfarmCard.imageSrc}
                             handleClick={handleClick} />
                         </Grid>
                     )}

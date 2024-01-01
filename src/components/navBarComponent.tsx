@@ -40,6 +40,7 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
   };
 
   const handleClose = () => {
+    localStorage.removeItem("token")
     setAnchorEl(null);
   };
   return (

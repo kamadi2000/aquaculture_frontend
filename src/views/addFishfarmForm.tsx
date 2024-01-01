@@ -1,9 +1,8 @@
-import { Button, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Typography } from "@mui/material"
+import { Button, FormControlLabel, Stack, Switch, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "../components/outerFrameComponent"
 import { useState } from "react"
-import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
-import UnstyledInputBasic from "../components/numberInputComponent";
 import { useFishfarm } from "../hooks/fishfarm";
+import { useLocation } from "react-router-dom";
 
 export const FishfarmForm = () => {
     const [name, setName] = useState('');
@@ -12,14 +11,27 @@ export const FishfarmForm = () => {
     const [longitude, setLongitude] = useState<number | null>(null);
     const [cages, setCages] = useState<number | null>(null);
     const [barge, setBarge] = useState<boolean>(false);
+    const [imageName, setImageName] = useState('');
+    const [imageFile, setImageFile] = useState<object|null>({});
     const { handleAddFishfarm } = useFishfarm();
     const handleAdd = () => {
-        const fishfarm = {name : name,  longitude : longitude, latitude : latitude, num_of_cages : cages, has_barge : barge, image : image}
+        const fishfarm = {name: name, longitude: longitude, latitude: latitude, num_of_cages: cages, has_barge: barge, imageFile: imageFile, imageName : imageName }
         handleAddFishfarm(fishfarm)
     }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBarge(event.target.checked);
-      };
+    };
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            let files = event.target.files[0]
+            setImageFile(files)
+            setImageName(files.name)
+            console.log(event.target.files)
+        } else {
+            setImageFile(null)
+            setImageName('')
+        }
+    }
     return (
         <OuterFrame>
             <Typography sx={{ flex: '1 1 100%' }} variant="h6">Fish farms</Typography>
@@ -39,14 +51,12 @@ export const FishfarmForm = () => {
                         setName(event.target.value);
                     }}
                 />
-                <TextField
-                    id="picture"
-                    label="Picture"
-                    size="small"
-                    value={image}
-                    onChange={(event) => {
-                        SetImage(event.target.value);
-                    }}
+                <input
+                    id="btn-upload"
+                    name="btn-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
                 />
 
                 <TextField
@@ -85,10 +95,10 @@ export const FishfarmForm = () => {
                     value={false}
                     control={
                         <Switch
-                        checked={barge}
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                      />}
+                            checked={barge}
+                            onChange={handleChange}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />}
                     label="Does fish farm has a barge ?"
                     labelPlacement="start"
                 />

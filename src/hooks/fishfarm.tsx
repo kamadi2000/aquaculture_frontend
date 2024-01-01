@@ -12,7 +12,8 @@ export const useFishfarm = () => {
     
     const addFishfarm = (fishfarm : object) => { return axios.post(url, fishfarm, {
         headers : {
-            'Authorization' : `Bearer ${token}`
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'multipart/form-data'
         }
     })}
     const editFishfarm = (fishfarm : object) => { return axios.put(url, fishfarm, {
@@ -20,7 +21,7 @@ export const useFishfarm = () => {
             'Authorization' : `Bearer ${token}`
         }
     })}
-    const deleteFishfarm = (id : number) => { return axios.post(`${url}${id}`, {
+    const deleteFishfarm = (id : number) => { return axios.post(`${url}/${id}`, {
         headers : {
             'Authorization' : `Bearer ${token}`
         }
