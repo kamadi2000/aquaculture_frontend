@@ -3,9 +3,17 @@ import { IAddFishFarmData } from './stepperComponent';
 import { useWorker } from '../hooks/worker';
 import { useQuery } from 'react-query';
 import { positionEnumMap, workers } from '../utils/constants';
+import { url } from 'inspector';
+
+const ImageRetrieveInTable = (imagePath : string) => {
+  return(
+    <img style={{borderRadius : '50%',height : 40, width : 40,alignSelf : 'center'}}  src={imagePath}/>
+  )
+}
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 70 },
+  // { field: 'picture', headerName: 'Picture', width: 130, valueSetter : (params) => ImageRetrieveInTable(params.value as string) },
   { field: 'name', headerName: 'Name', width: 130 },
   { field: 'email', headerName: 'Email', width: 260 },
   {
@@ -14,8 +22,7 @@ const columns: GridColDef[] = [
     type: 'number',
     width: 90,
   },
-  { field: 'position', headerName: 'Position', width: 130, valueGetter : (params) => positionEnumMap[params.value as number] },
-  { field: 'picture', headerName: 'Picture', width: 130 }
+  { field: 'position', headerName: 'Position', width: 130, valueGetter : (params) => positionEnumMap[params.value as number] }  
 ];
 
 

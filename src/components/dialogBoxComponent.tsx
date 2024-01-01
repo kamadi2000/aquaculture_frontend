@@ -67,12 +67,12 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          {(data?.data.workers).length === 0 ? 
+          {(data?.data.workers)?.length === 0 ? 
           <Typography>
             No workers in the fish farm
           </Typography>
           :
-          (data?.data.workers).map((worker : WorkerProps) => 
+          (data?.data.workers)?.map((worker : WorkerProps) => 
           <Stack direction='row' spacing={3}>
             <Typography>
             {worker.id}

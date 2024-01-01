@@ -25,9 +25,15 @@ export const useClient = () => {
                 'Authorization' : `Bearer ${token}`
             }
         }) }
+    const deleteClient = (id : number) => { return axios.delete(`${url}/${id}`,{
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    })}
 
     const { mutate : addClientMutate } = useMutation(addClient)
     const { mutate : addClientFishfarmMutate } = useMutation(addClientFishfarm)
+    const { mutate : deleteClientMutate} = useMutation(deleteClient)
     
     const handleAddClient = (client : object) => {
         return addClientMutate(client, {
@@ -46,15 +52,34 @@ export const useClient = () => {
         })
     }
 
+    const handleGetClientById = (id : number) => {
+        return axios.get(`${url}/${id}`, {
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        })
+    }
+
     const handleAddFishFarm = ({ id, fishFarmData} : FishFormDataProps) => {
         return addClientFishfarmMutate({ id, fishFarmData}, {
             onSuccess : (data) => console.log(data),
             onError : (data) => console.log(data)
         })
     }
+
+    const handleDelClient = (id : number) => {
+        return deleteClientMutate(id, {
+            onSuccess : (data) => {
+                queryClient.invalidateQueries(clients)
+                console.log(data)},
+            onError : (data) => console.log(data)
+        })
+    }
     return {
         handleAddClient,
         handleGetClient,
-        handleAddFishFarm
+        handleAddFishFarm,
+        handleGetClientById,
+        handleDelClient
     }
 }

@@ -3,21 +3,34 @@ import { OuterFrame } from "../components/outerFrameComponent"
 import { useState } from "react"
 import { useWorker } from "../hooks/worker";
 import { useNavigate } from "react-router-dom";
+import { CloudUploadOutlined, Label, Work } from "@mui/icons-material";
 
 export const WorkerForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [age, setAge] = useState<number|null>(null);
-    const [picture, setPicture] = useState('');
+    const [age, setAge] = useState<number | null>(null);
+    const [imageName, setImageName] = useState('');
+    const [imageFile, setImageFile] = useState<object|null>({});
     const [position, setPosition] = useState('');
-    const { handleAddWorker} = useWorker();
+    const { handleAddWorker } = useWorker();
     const navigate = useNavigate();
     const handleChange = (event: SelectChangeEvent) => {
         setPosition(event.target.value);
     };
     const handleAddWorkerClick = () => {
-        const Worker = { name : name, email : email, age : age, picture : picture, position : position}
+        const Worker = { name : name, email : email, age : age, imageFile : imageFile,imageName : imageName, position : position }
         handleAddWorker(Worker)
+    }
+    const handleImageUpload = (event : React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]){
+            let files = event.target.files[0]
+            setImageFile(files)
+            setImageName(files.name)
+            console.log(event.target.files)
+        }else{
+            setImageFile(null)
+            setImageName('')
+        }
     }
     return (
         <OuterFrame>
@@ -49,16 +62,25 @@ export const WorkerForm = () => {
                         setEmail(event.target.value);
                     }}
                 />
-
-                <TextField
-                    id="picture"
-                    label="Picture"
-                    size="small"
-                    value={picture}
-                    onChange={(event) => {
-                        setPicture(event.target.value);
-                    }}
-                />
+                <Stack direction='row' spacing={3}>
+                    <input
+                        id="btn-upload"
+                        name="btn-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                         />
+                    <Button
+                        className="btn-choose"
+                        variant="outlined"
+                        component="span" >
+                        Choose Image
+                    </Button>
+                    
+                    <Button variant="contained" color="primary" startIcon={<CloudUploadOutlined />} component="span">
+                        Upload Rpofile photo
+                    </Button>
+                </Stack>
                 <TextField
                     id="age"
                     label="Age"
@@ -70,7 +92,7 @@ export const WorkerForm = () => {
                         setAge(newAge)
                     }}
                 />
-                
+
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Position</InputLabel>
                     <Select

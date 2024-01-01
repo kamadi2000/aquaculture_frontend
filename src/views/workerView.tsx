@@ -14,11 +14,14 @@ import { useWorker } from '../hooks/worker';
 import { useConfirm } from 'material-ui-confirm';
 import { useState } from 'react';
 import { ViewWorker } from '../components/viewWorkerDialog';
+import profileImage from '../assets/images/profileImage.png'
 
 interface Worker {
     id: number,
     name: string,
-    age: number
+    age: number,
+    imageSrc : string,
+    imageName : string|null
 }
 export default function WorkerTable() {
     const confirm = useConfirm();
@@ -31,8 +34,7 @@ export default function WorkerTable() {
     const handleDelete = (id: number) => {
         confirm({ description: `This will permanently delete worker ${id}.` })
             .then(() => handleDelWorker(id))
-            .catch(() => console.log("Deletion cancelled."));
-        ;
+            .catch(() => console.log("Deletion cancelled."))
     }
     const handleView = (id : number) => {
         setWorkerId(id)
@@ -58,6 +60,7 @@ export default function WorkerTable() {
                     <TableHead>
                         <TableRow>
                             <TableCell>Id</TableCell>
+                            <TableCell>Profile picture</TableCell>
                             <TableCell align="right">Name</TableCell>
                             <TableCell align="right">Age</TableCell>
                             <TableCell align="right">
@@ -79,6 +82,10 @@ export default function WorkerTable() {
                                 <TableCell component="th" scope="row">
                                     {worker.id}
                                 </TableCell>
+                                <TableCell>{worker.imageName ? 
+                                (<img style={{borderRadius : '50%',height : 50, width : 50,alignSelf : 'center'}}  src={worker.imageSrc}/>)
+                                :
+                                (<img style={{borderRadius : '50%',height : 50, width : 50,alignSelf : 'center'}}  src={profileImage}/>) }</TableCell>
                                 <TableCell align="right">{worker.name}</TableCell>
                                 <TableCell align="right">{worker.age}</TableCell>
                                 <TableCell align="right">

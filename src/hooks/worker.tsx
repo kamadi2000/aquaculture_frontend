@@ -11,7 +11,8 @@ export const useWorker = () => {
     const navigate = useNavigate();
     const addWorker = (worker : object) => { return axios.post(url, worker, {
         headers : {
-            'Authorization' : `Bearer ${token}`
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'multipart/form-data'
         }
     })}
     const deleteWorker = (id : number) => { return axios.delete(`${url}/${id}`,{

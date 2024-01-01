@@ -16,7 +16,7 @@ type AddFishFarmProps = {
 
 export const AddFishFarmStep = ({ formData, setFormData }: AddFishFarmProps) => {
     const [open, setOpen] = useState(false);
-    const [id, setId] = useState(0);
+    const [id, setId] = useState<number|null>(null);
     const { handleGetFishfarm } = useFishfarm();
     const { data } = useQuery(fishfarms, handleGetFishfarm)
 
@@ -30,13 +30,12 @@ export const AddFishFarmStep = ({ formData, setFormData }: AddFishFarmProps) => 
     }
     return (
         <>
-            <CustomizedDialogs id={id} open={open} setOpen={setOpen} />
+            {id && <CustomizedDialogs id={id} open={open} setOpen={setOpen} /> }
             <Grid container spacing={4} direction="row" justifyContent="center" alignItems="center">
                 {data?.data.map((fishfarmCard: FishfarmCard) =>
                     <Grid item xs={12} sm={6} md={3}>
                         <div>
-                            <Checkbox checked={formData.fishfarmId === fishfarmCard.id} onChange={() => handleSelect(fishfarmCard.id)} />
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Checkbox checked={formData.fishfarmId === fishfarmCard.id} onChange={() => handleSelect(fishfarmCard.id)} />                           
                             <MediaCard 
                             id={fishfarmCard.id} 
                             name={fishfarmCard.name} 
@@ -45,7 +44,7 @@ export const AddFishFarmStep = ({ formData, setFormData }: AddFishFarmProps) => 
                             longitude={fishfarmCard.longitude}
                             latitude={fishfarmCard.latitude} 
                             handleClick={handleClick} />
-                        </Grid>
+                        
                         </div>
                     </Grid>
                 )}
