@@ -59,7 +59,6 @@ export default function WorkerTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Id</TableCell>
                             <TableCell>Profile picture</TableCell>
                             <TableCell align="right">Name</TableCell>
                             <TableCell align="right">Age</TableCell>
@@ -79,9 +78,6 @@ export default function WorkerTable() {
                                 key={worker.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {worker.id}
-                                </TableCell>
                                 <TableCell>{worker.imageName ? 
                                 (<img style={{borderRadius : '50%',height : 50, width : 50,alignSelf : 'center'}}  src={worker.imageSrc}/>)
                                 :

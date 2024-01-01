@@ -70,7 +70,7 @@ export const WorkerForm = () => {
                         accept="image/*"
                         onChange={handleImageUpload}
                          />
-                    <Button
+                    {/* <Button
                         className="btn-choose"
                         variant="outlined"
                         component="span" >
@@ -79,7 +79,7 @@ export const WorkerForm = () => {
                     
                     <Button variant="contained" color="primary" startIcon={<CloudUploadOutlined />} component="span">
                         Upload Rpofile photo
-                    </Button>
+                    </Button> */}
                 </Stack>
                 <TextField
                     id="age"

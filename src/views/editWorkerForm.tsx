@@ -1,41 +1,73 @@
 import { Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "../components/outerFrameComponent"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useWorker } from "../hooks/worker";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { workers } from "../utils/constants";
+import profileImage from '../assets/images/profileImage.png'
 
 export const EditWorkerForm = () => {
     const { workerId } = useParams();
 
     const { handleGetWorkerById, handleEditWorker } = useWorker();
-    const { data, isLoading } = useQuery([workers, Number(workerId) ], () => handleGetWorkerById(Number(workerId)))
+    const { data, isLoading } = useQuery([workers, Number(workerId)], () => handleGetWorkerById(Number(workerId)))
+    const [workerData, setWorkerData] = useState(data)
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [age, setAge] = useState<number | null>(data?.data?.age);
+    const [imageName, setImageName] = useState(data?.data?.imageName);
+    const [imageFile, setImageFile] = useState<object | null>({});
+    const [imageSrc, setImageSrc] = useState(data?.data?.imageSrc)
+    const [position, setPosition] = useState(data?.data.position);
 
-    const [name, setName] = useState(data?.data.name);
-    const [email, setEmail] = useState(data?.data?.email);
-    const [age, setAge] = useState<number|null>(data?.data?.age);
-    const [picture, setPicture] = useState(data?.data?.picture);
-    const [position, setPosition] = useState(data?.data?.position);
-    
     const handleEditWorkerClick = () => {
-        const Worker = {id : workerId, name : name, email : email, age : age, picture : picture, position : position}
+        const Worker = { id: workerId, name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
         handleEditWorker(Worker)
     }
     const handleChange = (event: SelectChangeEvent) => {
         setPosition(event.target.value);
     };
+    useEffect(()=> {
+        setName(data?.data.name)
+        setEmail(data?.data.email)
+
+    },[data])
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            let files = event.target.files[0]
+            setImageFile(files)
+            setImageName(files.name)
+            console.log(event.target.files)
+        } else {
+            setImageFile(null)
+            setImageName('')
+        }
+    }
     return (
         <OuterFrame>
             <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>
-            <Stack
+            {!isLoading && <Stack
                 component="form"
                 spacing={2}
+                noValidate
             >
+                {imageName ?
+                    (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
+                    :
+                    (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)}
+                <input
+                    id="btn-upload"
+                    name="btn-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                />
                 <TextField
                     id="name"
-                    label= "Name"
+                    label="Name"
                     size="small"
+                    defaultValue={name}
                     value={name}
                     onChange={(event) => {
                         setName(event.target.value);
@@ -52,15 +84,7 @@ export const EditWorkerForm = () => {
                     }}
                 />
 
-                <TextField
-                    id="picture"
-                    label="Picture"
-                    size="small"
-                    value={picture}
-                    onChange={(event) => {
-                        setPicture(event.target.value);
-                    }}
-                />
+                
                 <TextField
                     id="age"
                     label="Age"
@@ -72,7 +96,7 @@ export const EditWorkerForm = () => {
                         setAge(newAge)
                     }}
                 />
-                
+
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Position</InputLabel>
                     <Select
@@ -92,7 +116,7 @@ export const EditWorkerForm = () => {
 
                 <Button onClick={handleEditWorkerClick} variant="contained" color="primary">Save changes</Button>
 
-            </Stack>
+            </Stack>}
         </OuterFrame>
     )
 }

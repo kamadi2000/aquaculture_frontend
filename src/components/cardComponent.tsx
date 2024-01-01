@@ -14,17 +14,22 @@ type mediaCardProps = {
     cages : number;
     longitude : number;
     latitude : number;
+    imageName : string|null;
+    imageSrc : string,
     handleClick : (id : number) => void ;
 }
 
-export default function MediaCard({id, name, barge, cages, longitude, latitude, handleClick}:mediaCardProps) {
+export default function MediaCard({id, name, barge, cages, longitude, latitude, imageName, imageSrc, handleClick}:mediaCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
+      {imageName ? (<CardMedia
         sx={{ height: 140 }}
-        image='https://srilankainstatours.com/wp-content/uploads/2023/02/Fisherman-in-Mannar-bay-Sri-Lanka-Things-to-do-in-Mannar.webp'
-        title="green iguana"
-      />
+        image={imageSrc}
+      />) : (<CardMedia
+        sx={{ height: 140 }}
+        image={imageSrc}
+      />)
+      }
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
