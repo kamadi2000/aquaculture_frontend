@@ -2,9 +2,10 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import styled from '@emotion/styled';
-import { IconButton, Menu, MenuItem, Theme, Typography } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem, Theme, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type NavBarProps = {
   open: boolean;
@@ -12,6 +13,7 @@ type NavBarProps = {
   handleDrawerOpen: () => void
 }
 export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const drawerWidth = 240;
   interface AppBarProps extends MuiAppBarProps {
@@ -40,9 +42,13 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
   };
 
   const handleClose = () => {
-    localStorage.removeItem("token")
     setAnchorEl(null);
+    
   };
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate('/')
+  }
   return (
     <AppBar position="fixed" open={open}>
       <Toolbar>
@@ -62,11 +68,12 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
           AquaCulture
         </Typography>
         <div>
-          <IconButton
+          {/* <IconButton
             size="large"
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
+            edge="end"
             onClick={handleMenu}
             color="inherit"
           >
@@ -87,8 +94,9 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </Menu>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu> */}
+          <Button onClick={handleLogout} color="inherit">Logout</Button>
         </div>
       </Toolbar>
     </AppBar>

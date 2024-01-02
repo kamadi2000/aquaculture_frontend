@@ -12,17 +12,17 @@ export const EditWorkerForm = () => {
 
     const { handleGetWorkerById, handleEditWorker } = useWorker();
     const { data, isLoading } = useQuery([workers, Number(workerId)], () => handleGetWorkerById(Number(workerId)))
-    const [workerData, setWorkerData] = useState(data)
+    
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [age, setAge] = useState<number | null>(data?.data?.age);
-    const [imageName, setImageName] = useState(data?.data?.imageName);
+    const [age, setAge] = useState<number | null>(null);
+    const [imageName, setImageName] = useState('');
     const [imageFile, setImageFile] = useState<object | null>({});
-    const [imageSrc, setImageSrc] = useState(data?.data?.imageSrc)
-    const [position, setPosition] = useState(data?.data.position);
+    const [imageSrc, setImageSrc] = useState('')
+    const [position, setPosition] = useState('');
 
     const handleEditWorkerClick = () => {
-        const Worker = { id: workerId, name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
+        const Worker = { id: Number(workerId), name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
         handleEditWorker(Worker)
     }
     const handleChange = (event: SelectChangeEvent) => {
@@ -31,8 +31,12 @@ export const EditWorkerForm = () => {
     useEffect(()=> {
         setName(data?.data.name)
         setEmail(data?.data.email)
-
+        setAge(data?.data?.age)
+        setImageName(data?.data?.imageName)
+        setImageSrc(data?.data?.imageSrc)
+        setPosition(String(data?.data.position))
     },[data])
+
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             let files = event.target.files[0]

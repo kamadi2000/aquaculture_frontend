@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import liard from '../assets/images/logo512.png';
 import { url } from 'inspector';
+import { useNavigate } from 'react-router-dom';
 
 type mediaCardProps = {
     id : number;
@@ -20,6 +21,7 @@ type mediaCardProps = {
 }
 
 export default function MediaCard({id, name, barge, cages, longitude, latitude, imageName, imageSrc, handleClick}:mediaCardProps) {
+  const navigate = useNavigate()
   return (
     <Card sx={{ maxWidth: 345 }}>
       {imageName ? (<CardMedia
@@ -46,6 +48,7 @@ export default function MediaCard({id, name, barge, cages, longitude, latitude, 
       </CardContent>
       <CardActions>
         <Button onClick={() => handleClick(id)} size="small">See Workers</Button>
+        <Button onClick={() => navigate(`/fishFarmView/${id}/editFishfarmForm`)} size="small">Edit fishfarm</Button>
       </CardActions>
     </Card>
   );

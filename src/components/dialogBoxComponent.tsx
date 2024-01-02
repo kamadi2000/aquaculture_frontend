@@ -74,9 +74,9 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
           :
           (data?.data.workers)?.map((worker : WorkerProps) => 
           <Stack direction='row' spacing={3}>
-            <Typography>
+            {/* <Typography>
             {worker.id}
-          </Typography>
+          </Typography> */}
           <Typography>
             {worker.name}
           </Typography>

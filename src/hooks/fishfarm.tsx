@@ -18,7 +18,8 @@ export const useFishfarm = () => {
     })}
     const editFishfarm = (fishfarm : object) => { return axios.put(url, fishfarm, {
         headers : {
-            'Authorization' : `Bearer ${token}`
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'multipart/form-data'
         }
     })}
     const deleteFishfarm = (id : number) => { return axios.post(`${url}/${id}`, {
@@ -61,7 +62,8 @@ export const useFishfarm = () => {
         return editFishfarmMutate(fishfarm, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
-                console.log(data)},
+                console.log(data)
+                navigate('/fishFarmView')},
             onError : (data) => console.log(data)
         })
     }

@@ -46,7 +46,6 @@ export default function ClientTable() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Id</TableCell>
                             <TableCell align="right">Name</TableCell>
                             <TableCell align="right">
                                 <Button 
@@ -64,16 +63,12 @@ export default function ClientTable() {
                                 key={client.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {client.id}
-                                </TableCell>
                                 <TableCell align="right">{client.name}</TableCell>
                                 <TableCell align="right">
                                     <Button onClick={() => navigate(`/clientView/${client.id}/fishfarm`)} style={{ justifyItems: 'right' }} variant="contained">View</Button></TableCell>
                                 <TableCell align="right">
                                     <Button onClick={() => navigate(`/clientView/${client.id}/addFishfarm`)} style={{ justifyItems: 'right' }} variant="contained">Add fishfarm</Button></TableCell>
                                 <TableCell align="right"><Button onClick={() => handleDelete(client.id)} style={{ justifyItems: 'right' }} variant="contained">Delete</Button></TableCell>
-                                <TableCell align="right"><Button style={{ justifyItems: 'right' }} variant="contained">Edit</Button></TableCell>
 
                             </TableRow>
                         ))}

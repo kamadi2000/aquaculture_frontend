@@ -16,7 +16,7 @@ export const ClientInfo = () => {
     const [id, setId] = useState<number|null>(null);
     const { handleGetClientById } = useClient()
     const { data, isLoading} = useQuery([clients, Number(clientId)],() => handleGetClientById(Number(clientId)))
-
+    console.log({data})
 
     const handleClick = (Id: number) => {
         setId(Id)
