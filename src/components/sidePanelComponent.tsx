@@ -11,7 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Face6Icon from '@mui/icons-material/Face6';
 import SailingIcon from '@mui/icons-material/Sailing';
 import EngineeringIcon from '@mui/icons-material/Engineering';
@@ -77,6 +77,7 @@ const sidePanelList = [
     {id : 1, name : "Clients", Icon : Face6Icon, navigate : "/clientView"},
     {id : 2, name : "Fish farms", Icon : SailingIcon, navigate : "/fishFarmView"},
     {id : 3, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
+    {id : 4, name : "Admin", Icon : AccountCircleIcon , navigate : "/adminView"}
 ]
 
 export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanelProps) {

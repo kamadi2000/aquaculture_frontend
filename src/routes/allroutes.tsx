@@ -10,6 +10,8 @@ import { FishfarmForm } from "../views/addFishfarmForm"
 import { WorkerForm } from "../views/addWorkerForm"
 import { EditWorkerForm } from "../views/editWorkerForm"
 import { EditFishfarmForm } from "../views/editFishfarmForm"
+import AdminTable from "../views/adminView"
+import { AdminForm } from "../views/addAdminForm"
 
 export const Allroutes = () => {
     return(
@@ -18,6 +20,7 @@ export const Allroutes = () => {
             <Route path="/clientView" element={<ClientTable/>}></Route>
             <Route path="/workerView" element={<WorkerTable/>}></Route>
             <Route path="/fishFarmView" element={<FishFarm/>}></Route>
+            <Route path="/adminView" element={<AdminTable/>}></Route>
             <Route path="/outerframe" element={<OuterFrame/>}></Route>
             <Route path="/clientView/:clientId/addFishfarm" element={<AddFishFarm/>}></Route>
             <Route path="/clientView/:clientId/fishfarm" element={<ClientInfo/>}></Route>
@@ -25,6 +28,7 @@ export const Allroutes = () => {
             <Route path="/fishFarmView/:fishfarmId/editFishfarmForm" element={<EditFishfarmForm/>}></Route>
             <Route path="/workerView/workerform" element={<WorkerForm/>}></Route>
             <Route path="/workerView/:workerId/editWorkerform" element={<EditWorkerForm/>}></Route>
+            <Route path="/adminView/addAdminForm" element={<AdminForm/>}></Route>
         </Routes>
     )
 }
