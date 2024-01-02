@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { NavBar } from "./navBarComponent"
-import SidePanel from "./sidePanelComponent";
+import { NavBar } from "./NavBarComponent"
+import SidePanel from "./SidePanelComponent";
 import { Box, styled } from "@mui/material";
 
 type OuterFrameProps = {

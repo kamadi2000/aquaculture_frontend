@@ -5,13 +5,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { OuterFrame } from '../components/outerFrameComponent';
+import { OuterFrame } from '../components/OuterFrameComponent';
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
 import { clients } from '../utils/constants';
-import FormDialog from '../components/addClientDialogComponent';
+import FormDialog from '../components/AddClientDialogComponent';
 import { useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 

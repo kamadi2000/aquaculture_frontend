@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@mui/material"
 import { useState } from "react";
-import CustomizedDialogs from "./dialogBoxComponent";
-import MediaCard from "./cardComponent";
-import { IAddFishFarmData } from "./stepperComponent";
+import CustomizedDialogs from "./DialogBoxComponent";
+import MediaCard from "./CardComponent";
+import { IAddFishFarmData } from "./StepperComponent";
 import Checkbox from '@mui/material/Checkbox';
 import { useFishfarm } from "../hooks/fishfarm";
 import { useQuery } from "react-query";

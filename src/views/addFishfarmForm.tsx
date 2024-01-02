@@ -1,5 +1,5 @@
 import { Button, FormControlLabel, Stack, Switch, TextField, Typography } from "@mui/material"
-import { OuterFrame } from "../components/outerFrameComponent"
+import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useFishfarm } from "../hooks/fishfarm";
 import { useLocation } from "react-router-dom";

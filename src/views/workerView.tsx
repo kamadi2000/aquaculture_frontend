@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { OuterFrame } from '../components/outerFrameComponent';
+import { OuterFrame } from '../components/OuterFrameComponent';
 import { Button, Typography } from '@mui/material';
 import { useQuery } from 'react-query';
 import { workers } from '../utils/constants';
@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useWorker } from '../hooks/worker';
 import { useConfirm } from 'material-ui-confirm';
 import { useState } from 'react';
-import { ViewWorker } from '../components/viewWorkerDialog';
+import { ViewWorker } from '../components/ViewWorkerDialog';
 import profileImage from '../assets/images/profileImage.png'
 
 interface Worker {

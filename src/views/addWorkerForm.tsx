@@ -1,5 +1,5 @@
 import { Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
-import { OuterFrame } from "../components/outerFrameComponent"
+import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useWorker } from "../hooks/worker";
 import { useNavigate } from "react-router-dom";

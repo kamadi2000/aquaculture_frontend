@@ -1,7 +1,7 @@
 import axios from "axios"
 import { BACKEND_URL, clients } from "../utils/constants"
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { IAddFishFarmData } from "../components/stepperComponent"
+import { IAddFishFarmData } from "../components/StepperComponent"
 
 let token = localStorage.getItem("token")
 

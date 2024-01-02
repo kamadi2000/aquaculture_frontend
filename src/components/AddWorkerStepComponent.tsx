@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
-import { IAddFishFarmData } from './stepperComponent';
+import { IAddFishFarmData } from './StepperComponent';
 import { useWorker } from '../hooks/worker';
 import { useQuery } from 'react-query';
 import { positionEnumMap, workers } from '../utils/constants';
