@@ -2,11 +2,11 @@ import { Button, FormControlLabel, Stack, Switch, TextField, Typography } from "
 import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useFishfarm } from "../hooks/fishfarm";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 export const FishfarmForm = () => {
     const [name, setName] = useState('');
-    const [image, SetImage] = useState('');
+    const { clientId } = useParams();
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
     const [cages, setCages] = useState<number | null>(null);
@@ -15,7 +15,7 @@ export const FishfarmForm = () => {
     const [imageFile, setImageFile] = useState<object|null>({});
     const { handleAddFishfarm } = useFishfarm();
     const handleAdd = () => {
-        const fishfarm = {name: name, longitude: longitude, latitude: latitude, num_of_cages: cages, has_barge: barge, imageFile: imageFile, imageName : imageName }
+        const fishfarm = {clientId : clientId, name: name, longitude: longitude, latitude: latitude, num_of_cages: cages, has_barge: barge, imageFile: imageFile, imageName : imageName }
         handleAddFishfarm(fishfarm)
     }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

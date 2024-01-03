@@ -22,7 +22,7 @@ export const useFishfarm = () => {
             'Content-Type' : 'multipart/form-data'
         }
     })}
-    const deleteFishfarm = (id : number) => { return axios.post(`${url}/${id}`, {
+    const deleteFishfarm = (id : number) => { return axios.delete(`${url}/${id}`, {
         headers : {
             'Authorization' : `Bearer ${token}`
         }

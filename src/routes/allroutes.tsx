@@ -24,7 +24,7 @@ export const Allroutes = () => {
             <Route path="/outerframe" element={<OuterFrame/>}></Route>
             <Route path="/clientView/:clientId/addFishfarm" element={<AddFishFarm/>}></Route>
             <Route path="/clientView/:clientId/fishfarm" element={<ClientInfo/>}></Route>
-            <Route path="/fishFarmView/fishfarmform" element={<FishfarmForm/>}></Route>
+            <Route path="/fishfarmform/:clientId" element={<FishfarmForm/>}></Route>
             <Route path="/fishFarmView/:fishfarmId/editFishfarmForm" element={<EditFishfarmForm/>}></Route>
             <Route path="/workerView/workerform" element={<WorkerForm/>}></Route>
             <Route path="/workerView/:workerId/editWorkerform" element={<EditWorkerForm/>}></Route>
