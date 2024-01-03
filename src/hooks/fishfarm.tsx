@@ -75,12 +75,20 @@ export const useFishfarm = () => {
             onError : (data) => console.log(data)
         })
     }
+    const handleGetFishFarmWorkers = (fishFarmId : number) => {
+        return axios.get(`${url}/clientFishFarms/${fishFarmId}`,{
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        })
+    }
     
     return {
         handleAddFishfarm,
         handleGetFishfarm,
         handleGetByFishfarmId,
         handleDelFishfarm,
-        handleEditFishfarm
+        handleEditFishfarm,
+        handleGetFishFarmWorkers
     }
 }

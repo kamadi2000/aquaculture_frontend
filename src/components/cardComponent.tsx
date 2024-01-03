@@ -60,7 +60,7 @@ export default function MediaCard({ id, name, barge, cages, longitude, latitude,
       </CardContent>
       <CardActions>
         <Stack spacing={1}>
-          <Button variant='outlined' onClick={() => handleClick(id)} size="small">See Workers</Button>
+          <Button variant='outlined' onClick={() => handleClick(id)} size="small">Workers</Button>
           <Button variant='outlined' onClick={() => navigate(`/fishFarmView/${id}/editFishfarmForm`)} size="small">Edit fishfarm</Button>
           <Button variant='outlined' onClick={() => handleDelete(id)} size="small">Delete fishfarm</Button>
         </Stack>

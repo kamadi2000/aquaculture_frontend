@@ -1,13 +1,13 @@
 import axios from "axios"
 import { BACKEND_URL, clients } from "../utils/constants"
-import { useMutation, useQuery, useQueryClient } from "react-query"
-import { IAddFishFarmData } from "../components/StepperComponent"
+import { useMutation, useQueryClient } from "react-query"
+import { IFishFarmData } from "../components/DialogBoxComponent"
 
 let token = localStorage.getItem("token")
 
 type FishFormDataProps = {
-    id? : string,
-    fishFarmData : IAddFishFarmData
+    id? : number,
+    fishFarmData : IFishFarmData
 }
 
 export const useClient = () => {
@@ -20,7 +20,7 @@ export const useClient = () => {
         }
     })}
     const addClientFishfarm = ({ id, fishFarmData} : FishFormDataProps) => { 
-        return axios.post( `${url}/${id}`, fishFarmData,{
+        return axios.put( `${url}/${id}`, fishFarmData,{
             headers : {
                 'Authorization' : `Bearer ${token}`
             }
@@ -60,7 +60,7 @@ export const useClient = () => {
         })
     }
 
-    const handleAddFishFarm = ({ id, fishFarmData} : FishFormDataProps) => {
+    const handleClientFishFarm = ({ id, fishFarmData} : FishFormDataProps) => {
         return addClientFishfarmMutate({ id, fishFarmData}, {
             onSuccess : (data) => console.log(data),
             onError : (data) => console.log(data)
@@ -78,7 +78,7 @@ export const useClient = () => {
     return {
         handleAddClient,
         handleGetClient,
-        handleAddFishFarm,
+        handleClientFishFarm,
         handleGetClientById,
         handleDelClient
     }

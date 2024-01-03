@@ -11,7 +11,10 @@ import Typography from '@mui/material/Typography';
 import { useFishfarm } from '../hooks/fishfarm';
 import { useQuery } from 'react-query';
 import { fishfarms } from '../utils/constants';
-import { ListItem, Stack } from '@mui/material';
+import { Grid, ListItem, Stack } from '@mui/material';
+import DataGridDemo from './WorkerGridComponent';
+import { useParams } from 'react-router-dom';
+import { useClient } from '../hooks/client';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -27,24 +30,27 @@ type dialogBoxProps = {
   open: boolean;
   setOpen: (R: boolean) => void
 }
-type WorkerProps = {
-  id : number;
-  name : string
+export interface IFishFarmData {
+  fishfarmId : number |null
+  workersIdList : number[]
 }
 
 export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps) {
-  const { handleGetByFishfarmId } = useFishfarm();
-  
-  const { data, isLoading } = useQuery([fishfarms, id], () => handleGetByFishfarmId(id))
-  console.log(data?.data.workers)
-  
+  const { clientId } = useParams();
+  const { handleClientFishFarm } = useClient();
+  const [fishFarmWorker, setFishFarmWorker] = React.useState<IFishFarmData>({fishfarmId : null,workersIdList : []})
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleSave = () => {
+    setFishFarmWorker({...fishFarmWorker,fishfarmId : id})
+    console.log(fishFarmWorker)
+    handleClientFishFarm({id : Number(clientId), fishFarmData : fishFarmWorker})
+    setOpen(false)
+  }
   return (
     <React.Fragment>
-      
+
       <BootstrapDialog
         maxWidth='md'
         onClose={handleClose}
@@ -52,7 +58,14 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
         open={open}
       >
         <DialogTitle sx={{ m: 0, paddingRight: 50 }} id="customized-dialog-title">
-          {data?.data.name}
+          <Grid container direction='row' spacing={12}>
+            <Grid item spacing={6}>
+              <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>
+            </Grid>
+            <Grid item spacing={6} paddingBottom={3}>
+              <Button onClick={handleSave} variant="contained">Save Changes</Button>
+            </Grid>
+          </Grid>
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -67,26 +80,11 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          {(data?.data.workers)?.length === 0 ? 
-          <Typography>
-            No workers in the fish farm
-          </Typography>
-          :
-          (data?.data.workers)?.map((worker : WorkerProps) => 
-          <Stack direction='row' spacing={3}>
-            {/* <Typography>
-            {worker.id}
-          </Typography> */}
-          <Typography>
-            {worker.name}
-          </Typography>
-          </Stack>)}
-          
+          <DataGridDemo fishFarmId={id} fishFarmWorker={fishFarmWorker} setFishFarmWorker={setFishFarmWorker} />
+
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Done
-          </Button>
+
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

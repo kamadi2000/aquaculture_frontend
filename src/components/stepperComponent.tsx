@@ -22,7 +22,7 @@ export interface IAddFishFarmData {
 export default function StepperComponent() {
   const navigate = useNavigate();
   const { clientId } = useParams();
-  const { handleAddFishFarm } = useClient()
+  const { handleClientFishFarm } = useClient()
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [formData, setFormData] = React.useState<IAddFishFarmData>({fishfarmId : null,workersIdList : []})
@@ -73,7 +73,7 @@ export default function StepperComponent() {
   };
 
   const onFinish = () => {
-    handleAddFishFarm({id : clientId, fishFarmData : formData})
+    handleClientFishFarm({id : Number(clientId), fishFarmData : formData})
   }
 
   return (

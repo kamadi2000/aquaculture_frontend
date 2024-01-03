@@ -75,11 +75,15 @@ export const useWorker = () => {
             onError : (data) => console.log(data)
         })
     }
+    const handleGetIdleWorkers = () => {
+        return axios.get(`${url}/workers`)
+    }
     return {
         handleAddWorker,
         handleGetWorker,
         handleGetWorkerById,
         handleEditWorker,
-        handleDelWorker
+        handleDelWorker,
+        handleGetIdleWorkers
     }
 }
