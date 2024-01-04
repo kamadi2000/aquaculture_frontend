@@ -22,7 +22,8 @@ export const useWorker = () => {
     })}
     const editWorker = (worker : object) => { return axios.put(url, worker, {
         headers : {
-            'Authorization' : `Bearer ${token}`
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'multipart/form-data'
         }
     })}
     
@@ -76,7 +77,11 @@ export const useWorker = () => {
         })
     }
     const handleGetIdleWorkers = () => {
-        return axios.get(`${url}/workers`)
+        return axios.get(`${url}/workers`,{
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        })
     }
     return {
         handleAddWorker,

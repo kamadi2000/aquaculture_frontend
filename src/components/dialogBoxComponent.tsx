@@ -38,14 +38,18 @@ export interface IFishFarmData {
 export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps) {
   const { clientId } = useParams();
   const { handleClientFishFarm } = useClient();
+  const [fid, setFId] = React.useState(id)
   const [fishFarmWorker, setFishFarmWorker] = React.useState<IFishFarmData>({fishfarmId : null,workersIdList : []})
   const handleClose = () => {
     setOpen(false);
   };
+  // React.useEffect(() => {
+  //   setFishFarmWorker()
+  // },[id])
   const handleSave = () => {
-    setFishFarmWorker({...fishFarmWorker,fishfarmId : id})
+    console.log({id}) 
+    handleClientFishFarm({id : Number(clientId), fishFarmData : {...fishFarmWorker,fishfarmId : id}})
     console.log(fishFarmWorker)
-    handleClientFishFarm({id : Number(clientId), fishFarmData : fishFarmWorker})
     setOpen(false)
   }
   return (
@@ -58,6 +62,7 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
         open={open}
       >
         <DialogTitle sx={{ m: 0, paddingRight: 50 }} id="customized-dialog-title">
+          {/* <Typography>{id}</Typography> */}
           <Grid container direction='row' spacing={12}>
             <Grid item spacing={6}>
               <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>

@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/OuterFrameComponent';
-import { Button, Typography } from '@mui/material';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 import { useQuery } from 'react-query';
 import { workers } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
@@ -20,13 +20,13 @@ interface Worker {
     id: number,
     name: string,
     age: number,
-    imageSrc : string,
-    imageName : string|null
+    imageSrc: string,
+    imageName: string | null
 }
 export default function WorkerTable() {
     const confirm = useConfirm();
     const [open, setOpen] = useState(false);
-    const [workerId, setWorkerId] = useState<number|null>(null);
+    const [workerId, setWorkerId] = useState<number | null>(null);
     const { handleGetWorker, handleDelWorker } = useWorker();
     const navigate = useNavigate();
     const { data, isLoading, isError, error } = useQuery(workers, handleGetWorker);
@@ -36,39 +36,41 @@ export default function WorkerTable() {
             .then(() => handleDelWorker(id))
             .catch(() => console.log("Deletion cancelled."))
     }
-    const handleView = (id : number) => {
+    const handleView = (id: number) => {
         setWorkerId(id)
         setOpen(true)
     }
-    if (isLoading){
-        return(
+    if (isLoading) {
+        return (
             <h1>Loading..</h1>
         )
     }
 
     return (
         <OuterFrame>
-            {workerId && <ViewWorker id={workerId} open={open} setOpen={setOpen}/> }           
-            <Typography
-                sx={{ flex: '1 1 100%' }}
-                variant="h6"
-            >
-                Workers
-            </Typography>
+            {workerId && <ViewWorker id={workerId} open={open} setOpen={setOpen} />}
+            <Grid container direction='row' spacing={12}>
+                <Grid item spacing={6}>
+                    <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>
+                </Grid>
+                <Grid item spacing={6} paddingBottom={6}>
+                    <Button
+                        style={{ justifyItems: 'right' }}
+                        variant="contained"
+                        onClick={() => navigate('/workerView/workerform')}>
+                        Add Worker
+                    </Button>
+                </Grid>
+            </Grid>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Profile picture</TableCell>
-                            <TableCell align="right">Name</TableCell>
-                            <TableCell align="right">Age</TableCell>
-                            <TableCell align="right">
-                                <Button
-                                    style={{ justifyItems: 'right' }}
-                                    variant="contained"
-                                    onClick={() => navigate('/workerView/workerform')}>
-                                    Add Worker
-                                </Button>
+                            <TableCell align='center'><b>Profile picture</b></TableCell>
+                            <TableCell align="center"><b>Name</b></TableCell>
+                            <TableCell align="center"><b>Age</b></TableCell>
+                            <TableCell align="center">
+                                <b>Actions</b>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -78,17 +80,35 @@ export default function WorkerTable() {
                                 key={worker.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell>{worker.imageName ? 
-                                (<img style={{borderRadius : '50%',height : 50, width : 50,alignSelf : 'center'}}  src={worker.imageSrc}/>)
-                                :
-                                (<img style={{borderRadius : '50%',height : 50, width : 50,alignSelf : 'center'}}  src={profileImage}/>) }</TableCell>
-                                <TableCell align="right">{worker.name}</TableCell>
-                                <TableCell align="right">{worker.age}</TableCell>
-                                <TableCell align="right">
-                                    <Button onClick={() => handleView(worker.id)} style={{ justifyItems: 'right' }} variant="contained">View</Button></TableCell>
-                                <TableCell align="right"><Button onClick={() => handleDelete(worker.id)} style={{ justifyItems: 'right' }} variant="contained">Delete</Button></TableCell>
-                                <TableCell align="right">
-                                    <Button onClick={() => navigate(`/workerView/${worker.id}/editWorkerform`)} style={{ justifyItems: 'right' }} variant="contained">Edit</Button></TableCell>
+                                <TableCell align='center'>{worker.imageName ?
+                                    (<img style={{ borderRadius: '50%', height: 50, width: 50, alignSelf: 'center' }} src={worker.imageSrc} />)
+                                    :
+                                    (<img style={{ borderRadius: '50%', height: 50, width: 50, alignSelf: 'center' }} src={profileImage} />)}</TableCell>
+                                <TableCell align="center">{worker.name}</TableCell>
+                                <TableCell align="center">{worker.age}</TableCell>
+                                <TableCell align="center">
+                                <Stack direction='row' spacing={2} justifyContent={'center'} alignItems={'center'}>
+                                    <Button
+                                        onClick={() => handleView(worker.id)}
+                                        style={{ justifyItems: 'right' }}
+                                        variant="contained">
+                                        View
+                                    </Button>
+                                    <Button
+                                        onClick={() => handleDelete(worker.id)}
+                                        style={{ justifyItems: 'right' }}
+                                        variant="contained">
+                                        Delete
+                                    </Button>
+
+                                    <Button
+                                        onClick={() => navigate(`/workerView/${worker.id}/editWorkerform`)}
+                                        style={{ justifyItems: 'right' }}
+                                        variant="contained">
+                                        Edit
+                                    </Button>
+                                    </Stack>
+                                </TableCell>
 
                             </TableRow>
                         ))}

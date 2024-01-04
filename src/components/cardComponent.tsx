@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFishfarm } from '../hooks/fishfarm';
 import { Stack } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
+import { useState } from 'react';
 
 type mediaCardProps = {
   id: number;
@@ -27,9 +28,9 @@ export default function MediaCard({ id, name, barge, cages, longitude, latitude,
   const confirm = useConfirm();
   const navigate = useNavigate();
   const { handleDelFishfarm } = useFishfarm();
-
-  const handleDelete = (id: number) => {
-    confirm({ description: `This will permanently delete fish farm ${id}.` })
+  const handleDelete = (Id: number) => {
+    console.log({Id})
+    confirm({ description: `This will permanently delete fish farm ${Id}.` })
             .then(() => handleDelFishfarm(id))
             .catch(() => console.log("Deletion cancelled."))
     
@@ -61,8 +62,8 @@ export default function MediaCard({ id, name, barge, cages, longitude, latitude,
       <CardActions>
         <Stack spacing={1}>
           <Button variant='outlined' onClick={() => handleClick(id)} size="small">Workers</Button>
-          <Button variant='outlined' onClick={() => navigate(`/fishFarmView/${id}/editFishfarmForm`)} size="small">Edit fishfarm</Button>
-          <Button variant='outlined' onClick={() => handleDelete(id)} size="small">Delete fishfarm</Button>
+          <Button variant='outlined' onClick={() => navigate(`/${id}/editFishfarmForm`)} size="small">Edit</Button>
+          <Button variant='outlined' onClick={() => handleDelete(id)} size="small">Delete</Button>
         </Stack>
       </CardActions>
     </Card>

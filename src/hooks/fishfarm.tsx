@@ -38,7 +38,7 @@ export const useFishfarm = () => {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
                 console.log(data)
-                navigate('/fishFarmView')},
+                navigate(-1)},
             onError : (data) => console.log(data)
         })
     }
@@ -63,11 +63,12 @@ export const useFishfarm = () => {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
                 console.log(data)
-                navigate('/fishFarmView')},
+                navigate(-1)},
             onError : (data) => console.log(data)
         })
     }
     const handleDelFishfarm = (id : number) => {
+        console.log({id})
         return deleteFishfarmMutate(id, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)

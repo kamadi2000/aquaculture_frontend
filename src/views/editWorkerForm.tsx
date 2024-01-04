@@ -23,6 +23,7 @@ export const EditWorkerForm = () => {
 
     const handleEditWorkerClick = () => {
         const Worker = { id: Number(workerId), name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
+        console.log({Worker})
         handleEditWorker(Worker)
     }
     const handleChange = (event: SelectChangeEvent) => {

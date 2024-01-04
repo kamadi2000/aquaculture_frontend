@@ -35,6 +35,7 @@ export const EditFishfarmForm = () => {
     
     const handleEdit = () => {
         const fishfarm = {id : Number(fishfarmId), name: name, longitude: longitude, latitude: latitude, num_of_cages: cages, has_barge: barge, imageFile: imageFile, imageName : imageName }
+        console.log({imageName})
         console.log({fishfarm})
         handleEditFishfarm(fishfarm)
     }
