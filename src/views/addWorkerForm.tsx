@@ -2,8 +2,7 @@ import { Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeE
 import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useWorker } from "../hooks/worker";
-import { useNavigate } from "react-router-dom";
-import { CloudUploadOutlined, Label, Work } from "@mui/icons-material";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const WorkerForm = () => {
     const [name, setName] = useState('');
@@ -12,13 +11,14 @@ export const WorkerForm = () => {
     const [imageName, setImageName] = useState('');
     const [imageFile, setImageFile] = useState<object|null>({});
     const [position, setPosition] = useState('');
+    const { clientId } = useParams()
     const { handleAddWorker } = useWorker();
     const navigate = useNavigate();
     const handleChange = (event: SelectChangeEvent) => {
         setPosition(event.target.value);
     };
     const handleAddWorkerClick = () => {
-        const Worker = { name : name, email : email, age : age, imageFile : imageFile,imageName : imageName, position : position }
+        const Worker = {clientId : clientId, name : name, email : email, age : age, imageFile : imageFile,imageName : imageName, position : position }
         handleAddWorker(Worker)
     }
     const handleImageUpload = (event : React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ export const WorkerForm = () => {
     }
     return (
         <OuterFrame>
-            <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>
+            <Typography sx={{ flex: '1 1 100%' }} variant="h6">Client/Workers</Typography>
             <Stack
                 component="form"
                 spacing={2}

@@ -4,7 +4,6 @@ import ClientTable from "../views/clientView"
 import WorkerTable from "../views/workerView"
 import { FishFarm } from "../views/fishFarmView"
 import { OuterFrame } from "../components/OuterFrameComponent"
-import { AddFishFarm } from "../views/addClientFishFarm"
 import { ClientInfo } from "../components/ClientInfoComponent"
 import { FishfarmForm } from "../views/addFishfarmForm"
 import { WorkerForm } from "../views/addWorkerForm"
@@ -18,15 +17,14 @@ export const Allroutes = () => {
         <Routes>
             <Route path="/" element={<Login/>}></Route>
             <Route path="/clientView" element={<ClientTable/>}></Route>
-            <Route path="/workerView" element={<WorkerTable/>}></Route>
+            <Route path="/workerView/:clientId" element={<WorkerTable/>}></Route>
             <Route path="/fishFarmView" element={<FishFarm/>}></Route>
             <Route path="/adminView" element={<AdminTable/>}></Route>
             <Route path="/outerframe" element={<OuterFrame/>}></Route>
-            <Route path="/clientView/:clientId/addFishfarm" element={<AddFishFarm/>}></Route>
             <Route path="/clientView/:clientId/fishfarm" element={<ClientInfo/>}></Route>
             <Route path="/fishfarmform/:clientId" element={<FishfarmForm/>}></Route>
             <Route path="/:fishfarmId/editFishfarmForm" element={<EditFishfarmForm/>}></Route>
-            <Route path="/workerView/workerform" element={<WorkerForm/>}></Route>
+            <Route path="/workerView/:clientId/workerform" element={<WorkerForm/>}></Route>
             <Route path="/workerView/:workerId/editWorkerform" element={<EditWorkerForm/>}></Route>
             <Route path="/adminView/addAdminForm" element={<AdminForm/>}></Route>
         </Routes>

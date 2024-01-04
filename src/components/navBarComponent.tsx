@@ -3,7 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import styled from '@emotion/styled';
 import { Button, IconButton, Menu, MenuItem, Theme, Typography } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -63,6 +63,15 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
           }}
         >
           <MenuIcon />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => navigate(-1)}
+          edge="start"
+          
+        >
+          <ArrowBackIosNewIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           AquaCulture

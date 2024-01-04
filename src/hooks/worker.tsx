@@ -35,16 +35,17 @@ export const useWorker = () => {
         return addWorkerMutate(worker, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(workers)
-                navigate('/workerView')
+                navigate(-1)
                 console.log(data)},
             onError : (data) => console.log(data)
         })
     }
 
-    const handleGetWorker = () => {
-        return axios.get(url, {
+    const handleGetWorker = (clientId : number) => {
+        return axios.get(`${url}/client/${clientId}`, {
             headers : {
-                'Authorization' : `Bearer ${token}`
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type' : 'multipart/form-data'
             }
         })
     }
@@ -71,7 +72,7 @@ export const useWorker = () => {
         return editWorkerMutate(worker, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(workers)
-                navigate('/workerView')
+                navigate(-1)
                 console.log(data)},
             onError : (data) => console.log(data)
         })

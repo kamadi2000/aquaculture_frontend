@@ -9,7 +9,7 @@ import { OuterFrame } from '../components/OuterFrameComponent';
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { useQuery } from 'react-query';
 import { workers } from '../utils/constants';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useWorker } from '../hooks/worker';
 import { useConfirm } from 'material-ui-confirm';
 import { useState } from 'react';
@@ -25,12 +25,13 @@ interface Worker {
 }
 export default function WorkerTable() {
     const confirm = useConfirm();
+    const {clientId} = useParams();
     const [open, setOpen] = useState(false);
     const [workerId, setWorkerId] = useState<number | null>(null);
     const { handleGetWorker, handleDelWorker } = useWorker();
     const navigate = useNavigate();
-    const { data, isLoading, isError, error } = useQuery(workers, handleGetWorker);
-
+    const { data, isLoading, isError, error } = useQuery(workers, () => handleGetWorker(Number(clientId)));
+ 
     const handleDelete = (id: number) => {
         confirm({ description: `This will permanently delete worker ${id}.` })
             .then(() => handleDelWorker(id))
@@ -51,13 +52,13 @@ export default function WorkerTable() {
             {workerId && <ViewWorker id={workerId} open={open} setOpen={setOpen} />}
             <Grid container direction='row' spacing={12}>
                 <Grid item spacing={6}>
-                    <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>
+                    <Typography sx={{ flex: '1 1 100%' }} variant="h6">Client/Workers</Typography>
                 </Grid>
                 <Grid item spacing={6} paddingBottom={6}>
                     <Button
                         style={{ justifyItems: 'right' }}
                         variant="contained"
-                        onClick={() => navigate('/workerView/workerform')}>
+                        onClick={() => navigate(`/workerView/${clientId}/workerform`)}>
                         Add Worker
                     </Button>
                 </Grid>

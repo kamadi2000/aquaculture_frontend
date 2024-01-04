@@ -68,22 +68,22 @@ export default function ClientTable() {
                                 <TableCell align="right">{client.name}</TableCell>
                                 <TableCell align="center">
                                     <Stack direction='row' spacing={2} justifyContent={'center'} alignItems={'center'}>
-                                        <Button 
-                                        onClick={() => navigate(`/clientView/${client.id}/fishfarm`)} 
-                                        style={{ justifyItems: 'right' }} 
-                                        variant="contained">
-                                            View
+                                        <Button
+                                            onClick={() => navigate(`/clientView/${client.id}/fishfarm`)}
+                                            style={{ justifyItems: 'right' }}
+                                            variant="contained">
+                                            Manage fishfarms
                                         </Button>
-                                        {/* <Button 
-                                        onClick={() => navigate(`/clientView/${client.id}/addFishfarm`)} 
-                                        style={{ justifyItems: 'right' }} 
-                                        variant="contained">
-                                            Add fishfarm
-                                        </Button> */}
-                                        <Button 
-                                        onClick={() => handleDelete(client.id)} 
-                                        style={{ justifyItems: 'right' }} 
-                                        variant="contained">
+                                        <Button
+                                            style={{ justifyItems: 'right' }}
+                                            variant="contained"
+                                            onClick={() => navigate(`/workerView/${client.id}`)}>
+                                            Manage Workers
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleDelete(client.id)}
+                                            style={{ justifyItems: 'right' }}
+                                            variant="contained">
                                             Delete
                                         </Button>
                                     </Stack>
