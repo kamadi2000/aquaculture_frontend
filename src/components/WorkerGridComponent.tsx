@@ -6,6 +6,7 @@ import { useFishfarm } from '../hooks/fishfarm';
 import { useQuery } from 'react-query';
 import { useWorker } from '../hooks/worker';
 import { IFishFarmData } from './DialogBoxComponent';
+import { useParams } from 'react-router-dom';
 
 interface ItemProp {
     id: number,
@@ -36,7 +37,8 @@ type FishFarmWorker = {
 export default function DataGridDemo({fishFarmId,fishFarmWorker, setFishFarmWorker} : FishFarmWorker) {
     const { handleGetFishFarmWorkers } = useFishfarm()
     const { handleGetIdleWorkers } = useWorker()
-    const { data: IdleWorkers } = useQuery(workers, handleGetIdleWorkers);
+    const {clientId} = useParams()
+    const { data: IdleWorkers } = useQuery(workers, () => handleGetIdleWorkers(Number(clientId)));
     // console.log({IdleWorkers})
     const { data: CurrentWorkers, isLoading } = useQuery(fishfarms, () => handleGetFishFarmWorkers(fishFarmId))
 

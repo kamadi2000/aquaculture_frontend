@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query"
 import { IFishFarmData } from "../components/DialogBoxComponent"
 
 let token = localStorage.getItem("token")
-
+// let email = localStorage.getItem("email")
 type FishFormDataProps = {
     id? : number,
     fishFarmData : IFishFarmData
@@ -44,8 +44,8 @@ export const useClient = () => {
         })
     }
 
-    const handleGetClient = () => {
-        return axios.get(url, {
+    const handleGetClient = (email : string|null) => {
+        return axios.get(`${url}/UserClient/${email}`, {
             headers : {
                 'Authorization' : `Bearer ${token}`
             }

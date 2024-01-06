@@ -20,11 +20,12 @@ interface User {
     name: string
 }
 export default function ClientTable() {
+    const email = localStorage.getItem("email")
     const confirm = useConfirm()
     const [open, setOpen] = useState(false)
     const { handleDelClient, handleGetClient } = useClient();
     const navigate = useNavigate();
-    const { data, isLoading, isError, error } = useQuery(clients, handleGetClient);
+    const { data, isLoading, isError, error } = useQuery(clients,() =>  handleGetClient(email));
     const handleAddClientClick = () => {
         setOpen(true)
     }

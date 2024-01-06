@@ -76,7 +76,12 @@ export default function WorkerTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.data.map((worker: Worker) => (
+                    {(data?.data)?.length == 0 ?
+                    ( 
+                    <Typography sx={{ m : 3, textAlign : 'center' }} >No workers at the moment</Typography>
+                    )
+                    :
+                        ((data?.data)?.map((worker: Worker) => (
                             <TableRow
                                 key={worker.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -112,7 +117,8 @@ export default function WorkerTable() {
                                 </TableCell>
 
                             </TableRow>
-                        ))}
+                        )))
+                                }
                     </TableBody>
                 </Table>
             </TableContainer>

@@ -76,7 +76,7 @@ type SidePanelProps = {
 const sidePanelList = [
     {id : 1, name : "Clients", Icon : Face6Icon, navigate : "/clientView"},
     // {id : 2, name : "Fish farms", Icon : SailingIcon, navigate : "/fishFarmView"},
-    {id : 3, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
+    // {id : 3, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
     {id : 4, name : "Admin", Icon : AccountCircleIcon , navigate : "/adminView"}
 ]
 

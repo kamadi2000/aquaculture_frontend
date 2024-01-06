@@ -77,8 +77,8 @@ export const useWorker = () => {
             onError : (data) => console.log(data)
         })
     }
-    const handleGetIdleWorkers = () => {
-        return axios.get(`${url}/workers`,{
+    const handleGetIdleWorkers = (clientId : number) => {
+        return axios.get(`${url}/workers/${clientId}`,{
             headers : {
                 'Authorization' : `Bearer ${token}`
             }
