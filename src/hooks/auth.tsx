@@ -9,6 +9,11 @@ interface IUserProps {
     email : string,
     password : string
 }
+interface IJwtPayload {
+    email : string,
+    role : string,
+    sub : string
+  }
 
 export const useAuth = () => {
     const url = BACKEND_URL + "/Auth"
@@ -26,10 +31,11 @@ export const useAuth = () => {
             handleUserLoginMutate(user, {
                 onSuccess : (data) => {
                     localStorage.setItem("token",data.data)
-                    localStorage.setItem("email",user.email)
-                    const decoded = jwtDecode(data.data);
+                    const decoded = jwtDecode(data.data) as IJwtPayload;
+                    localStorage.setItem("email",decoded.email as string)                    
                     console.log(decoded)
-                    navigate('/clientView')
+                    {decoded.role == "ClientAdmin" ? navigate('/clientView') : navigate("/adminView")}
+                    
                 },
                 onError : (data) => console.log(data) 
             })

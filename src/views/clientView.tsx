@@ -34,6 +34,11 @@ export default function ClientTable() {
             .then(() => handleDelClient(id))
             .catch(() => console.log("Deletion cancelled."))
     }
+    if (isLoading){
+        return(
+            <h2>Loading</h2>
+        )
+    }
     return (
         <OuterFrame>
             <FormDialog open={open} setOpen={setOpen} />
@@ -55,7 +60,7 @@ export default function ClientTable() {
                     <TableHead>
                         <TableRow>
                             <TableCell align="right"><b>Name</b></TableCell>
-                            <TableCell align="center">
+                            <TableCell align="right">
                                 <b>Actions</b>
                             </TableCell>
                         </TableRow>
@@ -67,8 +72,8 @@ export default function ClientTable() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="right">{client.name}</TableCell>
-                                <TableCell align="center">
-                                    <Stack direction='row' spacing={2} justifyContent={'center'} alignItems={'center'}>
+                                <TableCell align="right">
+                                    <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
                                         <Button
                                             onClick={() => navigate(`/clientView/${client.id}/fishfarm`)}
                                             style={{ justifyItems: 'right' }}

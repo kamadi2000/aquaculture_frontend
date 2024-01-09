@@ -3,7 +3,7 @@ import { BACKEND_URL, clients } from "../utils/constants"
 import { useMutation, useQueryClient } from "react-query"
 import { IFishFarmData } from "../components/DialogBoxComponent"
 
-let token = localStorage.getItem("token")
+
 // let email = localStorage.getItem("email")
 type FishFormDataProps = {
     id? : number,
@@ -13,7 +13,7 @@ type FishFormDataProps = {
 export const useClient = () => {
     const url = BACKEND_URL + "/Client"
     const queryClient = useQueryClient();
-
+    let token = localStorage.getItem("token")
     const addClient = (client : object) => { return axios.post(url, client, {
         headers : {
             'Authorization' : `Bearer ${token}`
@@ -45,6 +45,7 @@ export const useClient = () => {
     }
 
     const handleGetClient = (email : string|null) => {
+        console.log({token})
         return axios.get(`${url}/UserClient/${email}`, {
             headers : {
                 'Authorization' : `Bearer ${token}`

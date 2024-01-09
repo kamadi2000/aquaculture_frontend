@@ -1,4 +1,4 @@
-import { Alert, Button, Stack, TextField, Typography } from "@mui/material"
+import { Alert, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
@@ -9,17 +9,21 @@ export const AdminForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rPassword, setRPassword] = useState('');
+    const [role, setRole] = useState('')
 
     const { handleSignIn } = useAuth()
 
     const handleAddAdmin = () => {
         if (password === rPassword && password.length > 0) {
-            const Admin = { name: name, email: email, password: password }
+            const Admin = { name: name, email: email, password: password,role : role }
             handleSignIn(Admin)
         }else{
             console.log("passwords do not match")
         }
     }
+    const handleChange = (event: SelectChangeEvent) => {
+        setRole(event.target.value);
+    };
 
     return (
         <OuterFrame>
@@ -74,6 +78,21 @@ export const AdminForm = () => {
                         setRPassword(event.target.value);
                     }}
                 />
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={role}
+                        label="Role"
+                        size="small"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={"ClientAdmin"}>ClientAdmin</MenuItem>
+                        <MenuItem value={"Admin"}>Admin</MenuItem>
+                        
+                    </Select>
+                </FormControl>
 
 
                 <Button onClick={handleAddAdmin} variant="contained" color="primary">Add</Button>

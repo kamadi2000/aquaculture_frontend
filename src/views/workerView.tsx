@@ -70,7 +70,7 @@ export default function WorkerTable() {
                             <TableCell align='center'><b>Profile picture</b></TableCell>
                             <TableCell align="center"><b>Name</b></TableCell>
                             <TableCell align="center"><b>Age</b></TableCell>
-                            <TableCell align="center">
+                            <TableCell align="right">
                                 <b>Actions</b>
                             </TableCell>
                         </TableRow>
@@ -92,8 +92,8 @@ export default function WorkerTable() {
                                     (<img style={{ borderRadius: '50%', height: 50, width: 50, alignSelf: 'center' }} src={profileImage} />)}</TableCell>
                                 <TableCell align="center">{worker.name}</TableCell>
                                 <TableCell align="center">{worker.age}</TableCell>
-                                <TableCell align="center">
-                                <Stack direction='row' spacing={2} justifyContent={'center'} alignItems={'center'}>
+                                <TableCell align="right">
+                                <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
                                     <Button
                                         onClick={() => handleView(worker.id)}
                                         style={{ justifyItems: 'right' }}

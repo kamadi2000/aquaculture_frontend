@@ -16,6 +16,8 @@ import Face6Icon from '@mui/icons-material/Face6';
 import SailingIcon from '@mui/icons-material/Sailing';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import { useNavigate } from 'react-router-dom';
+import profileImage from '../assets/images/profileImage.png'
+import { Typography } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -77,7 +79,7 @@ const sidePanelList = [
     {id : 1, name : "Clients", Icon : Face6Icon, navigate : "/clientView"},
     // {id : 2, name : "Fish farms", Icon : SailingIcon, navigate : "/fishFarmView"},
     // {id : 3, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
-    {id : 4, name : "Admin", Icon : AccountCircleIcon , navigate : "/adminView"}
+    // {id : 4, name : "Admin", Icon : AccountCircleIcon , navigate : "/adminView"}
 ]
 
 export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanelProps) {
@@ -95,6 +97,11 @@ export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanel
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <div style={{display : 'flex',justifyContent : 'center', alignItems : 'center',flexDirection : 'column'}}>
+        <img style={{ borderRadius: '50%', height: 150, width: 150, margin : 10}} src={profileImage} />
+        <h5>Kamadi</h5>
+        </div>
+        <Divider/>
         <List>
           {sidePanelList.map((option, index) => (
             <ListItem key={option.id} disablePadding sx={{ display: 'block' }}>

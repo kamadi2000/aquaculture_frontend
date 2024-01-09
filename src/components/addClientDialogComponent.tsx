@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useClient } from '../hooks/client';
 
@@ -13,13 +12,14 @@ type FormDialogProps = {
     setOpen: (r: boolean) => void
 }
 export default function FormDialog({ open, setOpen }: FormDialogProps) {
+    const email = localStorage.getItem("email")
     const { handleAddClient } = useClient();
     const [name, setName] = React.useState('');
     const handleAdd = () => {
-        const client = {name : name}
+        const client = { userEmail: email, name: name }
         handleAddClient(client)
         setOpen(false)
-        
+
     }
     const handleClose = () => {
         setOpen(false);
