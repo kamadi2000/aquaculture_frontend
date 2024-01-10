@@ -12,7 +12,7 @@ export const EditWorkerForm = () => {
 
     const { handleGetWorkerById, handleEditWorker } = useWorker();
     const { data, isLoading } = useQuery([workers, Number(workerId)], () => handleGetWorkerById(Number(workerId)))
-    
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [age, setAge] = useState<number | null>(null);
@@ -23,30 +23,37 @@ export const EditWorkerForm = () => {
 
     const handleEditWorkerClick = () => {
         const Worker = { id: Number(workerId), name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
-        console.log({Worker})
+        console.log({ Worker })
         handleEditWorker(Worker)
     }
     const handleChange = (event: SelectChangeEvent) => {
         setPosition(event.target.value);
     };
-    useEffect(()=> {
+    useEffect(() => {
         setName(data?.data.name)
         setEmail(data?.data.email)
         setAge(data?.data?.age)
         setImageName(data?.data?.imageName)
         setImageSrc(data?.data?.imageSrc)
         setPosition(String(data?.data.position))
-    },[data])
+    }, [data])
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             let files = event.target.files[0]
-            setImageFile(files)
-            setImageName(files.name)
+            const reader = new FileReader()
+            reader.onload = x => {
+                setImageFile(files)
+                setImageName(files.name)
+                setImageSrc(x.target?.result as string)
+            }
+            reader.readAsDataURL(files)
+
             console.log(event.target.files)
         } else {
             setImageFile(null)
             setImageName('')
+            setImageSrc('')
         }
     }
     return (
@@ -90,7 +97,7 @@ export const EditWorkerForm = () => {
                     }}
                 />
 
-                
+
                 <TextField
                     id="age"
                     label="Age"

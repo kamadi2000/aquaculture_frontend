@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import { useWorker } from '../hooks/worker';
 import { useQuery } from 'react-query';
 import { positionEnumMap, workers } from '../utils/constants';
+import { Card, CardActions, CardContent } from '@mui/material';
+import profileImage from '../assets/images/profileImage.png'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -29,7 +31,7 @@ type ViewWorkerProps = {
 export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
     const { handleGetWorkerById } = useWorker();
     const { data, isLoading } = useQuery([workers, id], () => handleGetWorkerById(id))
-        
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -54,6 +56,7 @@ export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
                 >
                     <CloseIcon />
                 </IconButton>
+                {/* 
                 {!isLoading ? 
                 <>
                 <DialogContent dividers>
@@ -76,7 +79,35 @@ export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
                     </Button>
                 </DialogActions>
                 </>
-                : ''}
+                : ''} */}
+                <Card sx={{ minWidth: 275 }}>
+                    <CardContent sx={{ display : 'flex',flexDirection : 'column',alignItems: 'center', justifyContent: 'center' }}>
+                        {data?.data.imageName ?
+                            (<img style={{ borderRadius: '50%', height: 100, width: 100, alignSelf: 'center' }} src={data?.data.imageSrc} />)
+                            :
+                            (<img style={{ borderRadius: '50%', height: 100, width: 100, alignSelf: 'center' }} src={profileImage} />)}
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            {data?.data?.name}
+                        </Typography>
+                        <Typography sx={{ fontSize: 14  }} color="text.secondary" gutterBottom>
+                            {data?.data?.email}
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            {data?.data?.age} years old
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            {positionEnumMap[data?.data?.position]}
+                        </Typography>
+
+                    </CardContent>
+
+                    <DialogActions>
+                        <Button autoFocus onClick={handleClose}>
+                            Done
+                        </Button>
+                    </DialogActions>
+
+                </Card>
             </BootstrapDialog>
         </React.Fragment>
     );

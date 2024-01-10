@@ -3,6 +3,7 @@ import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useWorker } from "../hooks/worker";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import profileImage from '../assets/images/profileImage.png'
 
 export const WorkerForm = () => {
     const [name, setName] = useState('');
@@ -11,6 +12,7 @@ export const WorkerForm = () => {
     const [age, setAge] = useState<number | null>(null);
     const [imageName, setImageName] = useState('');
     const [imageFile, setImageFile] = useState<object | null>({});
+    const [imageSrc, setImageSrc] = useState('')
     const [position, setPosition] = useState('');
     const { clientId } = useParams()
     const { handleAddWorker } = useWorker();
@@ -25,8 +27,13 @@ export const WorkerForm = () => {
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             let files = event.target.files[0]
-            setImageFile(files)
-            setImageName(files.name)
+            const reader = new FileReader()
+            reader.onload = x => {
+                setImageFile(files)
+                setImageName(files.name)
+                setImageSrc(x.target?.result as string)
+            }
+            reader.readAsDataURL(files)
             console.log(event.target.files)
         } else {
             setImageFile(null)
@@ -48,7 +55,17 @@ export const WorkerForm = () => {
                 maxWidth={400}
             >
                 <h1>Add worker</h1>
-
+                {imageName ?
+                    (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
+                    :
+                    (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)}
+                <input
+                        id="btn-upload"
+                        name="btn-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                    />
                 <TextField
                     id="name"
                     label="Name"
@@ -68,14 +85,8 @@ export const WorkerForm = () => {
                         setEmail(event.target.value);
                     }}
                 />
-                <Stack direction='row' spacing={3}>
-                    <input
-                        id="btn-upload"
-                        name="btn-upload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                    />
+                
+                    
                     {/* <Button
                         className="btn-choose"
                         variant="outlined"
@@ -86,7 +97,7 @@ export const WorkerForm = () => {
                     <Button variant="contained" color="primary" startIcon={<CloudUploadOutlined />} component="span">
                         Upload Rpofile photo
                     </Button> */}
-                </Stack>
+                
                 <TextField
                     id="age"
                     label="Age"
