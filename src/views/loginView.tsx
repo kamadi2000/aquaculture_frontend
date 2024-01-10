@@ -2,17 +2,23 @@ import styled from "@emotion/styled";
 import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../hooks/auth";
+import * as EmailValidator from 'email-validator';
 
 export const Login = () => {
     const { handleLogin } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(false)
 
     const handleClick = () => {
-        const user = { email: email, password: password }
-        return (
+        if (email.length > 0 && EmailValidator.validate(email)) {
+            setError(false)
+            const user = { email: email, password: password }
             handleLogin(user)    
-        )
+        }else{
+            console.log('hi')
+            setError(true)
+        }
     }
     
     return (
@@ -27,12 +33,15 @@ export const Login = () => {
                 >
                     <h1>Login</h1>
                     <TextField
+                        error = {error}
+                        helperText = {error && "Invalid email" }
                         id="email"
-                        label="email"
+                        label="Email"
                         size="small"
                         value={email}
                         required
                         onChange={(event) => {
+                            setError(false)
                             setEmail(event.target.value);
                         }}
                     />

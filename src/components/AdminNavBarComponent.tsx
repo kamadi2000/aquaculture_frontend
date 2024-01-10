@@ -18,7 +18,7 @@ export default function AdminNavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -26,8 +26,8 @@ export default function AdminNavBar() {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          </IconButton> */}
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 ,textAlign : 'center'}}>
             Aqua Culture
           </Typography>
           <Button onClick={handleClick} color="inherit">Logout</Button>

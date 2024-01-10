@@ -1,8 +1,9 @@
-import { Alert, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
+import { Alert, Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth";
+import AdminNavBar from "../components/AdminNavBarComponent";
 
 export const AdminForm = () => {
     const [name, setName] = useState('');
@@ -26,8 +27,10 @@ export const AdminForm = () => {
     };
 
     return (
-        <OuterFrame>
-            <Typography sx={{ flex: '1 1 100%' }} variant="h6">Admins</Typography>
+        <>
+            <AdminNavBar/>
+            <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
+            {/* <Typography sx={{ flex: '1 1 100%' }} variant="h6">Admins</Typography> */}
             <Stack
                 component="form"
                 spacing={2}
@@ -99,6 +102,7 @@ export const AdminForm = () => {
                 <Button onClick={handleAddAdmin} variant="contained" color="primary">Add</Button>
 
             </Stack>
-        </OuterFrame>
+            </Box>
+        </>
     )
 }

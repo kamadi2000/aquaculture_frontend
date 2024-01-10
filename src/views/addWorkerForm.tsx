@@ -4,8 +4,10 @@ import { useState } from "react"
 import { useWorker } from "../hooks/worker";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import profileImage from '../assets/images/profileImage.png'
+import * as EmailValidator from 'email-validator';
 
 export const WorkerForm = () => {
+    
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const { state } = useLocation()
@@ -21,6 +23,11 @@ export const WorkerForm = () => {
         setPosition(event.target.value);
     };
     const handleAddWorkerClick = () => {
+        // if (email.length > 0 && EmailValidator.validate(email)) {
+        //     const Worker = { clientId: clientId, name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
+        //     handleAddWorker(Worker)
+        // }
+
         const Worker = { clientId: clientId, name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
         handleAddWorker(Worker)
     }
@@ -60,12 +67,12 @@ export const WorkerForm = () => {
                     :
                     (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)}
                 <input
-                        id="btn-upload"
-                        name="btn-upload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                    />
+                    id="btn-upload"
+                    name="btn-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                />
                 <TextField
                     id="name"
                     label="Name"
@@ -85,9 +92,9 @@ export const WorkerForm = () => {
                         setEmail(event.target.value);
                     }}
                 />
-                
-                    
-                    {/* <Button
+
+
+                {/* <Button
                         className="btn-choose"
                         variant="outlined"
                         component="span" >
@@ -97,7 +104,7 @@ export const WorkerForm = () => {
                     <Button variant="contained" color="primary" startIcon={<CloudUploadOutlined />} component="span">
                         Upload Rpofile photo
                     </Button> */}
-                
+
                 <TextField
                     id="age"
                     label="Age"

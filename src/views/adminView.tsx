@@ -5,13 +5,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { admins } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../hooks/admin';
 import AdminNavBar from '../components/AdminNavBarComponent';
+import { useConfirm } from 'material-ui-confirm';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export interface User {
     id: number,
@@ -19,35 +21,45 @@ export interface User {
     email : string
 }
 export default function AdminTable() {
+    const confirm = useConfirm();
     const [open, setOpen] = useState(false)
+    const { handleDelUser } = useAdmin()
     const { handleGetUsers } = useAdmin()
     const navigate = useNavigate();
     const { data, isLoading, isError, error } = useQuery(admins, handleGetUsers);
-
+    console.log(data)
     const handleAdd = () => {
         navigate('/adminView/addAdminForm')
+    }
+    const handleDelete = (id: number) => {
+        confirm({ description: `This will permanently delete client admin.` })
+            .then(() => handleDelUser(id))
+            .catch(() => console.log("Deletion cancelled."))
     }
 
     return (
         <>
             <AdminNavBar />
             <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
-                <Grid container direction='row' spacing={12}>
-                    <Grid item spacing={6}>
+                <Grid container direction='row' spacing={6}>
+                    <Grid item xs={6}>
                         <Typography
                             sx={{ flex: '1 1 100%' }}
-                            variant="h6"
+                            variant="h5"
                         >
-                            Client admins
+                            <b>Client admins</b>
                         </Typography>
                     </Grid>
-                    <Grid item spacing={6} paddingBottom={6}>
+                    <Grid item xs={6} paddingBottom={6} sx={{display: 'flex',justifyContent : 'right'}}>
+                        
                         <Button
                             style={{ justifyItems: 'right' }}
                             variant="contained"
                             onClick={handleAdd}>
-                            Add Admin
+                            Add
                         </Button>
+                        
+
                     </Grid>
                 </Grid>
                 <TableContainer component={Paper}>
@@ -56,6 +68,9 @@ export default function AdminTable() {
                             <TableRow>
                                 <TableCell align="center"><b>Name</b></TableCell>
                                 <TableCell align="center"><b>Email</b></TableCell>
+                                <TableCell align="right">
+                                <b>Actions</b>
+                            </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -66,6 +81,11 @@ export default function AdminTable() {
                                 >
                                     <TableCell align="center">{admin.name}</TableCell>
                                     <TableCell align="center">{admin.email}</TableCell>
+                                    <TableCell align='right'>
+                                        <Tooltip title="Delete" onClick={() => handleDelete(admin.id)}>
+                                        <DeleteOutlineIcon/>
+                                        </Tooltip>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

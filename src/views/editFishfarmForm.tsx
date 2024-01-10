@@ -144,7 +144,7 @@ export const EditFishfarmForm = () => {
                     labelPlacement="start"
                 />
 
-                <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
+                <Button onClick={handleEdit} variant="contained" color="primary">Save changes</Button>
                     
             </Stack>}
         </OuterFrame>

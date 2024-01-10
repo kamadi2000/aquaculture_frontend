@@ -1,10 +1,11 @@
 import axios from "axios"
-import { BACKEND_URL } from "../utils/constants"
-import { useMutation } from "react-query"
+import { BACKEND_URL, admins } from "../utils/constants"
+import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 import { User } from "../views/adminView"
 import { jwtDecode } from "jwt-decode";
 import { Alert } from "@mui/material"
+import { useAlert } from "../utils/alert"
 
 interface IUserProps {
     email : string,
@@ -21,14 +22,17 @@ interface IErrorData {
 export const useAuth = () => {
     const url = BACKEND_URL + "/Auth"
     const navigate = useNavigate();
-
+    const { errorAlert } = useAlert();
+    const queryClient = useQueryClient();
     const userLogin = (user : IUserProps) => { return axios.post(`${url}/login`, user) }
 
     const userSignIn = (user : object) => {return axios.post(`${url}/register`,user)}
 
     const { mutate : handleUserLoginMutate } = useMutation(userLogin)
     const { mutate : handleUserSignInMutate } = useMutation(userSignIn)
-  
+    const handleErrorLogin = () => {
+        errorAlert("Invalid Credentials")
+    }
     const handleLogin = (user : IUserProps) => {
         return(
             handleUserLoginMutate(user, {
@@ -39,7 +43,7 @@ export const useAuth = () => {
                     {decoded.role == "ClientAdmin" ? navigate('/clientView') : navigate("/adminView")}
                     
                 },
-                onError : (error) => console.log(error)
+                onError : () => handleErrorLogin()
             })
         )
     }
@@ -47,7 +51,7 @@ export const useAuth = () => {
         return(
             handleUserSignInMutate(user, {
                 onSuccess : (data) => {
-                    localStorage.setItem("token",data.data)
+                    queryClient.invalidateQueries(admins)
                     navigate('/adminView')
                 },
                 onError : (data) => console.log(data) 

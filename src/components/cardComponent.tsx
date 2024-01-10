@@ -30,7 +30,7 @@ export default function MediaCard({ id, name, barge, cages, longitude, latitude,
   const { handleDelFishfarm } = useFishfarm();
   const handleDelete = (Id: number) => {
     console.log({Id})
-    confirm({ description: `This will permanently delete fish farm ${Id}.` })
+    confirm({ description: `This will permanently delete fish farm.` })
             .then(() => handleDelFishfarm(id))
             .catch(() => console.log("Deletion cancelled."))
     

@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/OuterFrameComponent';
-import { Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
+import { Button, CircularProgress, Grid, Stack, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
@@ -15,6 +15,9 @@ import FormDialog from '../components/AddClientDialogComponent';
 import { useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 import { Loading } from '../components/LoadingComponent';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import SailingIcon from '@mui/icons-material/Sailing';
 
 interface User {
     id: number,
@@ -33,7 +36,7 @@ export default function ClientTable() {
         setOpen(true)
     }
     const handleDelete = (id: number) => {
-        confirm({ description: `This will permanently delete client ${id}.` })
+        confirm({ description: `This will permanently delete client.` })
             .then(() => handleDelClient(id))
             .catch(() => console.log("Deletion cancelled."))
     }
@@ -45,17 +48,20 @@ export default function ClientTable() {
     return (
         <OuterFrame>
             <FormDialog open={open} setOpen={setOpen} />
-            <Grid container direction='row' spacing={12}>
-                <Grid item spacing={6}>
-                    <Typography sx={{ flex: '1 1 100%' }} variant="h6">Clients</Typography>
+            <Grid container direction='row' spacing={6}>
+                <Grid item xs={6}>
+                    <Typography sx={{ flex: '1 1 100%' }} variant="h5"><b>Clients</b></Typography>
                 </Grid>
-                <Grid item spacing={6} paddingBottom={6}>
+                <Grid item xs={6} paddingBottom={6} sx={{display: 'flex',justifyContent : 'right'}}>
+                    
                     <Button
-                        style={{ justifyItems: 'right' }}
+                        style={{ justifyItems: 'right', }}
                         variant="contained"
                         onClick={handleAddClientClick}>
-                        Add Client
+                        Add
                     </Button>
+                    
+                    
                 </Grid>
             </Grid>
             <TableContainer component={Paper}>
@@ -79,25 +85,15 @@ export default function ClientTable() {
                                 <TableCell align="right">{client.clientEmail}</TableCell>
                                 <TableCell align="right">
                                     <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
-                                        <Button
-                                            onClick={() => navigate(`/clientView/${client.id}/fishfarm`,{state : client.name})}
-                                            style={{ justifyItems: 'right' }}
-                                            variant="contained">
-                                            Manage fishfarms
-                                        </Button>
-                                        <Button
-                                            style={{ justifyItems: 'right' }}
-                                            variant="contained"
-                                            onClick={() => navigate(`/workerView/${client.id}`,{state : client.name})}>
-                                            Manage Workers
-                                        </Button>
-                                        <Button
-                                            onClick={() => handleDelete(client.id)}
-                                            style={{ justifyItems: 'right' }}
-                                            color="error"
-                                            variant="contained">
-                                            Delete
-                                        </Button>
+                                        <Tooltip title="Manage fishfarms" onClick={() => navigate(`/clientView/${client.id}/fishfarm`,{state : client.name})}>
+                                            <SailingIcon/>
+                                        </Tooltip>
+                                        <Tooltip title="Manage Workers" onClick={() => navigate(`/workerView/${client.id}`,{state : client.name})}>
+                                            <EngineeringIcon/>
+                                        </Tooltip>
+                                        <Tooltip title="Delete" onClick={() => handleDelete(client.id)}>
+                                        <DeleteOutlineIcon/>
+                                        </Tooltip>
                                     </Stack>
                                 </TableCell>
 
