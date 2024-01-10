@@ -63,7 +63,7 @@ export default function WorkerTable() {
                     <Button
                         style={{ justifyItems: 'right' }}
                         variant="contained"
-                        onClick={() => navigate(`/workerView/${clientId}/workerform`)}>
+                        onClick={() => navigate(`/workerView/${clientId}/workerform`,{state : state})}>
                         Add Worker
                     </Button>
                 </Grid>

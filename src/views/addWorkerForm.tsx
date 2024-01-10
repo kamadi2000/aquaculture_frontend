@@ -1,15 +1,16 @@
-import { Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
+import { Breadcrumbs, Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "../components/OuterFrameComponent"
 import { useState } from "react"
 import { useWorker } from "../hooks/worker";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export const WorkerForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const { state } = useLocation()
     const [age, setAge] = useState<number | null>(null);
     const [imageName, setImageName] = useState('');
-    const [imageFile, setImageFile] = useState<object|null>({});
+    const [imageFile, setImageFile] = useState<object | null>({});
     const [position, setPosition] = useState('');
     const { clientId } = useParams()
     const { handleAddWorker } = useWorker();
@@ -18,23 +19,27 @@ export const WorkerForm = () => {
         setPosition(event.target.value);
     };
     const handleAddWorkerClick = () => {
-        const Worker = {clientId : clientId, name : name, email : email, age : age, imageFile : imageFile,imageName : imageName, position : position }
+        const Worker = { clientId: clientId, name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
         handleAddWorker(Worker)
     }
-    const handleImageUpload = (event : React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]){
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
             let files = event.target.files[0]
             setImageFile(files)
             setImageName(files.name)
             console.log(event.target.files)
-        }else{
+        } else {
             setImageFile(null)
             setImageName('')
         }
     }
     return (
         <OuterFrame>
-            <Typography sx={{ flex: '1 1 100%' }} variant="h6">Client/Workers</Typography>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Typography color="text.primary">Clients</Typography>
+                <Typography color="text.primary">{state}</Typography>
+                <Typography color="text.primary">Workers</Typography>
+            </Breadcrumbs>
             <Stack
                 component="form"
                 spacing={2}
@@ -70,7 +75,7 @@ export const WorkerForm = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleImageUpload}
-                         />
+                    />
                     {/* <Button
                         className="btn-choose"
                         variant="outlined"

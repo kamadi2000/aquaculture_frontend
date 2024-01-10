@@ -33,6 +33,7 @@ export const AdminForm = () => {
                 spacing={2}
                 noValidate
                 autoComplete="off"
+                maxWidth={400}
             >
                 <h1>Add Admin</h1>
 

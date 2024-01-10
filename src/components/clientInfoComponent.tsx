@@ -1,9 +1,9 @@
-import { Button, Grid, Stack, Typography } from "@mui/material"
+import { Breadcrumbs, Button, Grid, Stack, Typography } from "@mui/material"
 import MediaCard from "./CardComponent"
 import CustomizedDialogs from "./DialogBoxComponent"
 import { useState } from "react"
 import { OuterFrame } from "./OuterFrameComponent"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom"
 import { FishfarmCard } from "../views/fishFarmView"
 import { clients, fishfarms } from "../utils/constants"
 import { useFishfarm } from "../hooks/fishfarm"
@@ -13,6 +13,7 @@ import { useClient } from "../hooks/client"
 export const ClientInfo = () => {
     const [open, setOpen] = useState(false);
     const { clientId } = useParams();
+    const { state } = useLocation();
     const navigate = useNavigate();
     const [id, setId] = useState<number | null>(null);
     const { handleGetClientById } = useClient()
@@ -29,7 +30,11 @@ export const ClientInfo = () => {
                 {id && <CustomizedDialogs id={id} open={open} setOpen={setOpen} />}
                 <Grid container direction='row' spacing={12}>
                     <Grid item spacing={6}>
-                        <Typography sx={{ flex: '1 1 100%' }} variant="h6">Client/Fish farms</Typography>
+                    <Breadcrumbs aria-label="breadcrumb">
+                <Typography color="text.primary">Clients</Typography>
+                <Typography color="text.primary">{state}</Typography>
+                <Typography color="text.primary">Fishfarms</Typography>
+            </Breadcrumbs>
                     </Grid>
                     <Grid item spacing={6} paddingBottom={6}>
                         <Button onClick={() => navigate(`/fishfarmform/${clientId}`)} variant="contained">Add fish farm</Button>
