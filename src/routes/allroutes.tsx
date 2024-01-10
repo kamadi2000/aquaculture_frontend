@@ -11,6 +11,7 @@ import { EditWorkerForm } from "../views/editWorkerForm"
 import { EditFishfarmForm } from "../views/editFishfarmForm"
 import AdminTable from "../views/adminView"
 import { AdminForm } from "../views/addAdminForm"
+import { Loading } from "../components/LoadingComponent"
 
 export const Allroutes = () => {
     return(

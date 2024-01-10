@@ -4,6 +4,7 @@ import { useMutation } from "react-query"
 import { useNavigate } from "react-router-dom"
 import { User } from "../views/adminView"
 import { jwtDecode } from "jwt-decode";
+import { Alert } from "@mui/material"
 
 interface IUserProps {
     email : string,
@@ -13,8 +14,10 @@ interface IJwtPayload {
     email : string,
     role : string,
     sub : string
-  }
-
+}
+interface IErrorData {
+    response : object
+}
 export const useAuth = () => {
     const url = BACKEND_URL + "/Auth"
     const navigate = useNavigate();
@@ -33,11 +36,10 @@ export const useAuth = () => {
                     localStorage.setItem("token",data.data)
                     const decoded = jwtDecode(data.data) as IJwtPayload;
                     localStorage.setItem("email",decoded.email as string)                    
-                    console.log(decoded)
                     {decoded.role == "ClientAdmin" ? navigate('/clientView') : navigate("/adminView")}
                     
                 },
-                onError : (data) => console.log(data) 
+                onError : (error) => console.log(error)
             })
         )
     }

@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { useWorker } from '../hooks/worker';
 import { useQuery } from 'react-query';
-import { workers } from '../utils/constants';
+import { positionEnumMap, workers } from '../utils/constants';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -58,9 +58,6 @@ export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
                 <>
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        id : {data?.data?.id}
-                    </Typography>
-                    <Typography gutterBottom>
                         name : {data?.data?.name}
                     </Typography>
                     <Typography gutterBottom>
@@ -70,7 +67,7 @@ export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
                         Age : {data?.data?.age}
                     </Typography>
                     <Typography gutterBottom>
-                        Position : {data?.data?.position}
+                        Position : {positionEnumMap[data?.data?.position]}
                     </Typography>
                 </DialogContent>
                 <DialogActions>

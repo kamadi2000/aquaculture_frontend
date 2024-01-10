@@ -31,6 +31,7 @@ export const Login = () => {
                         label="email"
                         size="small"
                         value={email}
+                        required
                         onChange={(event) => {
                             setEmail(event.target.value);
                         }}
@@ -41,6 +42,7 @@ export const Login = () => {
                         label="Password"
                         type="password"
                         size="small"
+                        required
                         value={password}
                         onChange={(event) => {
                             setPassword(event.target.value);

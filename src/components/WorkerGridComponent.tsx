@@ -38,16 +38,16 @@ export default function DataGridDemo({fishFarmId,fishFarmWorker, setFishFarmWork
     const { handleGetFishFarmWorkers } = useFishfarm()
     const { handleGetIdleWorkers } = useWorker()
     const {clientId} = useParams()
-    const { data: IdleWorkers } = useQuery(workers, () => handleGetIdleWorkers(Number(clientId)));
+    const { data: IdleWorkers, isLoading : idleWorkerLoading } = useQuery(workers, () => handleGetIdleWorkers(Number(clientId)));
     // console.log({IdleWorkers})
-    const { data: CurrentWorkers, isLoading } = useQuery(fishfarms, () => handleGetFishFarmWorkers(fishFarmId))
+    const { data: CurrentWorkers, isLoading : currentWorkerLoading } = useQuery(fishfarms, () => handleGetFishFarmWorkers(fishFarmId))
 
     React.useEffect(() => {
         const ids = (CurrentWorkers?.data)?.map((item: ItemProp) => item['id'])
         setFishFarmWorker({...fishFarmWorker,workersIdList : ids})
     }, [CurrentWorkers])
 
-    if (isLoading) {
+    if (idleWorkerLoading || currentWorkerLoading) {
         return (
             <h1>Loading..</h1>
         )

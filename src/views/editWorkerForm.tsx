@@ -56,6 +56,7 @@ export const EditWorkerForm = () => {
                 component="form"
                 spacing={2}
                 noValidate
+                maxWidth={400}
             >
                 {imageName ?
                     (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)

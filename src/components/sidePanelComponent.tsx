@@ -84,6 +84,7 @@ const sidePanelList = [
 
 export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanelProps) {
   const theme = useTheme();
+  const email = localStorage.getItem("email")
   const navigate = useNavigate();
 
   return (
@@ -99,7 +100,7 @@ export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanel
         <Divider />
         <div style={{display : 'flex',justifyContent : 'center', alignItems : 'center',flexDirection : 'column'}}>
         <img style={{ borderRadius: '50%', height: 150, width: 150, margin : 10}} src={profileImage} />
-        <h5>Kamadi</h5>
+        <h5>{email}</h5>
         </div>
         <Divider/>
         <List>

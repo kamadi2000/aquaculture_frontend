@@ -14,9 +14,10 @@ type FormDialogProps = {
 export default function FormDialog({ open, setOpen }: FormDialogProps) {
     const email = localStorage.getItem("email")
     const { handleAddClient } = useClient();
+    const [clientEmail, setClientEmail] = React.useState('')
     const [name, setName] = React.useState('');
     const handleAdd = () => {
-        const client = { userEmail: email, name: name }
+        const client = { userEmail: email, name: name, clientEmail : clientEmail }
         handleAddClient(client)
         setOpen(false)
 
@@ -40,6 +41,16 @@ export default function FormDialog({ open, setOpen }: FormDialogProps) {
                         variant="standard"
                         value={name}
                         onChange={(event) => setName(event.target.value)}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Client email"
+                        fullWidth
+                        variant="standard"
+                        value={clientEmail}
+                        onChange={(event) => setClientEmail(event.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>

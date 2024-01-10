@@ -1,5 +1,5 @@
 import axios from "axios"
-import { BACKEND_URL, clients } from "../utils/constants"
+import { BACKEND_URL, clients, fishfarms, workers } from "../utils/constants"
 import { useMutation, useQueryClient } from "react-query"
 import { IFishFarmData } from "../components/DialogBoxComponent"
 
@@ -63,7 +63,11 @@ export const useClient = () => {
 
     const handleClientFishFarm = ({ id, fishFarmData} : FishFormDataProps) => {
         return addClientFishfarmMutate({ id, fishFarmData}, {
-            onSuccess : (data) => console.log(data),
+            onSuccess : (data) => {
+                queryClient.invalidateQueries(clients)
+                queryClient.invalidateQueries(fishfarms)
+                queryClient.invalidateQueries(workers)
+                console.log(data)},
             onError : (data) => console.log(data)
         })
     }

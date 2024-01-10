@@ -1,12 +1,13 @@
 import axios from "axios"
-import { BACKEND_URL, fishfarms } from "../utils/constants"
+import { BACKEND_URL, clients, fishfarms } from "../utils/constants"
 import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 
-let token = localStorage.getItem("token")
+
 
 export const useFishfarm = () => {
     const url = BACKEND_URL + "/FishFarm"
+    let token = localStorage.getItem("token")
     const navigate = useNavigate()
     const queryClient = useQueryClient();
     
@@ -72,6 +73,7 @@ export const useFishfarm = () => {
         return deleteFishfarmMutate(id, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
+                queryClient.invalidateQueries(clients)
                 console.log(data)},
             onError : (data) => console.log(data)
         })

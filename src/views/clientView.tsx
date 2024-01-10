@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/OuterFrameComponent';
-import { Button, Grid, Stack, Typography } from '@mui/material';
+import { Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
@@ -14,10 +14,12 @@ import { clients } from '../utils/constants';
 import FormDialog from '../components/AddClientDialogComponent';
 import { useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
+import { Loading } from '../components/LoadingComponent';
 
 interface User {
     id: number,
-    name: string
+    name: string,
+    clientEmail : string
 }
 export default function ClientTable() {
     const email = localStorage.getItem("email")
@@ -26,6 +28,7 @@ export default function ClientTable() {
     const { handleDelClient, handleGetClient } = useClient();
     const navigate = useNavigate();
     const { data, isLoading, isError, error } = useQuery(clients,() =>  handleGetClient(email));
+    console.log(data)
     const handleAddClientClick = () => {
         setOpen(true)
     }
@@ -36,7 +39,7 @@ export default function ClientTable() {
     }
     if (isLoading){
         return(
-            <h2>Loading</h2>
+            <Loading/>
         )
     }
     return (
@@ -60,6 +63,7 @@ export default function ClientTable() {
                     <TableHead>
                         <TableRow>
                             <TableCell align="right"><b>Name</b></TableCell>
+                            <TableCell align="right"><b>Email</b></TableCell>
                             <TableCell align="right">
                                 <b>Actions</b>
                             </TableCell>
@@ -72,10 +76,11 @@ export default function ClientTable() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="right">{client.name}</TableCell>
+                                <TableCell align="right">{client.clientEmail}</TableCell>
                                 <TableCell align="right">
                                     <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
                                         <Button
-                                            onClick={() => navigate(`/clientView/${client.id}/fishfarm`)}
+                                            onClick={() => navigate(`/clientView/${client.id}/fishfarm`,{state : client.name})}
                                             style={{ justifyItems: 'right' }}
                                             variant="contained">
                                             Manage fishfarms
@@ -83,12 +88,13 @@ export default function ClientTable() {
                                         <Button
                                             style={{ justifyItems: 'right' }}
                                             variant="contained"
-                                            onClick={() => navigate(`/workerView/${client.id}`)}>
+                                            onClick={() => navigate(`/workerView/${client.id}`,{state : client.name})}>
                                             Manage Workers
                                         </Button>
                                         <Button
                                             onClick={() => handleDelete(client.id)}
                                             style={{ justifyItems: 'right' }}
+                                            color="error"
                                             variant="contained">
                                             Delete
                                         </Button>

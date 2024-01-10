@@ -40,6 +40,7 @@ export const WorkerForm = () => {
                 spacing={2}
                 noValidate
                 autoComplete="off"
+                maxWidth={400}
             >
                 <h1>Add worker</h1>
 

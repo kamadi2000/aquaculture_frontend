@@ -1,6 +1,6 @@
 import { Button, FormControlLabel, Stack, Switch, TextField, Typography } from "@mui/material"
 import { OuterFrame } from "../components/OuterFrameComponent"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useFishfarm } from "../hooks/fishfarm";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -13,7 +13,7 @@ export const EditFishfarmForm = () => {
     const { fishfarmId } = useParams();
 
     const { data, isLoading } = useQuery([fishfarms, Number(fishfarmId)], () => handleGetByFishfarmId(Number(fishfarmId)))
-    
+    const fileInput = useRef<any>()
     const [name, setName] = useState('');
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
@@ -58,6 +58,7 @@ export const EditFishfarmForm = () => {
             {!isLoading && <Stack
                 component="form"
                 spacing={2}
+                maxWidth={400}
             >
                 <h1>Edit fish farm</h1>
                 
@@ -72,6 +73,23 @@ export const EditFishfarmForm = () => {
                     accept="image/*"
                     onChange={handleImageUpload}
                 />
+                {/* <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => fileInput.current.click()}
+                    >
+                        upload image
+                    </Button>
+
+                    <input
+                        onChange={handleImageUpload}
+                        ref={fileInput}
+                        accept="image/*"
+                        type="file"
+                        style={{ display: 'none' }}
+                    />
+                </div> */}
                 <TextField
                     id="name"
                     label="Name"

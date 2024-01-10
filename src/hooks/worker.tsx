@@ -3,10 +3,10 @@ import { BACKEND_URL, workers } from "../utils/constants"
 import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 
-let token = localStorage.getItem("token")
 
 export const useWorker = () => {
     const url = BACKEND_URL + "/Worker"
+    let token = localStorage.getItem("token")
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const addWorker = (worker : object) => { return axios.post(url, worker, {
