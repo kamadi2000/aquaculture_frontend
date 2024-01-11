@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/OuterFrameComponent';
-import { Button, CircularProgress, Grid, Stack, Tooltip, Typography } from '@mui/material';
+import { Button, CircularProgress, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
@@ -18,7 +18,9 @@ import { Loading } from '../components/LoadingComponent';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import SailingIcon from '@mui/icons-material/Sailing';
-
+import EditIcon from '@mui/icons-material/Edit';
+import { EditAdmin } from './editAdmin';
+import { EditClient } from '../components/EditClientDialogComponent';
 interface User {
     id: number,
     name: string,
@@ -27,7 +29,9 @@ interface User {
 export default function ClientTable() {
     const email = localStorage.getItem("email")
     const confirm = useConfirm()
+    const [clientId, setClientId] = useState<number|null>()
     const [open, setOpen] = useState(false)
+    const [openEditClient, setOpenEditClient] = useState(false)
     const { handleDelClient, handleGetClient } = useClient();
     const navigate = useNavigate();
     const { data, isLoading, isError, error } = useQuery(clients,() =>  handleGetClient(email));
@@ -40,6 +44,10 @@ export default function ClientTable() {
             .then(() => handleDelClient(id))
             .catch(() => console.log("Deletion cancelled."))
     }
+    const handleEdit = (id : number) => {
+        setClientId(id)
+        setOpenEditClient(true)
+    }
     if (isLoading){
         return(
             <Loading/>
@@ -47,6 +55,7 @@ export default function ClientTable() {
     }
     return (
         <OuterFrame>
+            {clientId && <EditClient id={clientId} open={openEditClient} setOpen={setOpenEditClient}/>}
             <FormDialog open={open} setOpen={setOpen} />
             <Grid container direction='row' spacing={6}>
                 <Grid item xs={6}>
@@ -85,14 +94,29 @@ export default function ClientTable() {
                                 <TableCell align="right">{client.clientEmail}</TableCell>
                                 <TableCell align="right">
                                     <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
+                                    <Tooltip title="Edit" onClick={() => handleEdit(client.id)}>
+                                            <IconButton>
+                                            <EditIcon/>
+                                            </IconButton>
+                                            
+                                        </Tooltip>
                                         <Tooltip title="Manage fishfarms" onClick={() => navigate(`/clientView/${client.id}/fishfarm`,{state : client.name})}>
+                                            <IconButton>
                                             <SailingIcon/>
+                                            </IconButton>
+                                            
                                         </Tooltip>
                                         <Tooltip title="Manage Workers" onClick={() => navigate(`/workerView/${client.id}`,{state : client.name})}>
+                                            <IconButton>
                                             <EngineeringIcon/>
+                                            </IconButton>
+                                            
                                         </Tooltip>
                                         <Tooltip title="Delete" onClick={() => handleDelete(client.id)}>
-                                        <DeleteOutlineIcon/>
+                                            <IconButton>
+                                            <DeleteOutlineIcon/>
+                                            </IconButton>
+                                        
                                         </Tooltip>
                                     </Stack>
                                 </TableCell>

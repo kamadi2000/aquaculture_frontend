@@ -30,10 +30,15 @@ export const useClient = () => {
             'Authorization' : `Bearer ${token}`
         }
     })}
-
+    const editClient = (client : object) => { return axios.put(url, client, {
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    })}
     const { mutate : addClientMutate } = useMutation(addClient)
     const { mutate : addClientFishfarmMutate } = useMutation(addClientFishfarm)
     const { mutate : deleteClientMutate} = useMutation(deleteClient)
+    const { mutate : editClientMutate } = useMutation(editClient) 
     
     const handleAddClient = (client : object) => {
         return addClientMutate(client, {
@@ -80,11 +85,20 @@ export const useClient = () => {
             onError : (data) => console.log(data)
         })
     }
+    const handleEditClient = (client : object) => {
+        return editClientMutate(client, {
+            onSuccess : (data) => {
+                queryClient.invalidateQueries(clients)
+                console.log(data)},
+            onError : (data) => console.log(data)
+        })
+    }
     return {
         handleAddClient,
         handleGetClient,
         handleClientFishFarm,
         handleGetClientById,
-        handleDelClient
+        handleDelClient,
+        handleEditClient
     }
 }

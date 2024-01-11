@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { BACKEND_URL, admins } from "../utils/constants"
 import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
@@ -43,7 +43,7 @@ export const useAuth = () => {
                     {decoded.role == "ClientAdmin" ? navigate('/clientView') : navigate("/adminView")}
                     
                 },
-                onError : () => handleErrorLogin()
+                onError : (error ) => console.log((error as AxiosError).response?.data)
             })
         )
     }
