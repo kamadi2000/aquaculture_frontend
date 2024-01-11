@@ -5,8 +5,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import FaceIcon from '@mui/icons-material/Face';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 export default function AdminNavBar() {
   const navigate = useNavigate();
@@ -30,7 +32,11 @@ export default function AdminNavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 ,textAlign : 'center'}}>
             Aqua Culture
           </Typography>
-          <Button onClick={handleClick} color="inherit">Logout</Button>
+          <Tooltip title="Logout" onClick={handleClick}>
+            <IconButton color='inherit'>
+              <PermIdentityIcon/>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </Box>

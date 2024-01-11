@@ -14,8 +14,15 @@ export const useAdmin = () => {
             }
         })
     }
-    const { mutate : deleteUserMutate} = useMutation(deleteUser);
-
+    const editUser = (user : object) => {
+        return axios.put(url, user, {
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        })
+    }
+    const { mutate : deleteUserMutate } = useMutation(deleteUser);
+    const { mutate : editUserMutate } = useMutation(editUser)
     const handleGetUsers = () => {
         return axios.get(url, {
             headers : {
@@ -31,9 +38,26 @@ export const useAdmin = () => {
             onError : (data) => console.log(data)
         })
     }
+    const handleEditUser = (user : object) => {
+        return editUserMutate(user, {
+            onSuccess : (data) => {
+                queryClient.invalidateQueries(admins)
+                console.log(data)},
+            onError : (data) => console.log(data)
+        })
+    }
+    const handleGetUserById = (id : number) => {
+        return axios.get(`${url}/${id}`, {
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        })
+    }
     return{
         handleGetUsers,
-        handleDelUser
+        handleDelUser,
+        handleEditUser,
+        handleGetUserById
     }
     
 }

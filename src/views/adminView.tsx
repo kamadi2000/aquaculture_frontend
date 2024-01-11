@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Grid, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { admins } from '../utils/constants';
@@ -14,17 +14,21 @@ import { useAdmin } from '../hooks/admin';
 import AdminNavBar from '../components/AdminNavBarComponent';
 import { useConfirm } from 'material-ui-confirm';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import { EditAdmin } from './editAdmin';
 
 export interface User {
     id: number,
     name: string,
-    email : string
+    email: string,
+    role: string
 }
 export default function AdminTable() {
     const confirm = useConfirm();
     const [open, setOpen] = useState(false)
     const { handleDelUser } = useAdmin()
     const { handleGetUsers } = useAdmin()
+    const [adminId, setAdminId] = useState<number|null>()
     const navigate = useNavigate();
     const { data, isLoading, isError, error } = useQuery(admins, handleGetUsers);
     console.log(data)
@@ -36,9 +40,14 @@ export default function AdminTable() {
             .then(() => handleDelUser(id))
             .catch(() => console.log("Deletion cancelled."))
     }
+    const handleEdit = (id : number) => {
+        setAdminId(id);
+        setOpen(true)
+    }
 
     return (
         <>
+            {adminId && <EditAdmin id={adminId} open={open} setOpen={setOpen}/>}
             <AdminNavBar />
             <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
                 <Grid container direction='row' spacing={6}>
@@ -47,18 +56,18 @@ export default function AdminTable() {
                             sx={{ flex: '1 1 100%' }}
                             variant="h5"
                         >
-                            <b>Client admins</b>
+                            <b>Admins</b>
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} paddingBottom={6} sx={{display: 'flex',justifyContent : 'right'}}>
-                        
+                    <Grid item xs={6} paddingBottom={6} sx={{ display: 'flex', justifyContent: 'right' }}>
+
                         <Button
                             style={{ justifyItems: 'right' }}
                             variant="contained"
                             onClick={handleAdd}>
                             Add
                         </Button>
-                        
+
 
                     </Grid>
                 </Grid>
@@ -68,9 +77,10 @@ export default function AdminTable() {
                             <TableRow>
                                 <TableCell align="center"><b>Name</b></TableCell>
                                 <TableCell align="center"><b>Email</b></TableCell>
+                                <TableCell align="center"><b>Role</b></TableCell>
                                 <TableCell align="right">
-                                <b>Actions</b>
-                            </TableCell>
+                                    <b>Actions</b>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -81,10 +91,22 @@ export default function AdminTable() {
                                 >
                                     <TableCell align="center">{admin.name}</TableCell>
                                     <TableCell align="center">{admin.email}</TableCell>
+                                    <TableCell align="center">{admin.role}</TableCell>
                                     <TableCell align='right'>
-                                        <Tooltip title="Delete" onClick={() => handleDelete(admin.id)}>
-                                        <DeleteOutlineIcon/>
-                                        </Tooltip>
+                                        <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
+                                            <Tooltip title="Edit" onClick={() => handleEdit(admin.id)}>
+                                                <IconButton>
+                                                <EditIcon />
+                                                </IconButton>
+                                                
+                                            </Tooltip>
+                                            <Tooltip title="Delete" onClick={() => handleDelete(admin.id)}>
+                                                <IconButton>
+                                                <DeleteOutlineIcon />
+                                                </IconButton>
+                                                
+                                            </Tooltip>
+                                        </Stack>
                                     </TableCell>
                                 </TableRow>
                             ))}
