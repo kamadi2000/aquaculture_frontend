@@ -9,35 +9,54 @@ import { clients, fishfarms } from "../utils/constants"
 import { useFishfarm } from "../hooks/fishfarm"
 import { useQuery } from "react-query"
 import { useClient } from "../hooks/client"
+import { FishfarmForm } from "../views/addFishfarmForm"
+import { EditFishfarmForm } from "../views/editFishfarmForm"
 
 export const ClientInfo = () => {
-    const [open, setOpen] = useState(false);
+    const [openWorkerDialog, setOpenWorkerDialog] = useState(false);
+    const [openFishfarmForm, setOpenFishfarmForm] = useState(false);
+    const [openEditFishfarm, setOpenEditFishfarm] = useState(false);
     const { clientId } = useParams();
     const { state } = useLocation();
     const navigate = useNavigate();
     const [id, setId] = useState<number | null>(null);
+    const [fishfarmId, setFishfarmId] = useState<number|null>()
     const { handleGetClientById } = useClient()
     const { data, isLoading } = useQuery([clients, Number(clientId)], () => handleGetClientById(Number(clientId)))
-    console.log({ data })
+    console.log({ clientId })
 
     const handleClick = (Id: number) => {
         setId(Id)
-        setOpen(true);
+        setOpenWorkerDialog(true);
+    }
+    const handleAddFishfarm = () => {
+        setOpenFishfarmForm(true)
+        setId(Number(clientId))
+
+    }
+    const handleEditFishfarm = (id : number) => {
+        console.log({id})
+        setFishfarmId(id)
+        setOpenEditFishfarm(true)
+        
+
     }
     return (
         <>
             <OuterFrame>
-                {id && <CustomizedDialogs id={id} open={open} setOpen={setOpen} />}
+                {fishfarmId && <EditFishfarmForm fishfarmId={fishfarmId} open={openEditFishfarm} setOpen={setOpenEditFishfarm}/>}
+                {clientId && <FishfarmForm clientId={Number(clientId)} open={openFishfarmForm} setOpen={setOpenFishfarmForm}/>}
+                {id && <CustomizedDialogs id={id} open={openWorkerDialog} setOpen={setOpenWorkerDialog} />}
                 <Grid container direction='row' spacing={12}>
                     <Grid item spacing={6}>
-                    <Breadcrumbs aria-label="breadcrumb">
-                <Typography color="text.primary">Clients</Typography>
-                <Typography color="text.primary">{state}</Typography>
-                <Typography color="text.primary">Fishfarms</Typography>
-            </Breadcrumbs>
+                        <Breadcrumbs aria-label="breadcrumb">
+                            <Typography color="text.primary">Clients</Typography>
+                            <Typography color="text.primary">{state}</Typography>
+                            <Typography color="text.primary">Fishfarms</Typography>
+                        </Breadcrumbs>
                     </Grid>
                     <Grid item spacing={6} paddingBottom={6}>
-                        <Button onClick={() => navigate(`/fishfarmform/${clientId}`)} variant="contained">Add fish farm</Button>
+                        <Button onClick={handleAddFishfarm} variant="contained">Add fish farm</Button>
                     </Grid>
                 </Grid>
                 <Grid container spacing={4} direction="row" justifyContent="center" alignItems="center">
@@ -55,6 +74,7 @@ export const ClientInfo = () => {
                                         latitude={fishfarmCard.latitude}
                                         imageName={fishfarmCard.imageName}
                                         imageSrc={fishfarmCard.imageSrc}
+                                        handleEdit = {handleEditFishfarm}
                                         handleClick={handleClick} />
                                 </Grid>
                             )

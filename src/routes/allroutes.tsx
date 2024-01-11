@@ -23,11 +23,11 @@ export const Allroutes = () => {
             <Route path="/adminView" element={<AdminTable/>}></Route>
             <Route path="/outerframe" element={<OuterFrame/>}></Route>
             <Route path="/clientView/:clientId/fishfarm" element={<ClientInfo/>}></Route>
-            <Route path="/fishfarmform/:clientId" element={<FishfarmForm/>}></Route>
-            <Route path="/:fishfarmId/editFishfarmForm" element={<EditFishfarmForm/>}></Route>
+            {/* <Route path="/fishfarmform/:clientId" element={<FishfarmForm/>}></Route> */}
+            {/* <Route path="/:fishfarmId/editFishfarmForm" element={<EditFishfarmForm/>}></Route> */}
             <Route path="/workerView/:clientId/workerform" element={<WorkerForm/>}></Route>
             <Route path="/workerView/:workerId/editWorkerform" element={<EditWorkerForm/>}></Route>
-            <Route path="/adminView/addAdminForm" element={<AdminForm/>}></Route>
+            {/* <Route path="/adminView/addAdminForm" element={<AdminForm/>}></Route> */}
         </Routes>
     )
 }

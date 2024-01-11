@@ -16,6 +16,7 @@ import { useConfirm } from 'material-ui-confirm';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { EditAdmin } from './editAdmin';
+import { AdminForm } from './addAdminForm';
 
 export interface User {
     id: number,
@@ -25,7 +26,8 @@ export interface User {
 }
 export default function AdminTable() {
     const confirm = useConfirm();
-    const [open, setOpen] = useState(false)
+    const [openEditDialog, setOpenEditDialog] = useState(false)
+    const [openAdminForm, setOpenAdminForm] = useState(false)
     const { handleDelUser } = useAdmin()
     const { handleGetUsers } = useAdmin()
     const [adminId, setAdminId] = useState<number|null>()
@@ -33,7 +35,8 @@ export default function AdminTable() {
     const { data, isLoading, isError, error } = useQuery(admins, handleGetUsers);
     console.log(data)
     const handleAdd = () => {
-        navigate('/adminView/addAdminForm')
+        // navigate('/adminView/addAdminForm')
+        setOpenAdminForm(true)
     }
     const handleDelete = (id: number) => {
         confirm({ description: `This will permanently delete client admin.` })
@@ -42,12 +45,13 @@ export default function AdminTable() {
     }
     const handleEdit = (id : number) => {
         setAdminId(id);
-        setOpen(true)
+        setOpenEditDialog(true)
     }
 
     return (
         <>
-            {adminId && <EditAdmin id={adminId} open={open} setOpen={setOpen}/>}
+            <AdminForm open={openAdminForm} setOpen={setOpenAdminForm}/>
+            {adminId && <EditAdmin id={adminId} open={openEditDialog} setOpen={setOpenEditDialog}/>}
             <AdminNavBar />
             <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
                 <Grid container direction='row' spacing={6}>

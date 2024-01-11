@@ -1,17 +1,44 @@
-import { Button, FormControlLabel, Stack, Switch, TextField, Typography } from "@mui/material"
-import { OuterFrame } from "../components/OuterFrameComponent"
 import { useEffect, useRef, useState } from "react"
-import { useFishfarm } from "../hooks/fishfarm";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fishfarms } from "../utils/constants";
 import profileImage from '../assets/images/profileImage.png'
+import { useFishfarm } from "../hooks/fishfarm";
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {
+    FormControlLabel, 
+    Switch, 
+    Typography,
+    Box,
+    Button,
+    Dialog,
+    DialogContent,
+    Stack,
+    TextField
+} from '@mui/material';
 
-export const EditFishfarmForm = () => {
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
 
+type EditFishfarmProps = {
+    fishfarmId : number,
+    open: boolean,
+    setOpen: (r: boolean) => void
+}
+
+export const EditFishfarmForm = ({fishfarmId, open, setOpen }: EditFishfarmProps) => {
+    const handleClose = () => {
+        setOpen(false);
+    };
     const { handleEditFishfarm, handleGetByFishfarmId } = useFishfarm();
-    const { fishfarmId } = useParams();
-
     const { data, isLoading } = useQuery([fishfarms, Number(fishfarmId)], () => handleGetByFishfarmId(Number(fishfarmId)))
     const fileInput = useRef<any>()
     const [name, setName] = useState('');
@@ -38,6 +65,7 @@ export const EditFishfarmForm = () => {
         console.log({imageName})
         console.log({fishfarm})
         handleEditFishfarm(fishfarm)
+        setOpen(false)
     }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBarge(event.target.checked);
@@ -54,8 +82,28 @@ export const EditFishfarmForm = () => {
         }
     }
     return (
-        <OuterFrame>
-            {!isLoading && <Stack
+        <>
+            <BootstrapDialog
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={open}
+            >
+                <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <DialogContent sx={{ padding: 10, width: 400 }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
+                        
+                    {!isLoading && <Stack
                 component="form"
                 spacing={2}
                 maxWidth={400}
@@ -147,6 +195,9 @@ export const EditFishfarmForm = () => {
                 <Button onClick={handleEdit} variant="contained" color="primary">Save changes</Button>
                     
             </Stack>}
-        </OuterFrame>
-    )
+                    </Box>
+                </DialogContent>
+            </BootstrapDialog>
+        </>
+    );
 }

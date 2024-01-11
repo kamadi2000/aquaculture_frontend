@@ -32,7 +32,7 @@ export const FishFarm = () => {
     }
     return (
         <>
-            <OuterFrame>
+            {/* <OuterFrame>
                 {id && <CustomizedDialogs id={id} open={open} setOpen={setOpen} />}
                 <Grid container direction='row' spacing={12}>
                 <Grid item spacing={6}>
@@ -60,7 +60,7 @@ export const FishFarm = () => {
                         </Grid>
                     )}
                 </Grid>
-            </OuterFrame>
+            </OuterFrame> */}
         </>
     )
 }

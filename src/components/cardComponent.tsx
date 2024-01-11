@@ -22,9 +22,10 @@ type mediaCardProps = {
   imageName: string | null;
   imageSrc: string,
   handleClick: (id: number) => void;
+  handleEdit : (id : number) => void
 }
 
-export default function MediaCard({ id, name, barge, cages, longitude, latitude, imageName, imageSrc, handleClick }: mediaCardProps) {
+export default function MediaCard({ id, name, barge, cages, longitude, latitude, imageName, imageSrc, handleClick, handleEdit }: mediaCardProps) {
   const confirm = useConfirm();
   const navigate = useNavigate();
   const { handleDelFishfarm } = useFishfarm();
@@ -62,7 +63,7 @@ export default function MediaCard({ id, name, barge, cages, longitude, latitude,
       <CardActions>
         <Stack spacing={1}>
           <Button variant='outlined' onClick={() => handleClick(id)} size="small">Workers</Button>
-          <Button variant='outlined' onClick={() => navigate(`/${id}/editFishfarmForm`)} size="small">Edit</Button>
+          <Button variant='outlined' onClick={() => handleEdit(id)} size="small">Edit</Button>
           <Button variant='outlined' onClick={() => handleDelete(id)} size="small">Delete</Button>
         </Stack>
       </CardActions>

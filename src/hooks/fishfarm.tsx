@@ -39,7 +39,7 @@ export const useFishfarm = () => {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
                 console.log(data)
-                navigate(-1)},
+                },
             onError : (data) => console.log(data)
         })
     }
@@ -63,8 +63,9 @@ export const useFishfarm = () => {
         return editFishfarmMutate(fishfarm, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
+                queryClient.invalidateQueries(clients)
                 console.log(data)
-                navigate(-1)},
+                },
             onError : (data) => console.log(data)
         })
     }

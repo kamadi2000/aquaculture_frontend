@@ -56,30 +56,6 @@ export const ViewWorker = ({ id, open, setOpen }: ViewWorkerProps) => {
                 >
                     <CloseIcon />
                 </IconButton>
-                {/* 
-                {!isLoading ? 
-                <>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
-                        name : {data?.data?.name}
-                    </Typography>
-                    <Typography gutterBottom>
-                        Email : {data?.data?.email}
-                    </Typography>
-                    <Typography gutterBottom>
-                        Age : {data?.data?.age}
-                    </Typography>
-                    <Typography gutterBottom>
-                        Position : {positionEnumMap[data?.data?.position]}
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Done
-                    </Button>
-                </DialogActions>
-                </>
-                : ''} */}
                 <Card sx={{ minWidth: 275 }}>
                     <CardContent sx={{ display : 'flex',flexDirection : 'column',alignItems: 'center', justifyContent: 'center' }}>
                         {data?.data.imageName ?
