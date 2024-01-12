@@ -21,6 +21,7 @@ import SailingIcon from '@mui/icons-material/Sailing';
 import EditIcon from '@mui/icons-material/Edit';
 import { EditAdmin } from './editAdmin';
 import { EditClient } from '../components/EditClientDialogComponent';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 interface User {
     id: number,
     name: string,
@@ -108,7 +109,7 @@ export default function ClientTable() {
                                         </Tooltip>
                                         <Tooltip title="Manage Workers" onClick={() => navigate(`/workerView/${client.id}`,{state : client.name})}>
                                             <IconButton>
-                                            <EngineeringIcon/>
+                                            <ManageAccountsIcon/>
                                             </IconButton>
                                             
                                         </Tooltip>

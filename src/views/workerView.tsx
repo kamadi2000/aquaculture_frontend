@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/OuterFrameComponent';
-import { Breadcrumbs, Button, Grid, Stack, Tooltip, Typography } from '@mui/material';
+import { Breadcrumbs, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useQuery } from 'react-query';
 import { workers } from '../utils/constants';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,8 @@ import profileImage from '../assets/images/profileImage.png'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { WorkerForm } from './addWorkerForm';
+import { EditWorkerForm } from './editWorkerForm';
 
 interface Worker {
     id: number,
@@ -29,7 +31,10 @@ interface Worker {
 export default function WorkerTable() {
     const confirm = useConfirm();
     const { clientId } = useParams();
-    const [open, setOpen] = useState(false);
+    const [editWorkerId, setEditWorkerId] = useState<number|null>()
+    const [openViewWorker, setOpenViewWorker] = useState(false);
+    const [openAddWorker, setOpenAddWorker] = useState(false);
+    const [openEditWorker, setOpenEditWorker] = useState(false)
     const [workerId, setWorkerId] = useState<number | null>(null);
     const { handleGetWorker, handleDelWorker } = useWorker();
     const navigate = useNavigate();
@@ -43,38 +48,48 @@ export default function WorkerTable() {
     }
     const handleView = (id: number) => {
         setWorkerId(id)
-        setOpen(true)
+        setOpenViewWorker(true)
+    }
+    const handleAdd = () => {
+        setOpenAddWorker(true)
+    }
+    const handleEdit = (id : number) => {
+        setEditWorkerId(id)
+        setOpenEditWorker(true)
     }
     if (isLoading) {
         return (
             <h1>Loading..</h1>
         )
     }
+    
 
     return (
         <OuterFrame>
-            {workerId && <ViewWorker id={workerId} open={open} setOpen={setOpen} />}
-            
+            {workerId && <ViewWorker id={workerId} open={openViewWorker} setOpen={setOpenViewWorker} />}
+            {clientId && <WorkerForm clientId={clientId} open={openAddWorker} setOpen={setOpenAddWorker}/>}
+            {editWorkerId && <EditWorkerForm workerId={editWorkerId} open={openEditWorker} setOpen={setOpenEditWorker}/>}
             <Grid container direction='row' spacing={6}>
-                    <Grid item xs={6}>
+                <Grid item xs={6}>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Typography color="text.primary">Clients</Typography>
-                        <Typography color="text.primary">{state}</Typography>
+                        <Typography color="text.inherit">Clients</Typography>
+                        <Typography color="text.inherit">{state}</Typography>
                         <Typography color="text.primary">Workers</Typography>
                     </Breadcrumbs>
-                    </Grid>
-                    <Grid item xs={6} paddingBottom={6} sx={{display: 'flex',justifyContent : 'right'}}>
-                        
+                </Grid>
+                <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'right' }}>
+
                     <Button
                         style={{ justifyItems: 'right' }}
                         variant="contained"
-                        onClick={() => navigate(`/workerView/${clientId}/workerform`, { state: state })}>
-                        Add Worker
+                        onClick={handleAdd}>
+                        Add
                     </Button>
-                        
 
-                    </Grid>
+
                 </Grid>
+            </Grid>
+            <Typography sx={{ flex: '1 1 100%', paddingBottom: 3 }} variant="h5"><b>Client Workers</b></Typography>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -107,15 +122,24 @@ export default function WorkerTable() {
                                     <TableCell align="right">
                                         <Stack direction='row' spacing={2} justifyContent={'right'} alignItems={'center'}>
                                             <Tooltip title="View" onClick={() => handleView(worker.id)}>
-                                                <VisibilityIcon/>
+                                                <IconButton>
+                                                    <VisibilityIcon />
+                                                </IconButton>
+
                                             </Tooltip>
-                                            
-                                            <Tooltip title="Edit" onClick={() => navigate(`/workerView/${worker.id}/editWorkerform`)}>
-                                                <EditIcon/>
+
+                                            <Tooltip title="Edit" onClick={() => handleEdit(worker.id)}>
+                                                <IconButton>
+                                                    <EditIcon />
+                                                </IconButton>
+
                                             </Tooltip>
-                                            
+
                                             <Tooltip title="Delete" onClick={() => handleDelete(worker.id)}>
-                                                <DeleteOutlineIcon />
+                                                <IconButton>
+                                                    <DeleteOutlineIcon />
+                                                </IconButton>
+
                                             </Tooltip>
                                         </Stack>
                                     </TableCell>

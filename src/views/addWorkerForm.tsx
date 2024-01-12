@@ -1,13 +1,49 @@
-import { Breadcrumbs, Button, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material"
-import { OuterFrame } from "../components/OuterFrameComponent"
-import { useState } from "react"
+import {
+    Box,
+    Dialog,
+    DialogContent,
+    Button,
+    FormControl,
+    Input,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material"
+
 import { useWorker } from "../hooks/worker";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import profileImage from '../assets/images/profileImage.png'
 import * as EmailValidator from 'email-validator';
+import { useRef, useState } from "react"
+import { useFishfarm } from "../hooks/fishfarm";
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
-export const WorkerForm = () => {
-    
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
+
+type AddWorkerProps = {
+    clientId : string
+    open: boolean,
+    setOpen: (r: boolean) => void
+}
+
+export const WorkerForm = ({clientId, open, setOpen }: AddWorkerProps) => {
+    const handleClose = () => {
+        setOpen(false);
+    };
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const { state } = useLocation()
@@ -16,7 +52,6 @@ export const WorkerForm = () => {
     const [imageFile, setImageFile] = useState<object | null>({});
     const [imageSrc, setImageSrc] = useState('')
     const [position, setPosition] = useState('');
-    const { clientId } = useParams()
     const { handleAddWorker } = useWorker();
     const navigate = useNavigate();
     const handleChange = (event: SelectChangeEvent) => {
@@ -30,6 +65,7 @@ export const WorkerForm = () => {
 
         const Worker = { clientId: clientId, name: name, email: email, age: age, imageFile: imageFile, imageName: imageName, position: position }
         handleAddWorker(Worker)
+        setOpen(false)
     }
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -48,53 +84,68 @@ export const WorkerForm = () => {
         }
     }
     return (
-        <OuterFrame>
-            <Breadcrumbs aria-label="breadcrumb">
-                <Typography color="text.primary">Clients</Typography>
-                <Typography color="text.primary">{state}</Typography>
-                <Typography color="text.primary">Workers</Typography>
-            </Breadcrumbs>
-            <Stack
-                component="form"
-                spacing={2}
-                noValidate
-                autoComplete="off"
-                maxWidth={400}
+        <>
+            <BootstrapDialog
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={open}
             >
-                <h1>Add worker</h1>
-                {imageName ?
-                    (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
-                    :
-                    (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)}
-                <input
-                    id="btn-upload"
-                    name="btn-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                />
-                <TextField
-                    id="name"
-                    label="Name"
-                    size="small"
-                    value={name}
-                    onChange={(event) => {
-                        setName(event.target.value);
+                <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
                     }}
-                />
-                <TextField
-                    id="email"
-                    label="Email"
-                    size="small"
-                    type="email"
-                    value={email}
-                    onChange={(event) => {
-                        setEmail(event.target.value);
-                    }}
-                />
+                >
+                    <CloseIcon />
+                </IconButton>
+                <DialogContent sx={{ padding: 10, width: 400 }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
+
+                        <Stack
+                            component="form"
+                            spacing={2}
+                            noValidate
+                            autoComplete="off"
+                            maxWidth={400}
+                        >
+                            <h1>Add worker</h1>
+                            {imageName ?
+                                (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
+                                :
+                                (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)}
+                            <input
+                                id="btn-upload"
+                                name="btn-upload"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                            />
+                            <TextField
+                                id="name"
+                                label="Name"
+                                size="small"
+                                value={name}
+                                onChange={(event) => {
+                                    setName(event.target.value);
+                                }}
+                            />
+                            <TextField
+                                id="email"
+                                label="Email"
+                                size="small"
+                                type="email"
+                                value={email}
+                                onChange={(event) => {
+                                    setEmail(event.target.value);
+                                }}
+                            />
 
 
-                {/* <Button
+                            {/* <Button
                         className="btn-choose"
                         variant="outlined"
                         component="span" >
@@ -105,38 +156,41 @@ export const WorkerForm = () => {
                         Upload Rpofile photo
                     </Button> */}
 
-                <TextField
-                    id="age"
-                    label="Age"
-                    size="small"
-                    value={age}
-                    type="number"
-                    onChange={(event) => {
-                        const newAge = parseInt(event.target.value);
-                        setAge(newAge)
-                    }}
-                />
+                            <TextField
+                                id="age"
+                                label="Age"
+                                size="small"
+                                value={age}
+                                type="number"
+                                onChange={(event) => {
+                                    const newAge = parseInt(event.target.value);
+                                    setAge(newAge)
+                                }}
+                            />
 
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Position</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={position}
-                        label="Position"
-                        size="small"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value={0}>CEO</MenuItem>
-                        <MenuItem value={1}>Worker</MenuItem>
-                        <MenuItem value={2}>Captain</MenuItem>
-                    </Select>
-                </FormControl>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Position</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={position}
+                                    label="Position"
+                                    size="small"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value={0}>CEO</MenuItem>
+                                    <MenuItem value={1}>Worker</MenuItem>
+                                    <MenuItem value={2}>Captain</MenuItem>
+                                </Select>
+                            </FormControl>
 
 
-                <Button onClick={handleAddWorkerClick} variant="contained" color="primary">Add</Button>
+                            <Button onClick={handleAddWorkerClick} variant="contained" color="primary">Add</Button>
 
-            </Stack>
-        </OuterFrame>
-    )
+                        </Stack>
+                    </Box>
+                </DialogContent>
+            </BootstrapDialog>
+        </>
+    );
 }

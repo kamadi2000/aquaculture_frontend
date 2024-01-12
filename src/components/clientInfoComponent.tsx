@@ -20,7 +20,7 @@ export const ClientInfo = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const [id, setId] = useState<number | null>(null);
-    const [fishfarmId, setFishfarmId] = useState<number|null>()
+    const [fishfarmId, setFishfarmId] = useState<number | null>()
     const { handleGetClientById } = useClient()
     const { data, isLoading } = useQuery([clients, Number(clientId)], () => handleGetClientById(Number(clientId)))
     console.log({ clientId })
@@ -34,31 +34,33 @@ export const ClientInfo = () => {
         setId(Number(clientId))
 
     }
-    const handleEditFishfarm = (id : number) => {
-        console.log({id})
+    const handleEditFishfarm = (id: number) => {
+        console.log({ id })
         setFishfarmId(id)
         setOpenEditFishfarm(true)
-        
+
 
     }
     return (
         <>
             <OuterFrame>
-                {fishfarmId && <EditFishfarmForm fishfarmId={fishfarmId} open={openEditFishfarm} setOpen={setOpenEditFishfarm}/>}
-                {clientId && <FishfarmForm clientId={Number(clientId)} open={openFishfarmForm} setOpen={setOpenFishfarmForm}/>}
+                {fishfarmId && <EditFishfarmForm fishfarmId={fishfarmId} open={openEditFishfarm} setOpen={setOpenEditFishfarm} />}
+                {clientId && <FishfarmForm clientId={Number(clientId)} open={openFishfarmForm} setOpen={setOpenFishfarmForm} />}
                 {id && <CustomizedDialogs id={id} open={openWorkerDialog} setOpen={setOpenWorkerDialog} />}
-                <Grid container direction='row' spacing={12}>
-                    <Grid item spacing={6}>
+                <Grid container direction='row' spacing={6}>
+                    <Grid item xs={6}>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Typography color="text.primary">Clients</Typography>
-                            <Typography color="text.primary">{state}</Typography>
-                            <Typography color="text.primary">Fishfarms</Typography>
+                            <Typography color="text.inherit">Clients</Typography>
+                            <Typography color="text.inherit">{state}</Typography>
+                            <Typography color="text.primary">Manage fishfarms</Typography>
                         </Breadcrumbs>
                     </Grid>
-                    <Grid item spacing={6} paddingBottom={6}>
+                    <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'right' }}>
                         <Button onClick={handleAddFishfarm} variant="contained">Add fish farm</Button>
                     </Grid>
                 </Grid>
+                <Typography sx={{ flex: '1 1 100%',paddingBottom : 3 }}
+                    variant="h5"><b>Client fishfarms</b></Typography>
                 <Grid container spacing={4} direction="row" justifyContent="center" alignItems="center">
                     {(data?.data.fishFarms)?.length == 0 ?
                         <Typography gutterBottom sx={{ padding: 6 }}>No fish farm are owned by this client.</Typography>
@@ -74,7 +76,7 @@ export const ClientInfo = () => {
                                         latitude={fishfarmCard.latitude}
                                         imageName={fishfarmCard.imageName}
                                         imageSrc={fishfarmCard.imageSrc}
-                                        handleEdit = {handleEditFishfarm}
+                                        handleEdit={handleEditFishfarm}
                                         handleClick={handleClick} />
                                 </Grid>
                             )

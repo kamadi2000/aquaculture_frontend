@@ -65,11 +65,9 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
           {/* <Typography>{id}</Typography> */}
           <Grid container direction='row' spacing={12}>
             <Grid item spacing={6}>
-              <Typography sx={{ flex: '1 1 100%' }} variant="h6">Workers</Typography>
+              <Typography sx={{ flex: '1 1 100%' }} variant="h5"><b>Workers</b></Typography>
             </Grid>
-            <Grid item spacing={6} paddingBottom={3}>
-              <Button onClick={handleSave} variant="contained">Save Changes</Button>
-            </Grid>
+            
           </Grid>
         </DialogTitle>
         <IconButton
@@ -89,7 +87,9 @@ export default function CustomizedDialogs({ id, open, setOpen }: dialogBoxProps)
 
         </DialogContent>
         <DialogActions>
-
+        <Grid item spacing={6} paddingBottom={3}>
+              <Button onClick={handleSave} variant="contained">Save</Button>
+            </Grid>
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

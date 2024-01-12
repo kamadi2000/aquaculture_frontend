@@ -35,7 +35,6 @@ export const useWorker = () => {
         return addWorkerMutate(worker, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(workers)
-                navigate(-1)
                 console.log(data)},
             onError : (data) => console.log(data)
         })
@@ -72,7 +71,6 @@ export const useWorker = () => {
         return editWorkerMutate(worker, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(workers)
-                navigate(-1)
                 console.log(data)},
             onError : (data) => console.log(data)
         })
