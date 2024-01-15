@@ -1,22 +1,25 @@
-import * as EmailValidator from 'email-validator';
-import { useState } from "react"
+import { useCallback } from "react"
 import { useAuth } from "../hooks/auth";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { z, ZodType } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
     Box,
     Button,
     Dialog,
     DialogContent,
     FormControl,
+    FormHelperText,
     InputLabel,
     MenuItem,
     Select,
-    SelectChangeEvent,
-    Stack,
-    TextField
+    TextField,
+    Typography
 } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { AdminFormData as formData, AdminFormDataProps as FormDataProps } from "../components/AdminSchemaComponent";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -33,33 +36,28 @@ type AddAdminProps = {
 }
 
 export const AdminForm = ({ open, setOpen }: AddAdminProps) => {
+    const { handleSubmit, control, formState: { errors } } = useForm({
+        mode: 'all',
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+            rPassword: "",
+            role: ""
+        },
+        resolver: zodResolver(formData)
+    })
     const handleClose = () => {
         setOpen(false);
     };
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [rPassword, setRPassword] = useState('');
-    const [role, setRole] = useState('')
-    const [error, setError] = useState(false)
+    
     const { handleSignIn } = useAuth()
 
-    const handleAddAdmin = () => {
-        if (password === rPassword && password.length > 0) {
-            if (email.length > 0 && EmailValidator.validate(email)) {
-                setError(false)
-                const Admin = { name: name, email: email, password: password, role: role }
-                handleSignIn(Admin)
-                setOpen(false)
-            } else {
-
-                setError(true)
-            }
-        }
-    }
-    const handleChange = (event: SelectChangeEvent) => {
-        setRole(event.target.value);
-    };
+    const onSubmit = useCallback((values: FormDataProps) => {
+        const Admin = { name: values.name, email: values.email, password: values.password, role: values.role }
+        handleSignIn(Admin)
+        setOpen(false)
+    }, [])
     return (
         <>
             <BootstrapDialog
@@ -80,81 +78,102 @@ export const AdminForm = ({ open, setOpen }: AddAdminProps) => {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ padding: 10, width: 400 }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 5, paddingRight: 5, paddingTop: 3 }}>
-                        <Stack
-                            component="form"
-                            spacing={2}
-                            noValidate
-                            autoComplete="off"
-                        >
-                            <h1>Add Admin</h1>
-
-                            <TextField
-                                required
-                                id="name"
-                                label="Name"
-                                size="small"
-                                value={name}
-                                onChange={(event) => {
-                                    setName(event.target.value);
-                                }}
+                    <Typography sx={{paddingBottom : 5}} variant='h6'><b>Add admin</b></Typography>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: "15px",
+                            marginBottom: '15px'
+                        }}>
+                            <Controller
+                                name='name'
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        error={!!errors.name}
+                                        label='Name'
+                                        type='text'
+                                        variant='outlined'
+                                        size="small"
+                                        helperText={errors.name?.message}
+                                        {...field}
+                                    />
+                                )}
                             />
-                            <TextField
-                                required
-                                error={error}
-                                helperText={error && "Invalid email"}
-                                id="email"
-                                label="Email"
-                                size="small"
-                                value={email}
-                                onChange={(event) => {
-                                    setError(false)
-                                    setEmail(event.target.value);
-                                }}
+                            <Controller
+                                name='email'
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        error={!!errors.email}
+                                        label='Email'
+                                        type='text'
+                                        size="small"
+                                        variant='outlined'
+                                        helperText={errors.email?.message}
+                                        {...field}
+                                    />
+                                )}
                             />
-                            <TextField
-                                required
-                                id="password"
-                                label="Password"
-                                size="small"
-                                type="password"
-                                value={password}
-                                onChange={(event) => {
-                                    setPassword(event.target.value);
-                                }}
+                            <Controller
+                                name='password'
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        error={!!errors.password}
+                                        label='Password'
+                                        type='password'
+                                        size="small"
+                                        variant='outlined'
+                                        helperText={errors.password?.message}
+                                        {...field}
+                                    />
+                                )}
                             />
-                            <TextField
-                                required
-                                id="RPassword"
-                                label="Re-enter password"
-                                size="small"
-                                type="password"
-                                value={rPassword}
-                                onChange={(event) => {
-                                    setRPassword(event.target.value);
-                                }}
+                            <Controller
+                                name='rPassword'
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        error={!!errors.rPassword}
+                                        label='Confirm password'
+                                        type='password'
+                                        size="small"
+                                        variant='outlined'
+                                        helperText={errors.rPassword?.message}
+                                        {...field}
+                                    />
+                                )}
                             />
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={role}
-                                    label="Role"
-                                    size="small"
-                                    onChange={handleChange}
-                                >
-                                    <MenuItem value={"ClientAdmin"}>ClientAdmin</MenuItem>
-                                    <MenuItem value={"Admin"}>Admin</MenuItem>
+                            <Controller
+                                name='role'
+                                control={control}
+                                render={({field}) => (
+                                    <FormControl fullWidth>
+                                        <InputLabel id="role">Role</InputLabel>
+                                        <Select
+                                            labelId="role"
+                                            id="role"
+                                            label='Role'
+                                            size="small"
+                                            variant='outlined'
+                                            error={!!errors.role}
+                                            {...field}
+                                        >
+                                            <MenuItem value={"ClientAdmin"}>ClientAdmin</MenuItem>
+                                            <MenuItem value={"Admin"}>Admin</MenuItem>
 
-                                </Select>
-                            </FormControl>
+                                        </Select>
+                                        {errors.role && <FormHelperText>{errors.role.message}</FormHelperText>}
+                                    </FormControl>
+                                )}
+                            />
 
+                        </Box>
+                        <Button sx={{marginTop : 3}} type='submit' variant="contained" color="primary">Add</Button>
 
-                            <Button onClick={handleAddAdmin} variant="contained" color="primary">Add</Button>
-
-                        </Stack>
-                    </Box>
+                    </form>
                 </DialogContent>
             </BootstrapDialog>
         </>

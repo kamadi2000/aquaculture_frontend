@@ -26,7 +26,8 @@ interface Worker {
     name: string,
     age: number,
     imageSrc: string,
-    imageName: string | null
+    imageName: string | null,
+    fishFarmId : number
 }
 export default function WorkerTable() {
     const confirm = useConfirm();
@@ -40,9 +41,9 @@ export default function WorkerTable() {
     const navigate = useNavigate();
     const { state } = useLocation();
     const { data, isLoading, isError, error } = useQuery(workers, () => handleGetWorker(Number(clientId)));
-
-    const handleDelete = (id: number) => {
-        confirm({ description: `This will permanently delete worker.` })
+    console.log(data)
+    const handleDelete = (id: number,fishFarmId : number) => {
+        confirm((fishFarmId == null) ? {description: `This will permanently delete worker.`} :{ description : `This person is already working in a fishfarm.`})
             .then(() => handleDelWorker(id))
             .catch(() => console.log("Deletion cancelled."))
     }
@@ -135,7 +136,7 @@ export default function WorkerTable() {
 
                                             </Tooltip>
 
-                                            <Tooltip title="Delete" onClick={() => handleDelete(worker.id)}>
+                                            <Tooltip title="Delete" onClick={() => handleDelete(worker.id, worker.fishFarmId)}>
                                                 <IconButton>
                                                     <DeleteOutlineIcon />
                                                 </IconButton>

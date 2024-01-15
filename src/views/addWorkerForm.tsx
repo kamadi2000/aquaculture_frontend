@@ -23,7 +23,7 @@ import { useFishfarm } from "../hooks/fishfarm";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { z } from 'zod'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -44,6 +44,15 @@ export const WorkerForm = ({clientId, open, setOpen }: AddWorkerProps) => {
     const handleClose = () => {
         setOpen(false);
     };
+    // const FormData = z.object({
+    //     name: z.string().min(1).max(18),
+    //     age: z.string().min(1).max(3),
+    //     email: z.string().email({ message: "Invalid email address" }),
+    //     imageName : z.string().optional(),
+    //     imageFile : z.any().optional(),
+    //     position : z.string(),
+    //     imageSrc : z.string().optional()
+    //   });
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const { state } = useLocation()
@@ -144,18 +153,6 @@ export const WorkerForm = ({clientId, open, setOpen }: AddWorkerProps) => {
                                 }}
                             />
 
-
-                            {/* <Button
-                        className="btn-choose"
-                        variant="outlined"
-                        component="span" >
-                        Choose Image
-                    </Button>
-                    
-                    <Button variant="contained" color="primary" startIcon={<CloudUploadOutlined />} component="span">
-                        Upload Rpofile photo
-                    </Button> */}
-
                             <TextField
                                 id="age"
                                 label="Age"
@@ -167,7 +164,6 @@ export const WorkerForm = ({clientId, open, setOpen }: AddWorkerProps) => {
                                     setAge(newAge)
                                 }}
                             />
-
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Position</InputLabel>
                                 <Select

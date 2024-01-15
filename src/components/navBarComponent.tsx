@@ -2,10 +2,11 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import styled from '@emotion/styled';
-import { Button, IconButton, Menu, MenuItem, Theme, Typography } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem, Theme, Tooltip, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 type NavBarProps = {
   open: boolean;
@@ -14,6 +15,8 @@ type NavBarProps = {
 }
 export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  console.log({pathname})
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const drawerWidth = 240;
   interface AppBarProps extends MuiAppBarProps {
@@ -43,7 +46,7 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-    
+
   };
   const handleLogout = () => {
     localStorage.clear()
@@ -65,16 +68,17 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
           <MenuIcon />
         </IconButton>
         <IconButton
+          disabled = {pathname == "/clientView"}
           color="inherit"
           aria-label="open drawer"
           onClick={() => navigate(-1)}
           edge="start"
-          
+
         >
           <ArrowBackIosNewIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          AquaCulture
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+          Aqua Culture
         </Typography>
         <div>
           {/* <IconButton
@@ -105,7 +109,12 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
           >
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu> */}
-          <Button onClick={handleLogout} color="inherit">Logout</Button>
+          <Tooltip title="Logout" onClick={handleLogout}>
+            <IconButton color='inherit'>
+              <PermIdentityIcon />
+            </IconButton>
+          </Tooltip>
+
         </div>
       </Toolbar>
     </AppBar>
