@@ -1,66 +1,73 @@
 import styled from "@emotion/styled";
 import { Button, Stack, TextField } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useAuth } from "../hooks/auth";
 import * as EmailValidator from 'email-validator';
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginData, LoginProps } from "../components/LoginSchemaComponent";
 
 export const Login = () => {
     const { handleLogin } = useAuth();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(false)
-
-    const handleClick = () => {
-        if (email.length > 0 && EmailValidator.validate(email)) {
-            setError(false)
-            const user = { email: email, password: password }
-            handleLogin(user)    
-        }else{
-            console.log('hi')
-            setError(true)
-        }
-    }
+    
+    const { handleSubmit, control, formState: { errors } } = useForm({
+        mode: 'all',
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+        resolver: zodResolver(LoginData)
+    })
+    
+    const onSubmit = useCallback((values: LoginProps) => {
+        const user = { email: values.email, password: values.password }
+        handleLogin(user)    
+    }, [])
     
     return (
         <>       
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}} >
             <DIV>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack
-                    component="form"
                     spacing={2}
-                    noValidate
-                    autoComplete="off"
                 >
                     <h1>Login</h1>
-                    <TextField
-                        error = {error}
-                        helperText = {error && "Invalid email" }
-                        id="email"
-                        label="Email"
-                        size="small"
-                        value={email}
-                        required
-                        onChange={(event) => {
-                            setError(false)
-                            setEmail(event.target.value);
-                        }}
-                    />
+                    <Controller
+                                name='email'
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        error={!!errors.email}
+                                        label='Email'
+                                        type='text'
+                                        size="small"
+                                        variant='outlined'
+                                        helperText={errors.email?.message}
+                                        {...field}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                name='password'
+                                control={control}
+                                render={({field}) => (
+                                    <TextField
+                                        error={!!errors.password}
+                                        label='Password'
+                                        type='password'
+                                        size="small"
+                                        variant='outlined'
+                                        helperText={errors.password?.message}
+                                        {...field}
+                                    />
+                                )}
+                            />
 
-                    <TextField
-                        id="Password"
-                        label="Password"
-                        type="password"
-                        size="small"
-                        required
-                        value={password}
-                        onChange={(event) => {
-                            setPassword(event.target.value);
-                        }}
-                    />
-
-                   <Button onClick={handleClick} variant="contained" color="primary">Login</Button>
+                   <Button type="submit" variant="contained" color="primary">Login</Button>
 
                 </Stack>
+            </form>
             </DIV>
             </div>
         </>
@@ -78,3 +85,5 @@ width : 25%;
 text-align:center;
 padding : 20px
 `
+
+
