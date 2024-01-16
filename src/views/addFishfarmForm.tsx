@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useFishfarm } from "../hooks/fishfarm";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
@@ -12,7 +12,8 @@ import {
     Dialog,
     DialogContent,
     Stack,
-    TextField
+    TextField,
+    SelectChangeEvent
 } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -45,9 +46,21 @@ export const FishfarmForm = ({clientId, open, setOpen }: AddAdminProps) => {
     const { handleAddFishfarm } = useFishfarm();
     const handleAdd = () => {
         const fishfarm = { clientId: clientId, name: name, longitude: longitude, latitude: latitude, num_of_cages: cages, has_barge: barge, imageFile: imageFile, imageName: imageName }
-        handleAddFishfarm(fishfarm)
+        handleAddFishfarm(fishfarm)        
         setOpen(false)
+        
     }
+    useEffect(() => {
+        if (open){
+            setBarge(false)
+            setCages(null)
+            setImageFile(null)
+            setImageName('')
+            setLatitude(null)
+            setLongitude(null)
+            setName('')
+        }
+    },[open])
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBarge(event.target.checked);
     };

@@ -73,6 +73,7 @@ export const EditWorkerForm = ({ workerId, open, setOpen }: EditFishfarmProps) =
                 setImageFile(files)
                 setImageName(files.name)
                 setImageSrc(x.target?.result as string)
+                
             }
             reader.readAsDataURL(files)
 

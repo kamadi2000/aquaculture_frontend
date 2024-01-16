@@ -38,6 +38,7 @@ export const useFishfarm = () => {
         return addFarmMutate(fishfarm, {
             onSuccess : (data) => {
                 queryClient.invalidateQueries(fishfarms)
+                queryClient.invalidateQueries(clients)
                 console.log(data)
                 },
             onError : (data) => console.log(data)

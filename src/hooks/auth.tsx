@@ -6,6 +6,7 @@ import { User } from "../views/adminView"
 import { jwtDecode } from "jwt-decode";
 import { Alert } from "@mui/material"
 import { useAlert } from "../utils/alert"
+import { useState } from "react"
 
 interface IUserProps {
     email : string,
@@ -25,14 +26,12 @@ export const useAuth = () => {
     const { errorAlert } = useAlert();
     const queryClient = useQueryClient();
     const userLogin = (user : IUserProps) => { return axios.post(`${url}/login`, user) }
-
+    const [loginFeedback, setLoginFeedback] = useState<any>()
     const userSignIn = (user : object) => {return axios.post(`${url}/register`,user)}
 
     const { mutate : handleUserLoginMutate } = useMutation(userLogin)
     const { mutate : handleUserSignInMutate } = useMutation(userSignIn)
-    const handleErrorLogin = () => {
-        errorAlert("Invalid Credentials")
-    }
+    
     const handleLogin = (user : IUserProps) => {
         return(
             handleUserLoginMutate(user, {
@@ -43,8 +42,10 @@ export const useAuth = () => {
                     {decoded.role == "ClientAdmin" ? navigate('/clientView') : navigate("/adminView")}
                     
                 },
-                onError : (error ) => console.log((error as AxiosError).response?.data)
+                onError : (error ) => setLoginFeedback((error as AxiosError).response?.data)
             })
+            
+            
         )
     }
     const handleSignIn = (user : object) => {

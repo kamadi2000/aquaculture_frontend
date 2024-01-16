@@ -19,7 +19,7 @@ interface ItemProp {
 }
 const columns: GridColDef[] = [
     { field: 'name', headerName: 'Name', width: 130 },
-    { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'email', headerName: 'Email', width: 180 },
     {
         field: 'age',
         headerName: 'Age',
