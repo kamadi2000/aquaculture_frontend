@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { useAuth } from "../hooks/auth";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
@@ -36,7 +36,7 @@ type AddAdminProps = {
 }
 
 export const AdminForm = ({ open, setOpen }: AddAdminProps) => {
-    const { handleSubmit, control, formState: { errors } } = useForm({
+    const { handleSubmit, control, formState: { errors }, reset } = useForm({
         mode: 'all',
         defaultValues: {
             name: "",
@@ -51,12 +51,14 @@ export const AdminForm = ({ open, setOpen }: AddAdminProps) => {
         setOpen(false);
     };
     
+    
     const { handleSignIn } = useAuth()
 
     const onSubmit = useCallback((values: FormDataProps) => {
         const Admin = { name: values.name, email: values.email, password: values.password, role: values.role }
         handleSignIn(Admin)
         setOpen(false)
+        reset()
     }, [])
     return (
         <>

@@ -31,7 +31,7 @@ type FormDialogProps = {
 
 export default function FormDialog({ open, setOpen }: FormDialogProps) {
     const { handleAddClient } = useClient();
-    const { handleSubmit, control, formState: { errors } } = useForm({
+    const { handleSubmit, control, formState: { errors }, reset } = useForm({
         mode: 'all',
         defaultValues: {
             name: "",
@@ -49,6 +49,7 @@ export default function FormDialog({ open, setOpen }: FormDialogProps) {
         const client = { userEmail: email, name: values.name, clientEmail : values.email }
         handleAddClient(client)
         setOpen(false)
+        reset()
     }, [])
     return (
         <>
