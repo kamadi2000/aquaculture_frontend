@@ -60,7 +60,7 @@ export default function AdminTable() {
                             sx={{ flex: '1 1 100%' }}
                             variant="h5"
                         >
-                            <b>Admins</b>
+                            <b>Users</b>
                         </Typography>
                     </Grid>
                     <Grid item xs={6} paddingBottom={6} sx={{ display: 'flex', justifyContent: 'right' }}>

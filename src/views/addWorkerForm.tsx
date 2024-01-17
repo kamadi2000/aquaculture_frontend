@@ -48,12 +48,14 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
             email: "",
             age: 0,
             position: 0,
-            image: any
+            image : {},
+            imageName : ""
         },
         resolver: zodResolver(WorkerFormData)
     })
     const handleClose = () => {
         setOpen(false);
+        reset()
     };
 
     const { handleAddWorker } = useWorker();
@@ -63,11 +65,11 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
             let files = event.target.files[0]
             const reader = new FileReader()
             reader.onload = x => {
-                setImageFile(files)
-                setImageName(files.name)
                 setImageSrc(x.target?.result as string)
             }
             reader.readAsDataURL(files)
+            setValue("image", event.target.files)
+            setValue("imageName",files.name)
             console.log(event.target.files)
         } else {
             setImageFile(null)
@@ -76,7 +78,14 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
     }
 
     const onSubmit = useCallback((values: WorkerFormDataProps) => {
-        const Worker = { clientId: clientId, name: values.name, email: values.email, age: values.age, imageFile: imageFile, imageName: imageName, position: values.position }
+        const Worker = { 
+            clientId: clientId, 
+            name: values.name, 
+            email: values.email, 
+            age: values.age, 
+            imageFile: values.image[0], 
+            imageName: values.imageName, 
+            position: values.position }
         handleAddWorker(Worker)
         setOpen(false)
         reset()
@@ -115,12 +124,17 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
                                 (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
                                 :
                                 (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)} */}
-                            <input
-                                id="btn-upload"
-                                name="btn-upload"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageUpload}
+                            <Controller
+                                name='image'
+                                control={control}
+                                render={({ field }) => (
+                                    <input
+                                        type="file"
+                                        accept="image/*"                                        
+                                        onChange={handleImageUpload}
+                            />
+                                )}
+                                {...errors.image && <FormHelperText>{errors.image.message}</FormHelperText> }
                             />
                             
                             <Controller
@@ -160,6 +174,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
                                     <TextField
                                         id="age"
                                         label="Age"
+                                        error={!!errors.age}
                                         size="small"
                                         type="number"
                                         helperText={errors.age?.message}
