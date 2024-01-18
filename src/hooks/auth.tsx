@@ -4,8 +4,6 @@ import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 import { User } from "../views/adminView"
 import { jwtDecode } from "jwt-decode";
-import { Alert } from "@mui/material"
-import { useAlert } from "../utils/alert"
 import { useState } from "react"
 import { useNotification } from "./notification"
 
@@ -18,16 +16,13 @@ interface IJwtPayload {
     role : string,
     sub : string
 }
-interface IErrorData {
-    response : object
-}
+
 export const useAuth = () => {
     const url = BACKEND_URL + "/Auth"
     const navigate = useNavigate();
-    const { errorAlert } = useAlert();
     const queryClient = useQueryClient();
+
     const userLogin = (user : IUserProps) => { return axios.post(`${url}/login`, user) }
-    const [loginFeedback, setLoginFeedback] = useState<any>()
     const userSignIn = (user : object) => {return axios.post(`${url}/register`,user)}
 
     const { mutate : handleUserLoginMutate } = useMutation(userLogin)

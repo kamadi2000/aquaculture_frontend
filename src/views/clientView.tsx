@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { OuterFrame } from '../components/OuterFrameComponent';
-import { Button, CircularProgress, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useClient } from '../hooks/client';
 import { useQuery } from 'react-query';
@@ -16,12 +16,11 @@ import { useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 import { Loading } from '../components/LoadingComponent';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EngineeringIcon from '@mui/icons-material/Engineering';
 import SailingIcon from '@mui/icons-material/Sailing';
 import EditIcon from '@mui/icons-material/Edit';
-import { EditAdmin } from './editAdmin';
 import { EditClient } from '../components/EditClientDialogComponent';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
 interface User {
     id: number,
     name: string,
@@ -35,8 +34,9 @@ export default function ClientTable() {
     const [openEditClient, setOpenEditClient] = useState(false)
     const { handleDelClient, handleGetClient } = useClient();
     const navigate = useNavigate();
-    const { data, isLoading, isError, error } = useQuery(clients,() =>  handleGetClient(email));
+    const { data, isLoading } = useQuery(clients,() =>  handleGetClient(email));
     console.log(data)
+    
     const handleAddClientClick = () => {
         setOpen(true)
     }

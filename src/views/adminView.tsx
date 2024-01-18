@@ -17,6 +17,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { EditAdmin } from './editAdmin';
 import { AdminForm } from './addAdminForm';
+import { Loading } from '../components/LoadingComponent';
 
 export interface User {
     id: number,
@@ -46,6 +47,11 @@ export default function AdminTable() {
     const handleEdit = (id : number) => {
         setAdminId(id);
         setOpenEditDialog(true)
+    }
+    if (isLoading){
+        return(
+            <Loading/>
+        )
     }
 
     return (

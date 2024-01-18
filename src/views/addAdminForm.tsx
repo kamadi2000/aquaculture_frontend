@@ -3,7 +3,6 @@ import { useAuth } from "../hooks/auth";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { z, ZodType } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     Box,
@@ -12,7 +11,6 @@ import {
     DialogContent,
     FormControl,
     FormHelperText,
-    InputAdornment,
     InputLabel,
     MenuItem,
     Select,

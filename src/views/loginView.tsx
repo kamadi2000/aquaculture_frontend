@@ -2,12 +2,12 @@ import styled from "@emotion/styled";
 import { Button, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useAuth } from "../hooks/auth";
-import * as EmailValidator from 'email-validator';
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginData, LoginProps } from "../components/LoginSchemaComponent";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 export const Login = () => {
     const { handleLogin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);

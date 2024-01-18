@@ -11,13 +11,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Face6Icon from '@mui/icons-material/Face6';
-import SailingIcon from '@mui/icons-material/Sailing';
-import EngineeringIcon from '@mui/icons-material/Engineering';
 import { useNavigate } from 'react-router-dom';
 import profileImage from '../assets/images/profileImage.png'
-import { Typography } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -76,10 +72,7 @@ type SidePanelProps = {
 }
 
 const sidePanelList = [
-    {id : 1, name : "Clients", Icon : Face6Icon, navigate : "/clientView"},
-    // {id : 2, name : "Fish farms", Icon : SailingIcon, navigate : "/fishFarmView"},
-    // {id : 3, name : "Workers", Icon : EngineeringIcon, navigate : "/workerView"},
-    // {id : 4, name : "Admin", Icon : AccountCircleIcon , navigate : "/adminView"}
+    {id : 1, name : "Clients", Icon : Face6Icon, navigate : "/clientView"}
 ]
 
 export default function SidePanel({open, setOpen, handleDrawerClose} : SidePanelProps) {
