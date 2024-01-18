@@ -30,7 +30,7 @@ export default function AdminNavBar() {
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 ,textAlign : 'center'}}>
-            Aqua Culture
+            Aquaculture
           </Typography>
           <Tooltip title="Logout" onClick={handleClick}>
             <IconButton color='inherit'>

@@ -82,7 +82,7 @@
 //                 setImageSrc(x.target?.result as string)
 //             }
 //             reader.readAsDataURL(files)
-//             setValue("image", event.target.files[0])
+//             setValue("image", event.target.files)
 //             setValue("imageName",files.name)
 //             console.log(event.target.files)
 //         } else {
@@ -92,7 +92,6 @@
 //     }
 
 //     const onSubmit = useCallback((values: EditWorkerFormDataProps) => {
-//         console.log('hi')
 //         const Worker = { 
 //             id: Number(workerId), 
 //             name: values.name, 
@@ -150,8 +149,8 @@
 //                             />
 //                                 )}
 //                             />
-                            
-                            
+
+
 //                             <Controller
 //                                 name='name'
 //                                 control={control}
@@ -248,7 +247,7 @@ import {
     DialogContent,
     Stack,
     TextField,
-    FormControl, InputLabel, MenuItem, Select, SelectChangeEvent
+    FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, DialogActions
 } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -307,7 +306,7 @@ export const EditWorkerForm = ({ workerId, open, setOpen }: EditFishfarmProps) =
                 setImageFile(files)
                 setImageName(files.name)
                 setImageSrc(x.target?.result as string)
-                
+
             }
             reader.readAsDataURL(files)
 
@@ -346,6 +345,7 @@ export const EditWorkerForm = ({ workerId, open, setOpen }: EditFishfarmProps) =
                             noValidate
                             maxWidth={400}
                         >
+                            <h1>Edit worker</h1>
                             {/* {imageName ?
                                 (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
                                 :
@@ -408,11 +408,15 @@ export const EditWorkerForm = ({ workerId, open, setOpen }: EditFishfarmProps) =
                             </FormControl>
 
 
-                            <Button onClick={handleEditWorkerClick} variant="contained" color="primary">Save changes</Button>
+
 
                         </Stack>}
                     </Box>
                 </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleEditWorkerClick} variant="contained" color="primary">Save</Button>
+                    <Button sx={{ marginLeft: 2 }} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
+                </DialogActions>
             </BootstrapDialog>
         </>
     );

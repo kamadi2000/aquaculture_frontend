@@ -69,7 +69,6 @@ export const useClient = () => {
     const handleClientFishFarm = ({ id, fishFarmData} : FishFormDataProps) => {
         return addClientFishfarmMutate({ id, fishFarmData}, {
             onSuccess : (data) => {
-                queryClient.invalidateQueries(clients)
                 queryClient.invalidateQueries(fishfarms)
                 queryClient.invalidateQueries(workers)
                 console.log(data)},

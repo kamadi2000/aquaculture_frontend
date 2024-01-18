@@ -38,6 +38,7 @@
 //     const [imageName, setImageName] = useState('');
 //     const [imageFile, setImageFile] = useState<object | null>({});
 //     const [imageSrc, setImageSrc] = useState('')
+//     const [imageType, setImageType] = useState('')
 //     const { handleSubmit, control, setValue,reset, formState: { errors },getValues } = useForm({
 //         mode: 'all',
 //         defaultValues: {
@@ -64,6 +65,7 @@
 //                     // console.log('event',event)
 //                     setImageFile(files)
 //                     setValue("imageName",files.name)
+//                     setImageType(files.type)
 //                 } else {
 //                     setImageFile(null)
 //                     setImageName('')
@@ -82,8 +84,9 @@
 //         }
 //     }, [data])
 //     const onSubmit = useCallback((values: FishfarmFormDataProps) => {
-//         const blob = new Blob([JSON.stringify(imageFile)]);
-          
+//         const blob = new Blob([JSON.stringify(imageFile)],{type : imageType});
+//         console.log({imageFile})
+
 //         var form = new FormData()
 //         form.append("name",values.name)
 //         form.append("latitude", values.latitude.toString())
@@ -258,7 +261,8 @@ import {
     Dialog,
     DialogContent,
     Stack,
-    TextField
+    TextField,
+    DialogActions
 } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -434,11 +438,15 @@ export const EditFishfarmForm = ({fishfarmId, open, setOpen }: EditFishfarmProps
                     labelPlacement="start"
                 />
 
-                <Button onClick={handleEdit} variant="contained" color="primary">Save changes</Button>
+                
                     
             </Stack>}
                     </Box>
                 </DialogContent>
+                <DialogActions>
+                <Button onClick={handleEdit} variant="contained" color="primary">Save</Button>
+                <Button sx={{marginLeft : 2}} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
+                </DialogActions>
             </BootstrapDialog>
         </>
     );

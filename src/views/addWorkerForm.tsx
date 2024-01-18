@@ -41,7 +41,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
     const [imageName, setImageName] = useState('');
     const [imageFile, setImageFile] = useState<object | null>({});
     const [imageSrc, setImageSrc] = useState('')
-    const { handleSubmit, control, setValue,reset, formState: { errors } } = useForm({
+    const { handleSubmit, control, setValue,reset, getValues , formState: { errors } } = useForm({
         mode: 'all',
         defaultValues: {
             name: "",
@@ -68,6 +68,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
                 setImageSrc(x.target?.result as string)
             }
             reader.readAsDataURL(files)
+            console.log(event.target.files)
             setValue("image", event.target.files)
             setValue("imageName",files.name)
             console.log(event.target.files)
@@ -90,6 +91,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
         setOpen(false)
         reset()
     }, [])
+    console.log(getValues())
     console.log({ errors })
 
     return (
@@ -134,9 +136,9 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
                                         onChange={handleImageUpload}
                             />
                                 )}
-                                {...errors.image && <FormHelperText>{errors.image.message}</FormHelperText> }
+                                
                             />
-                            
+                            {!!errors.image && <FormHelperText>{errors.image.message}</FormHelperText> }
                             <Controller
                                 name='name'
                                 control={control}
@@ -211,6 +213,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
 
                         </Box>
                         <Button sx={{ marginTop: 3 }} type='submit' variant="contained" color="primary">Add</Button>
+                        <Button sx={{marginTop : 3, marginLeft : 2}} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
 
                     </form>
                 </DialogContent>

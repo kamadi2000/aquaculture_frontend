@@ -14,7 +14,7 @@ export const NotificationProvider = ({ children }: { children: any }) => {
     }
     return (
         <Provider value={{showNotification}}>
-            <Snackbar anchorOrigin={{vertical : 'top', horizontal : 'center'}} open={!!notificationContent.message} autoHideDuration={4000} onClose={handleClose}>
+            <Snackbar anchorOrigin={{vertical : 'bottom', horizontal : 'left'}} open={!!notificationContent.message} autoHideDuration={4000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={notificationContent.severity} sx={{ width: '100%' }}>
                     {notificationContent.message}
                 </Alert>

@@ -78,7 +78,7 @@ export const NavBar = ({ open, setOpen, handleDrawerOpen }: NavBarProps) => {
           <ArrowBackIosNewIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-          Aqua Culture
+          Aquaculture
         </Typography>
         <div>
           {/* <IconButton

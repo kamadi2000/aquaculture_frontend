@@ -245,7 +245,7 @@ export const EditClient = ({ id, open, setOpen }: EditAdminProps) => {
 
                         </Box>
                         <Button type='submit' variant="contained" color="primary">Save</Button>
-                        <Button sx={{marginTop : 3, marginLeft : 2}} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
+                        <Button sx={{marginLeft : 2}} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
                     </form>
                 </DialogContent>
                 {/* <DialogActions>

@@ -126,7 +126,7 @@ export const FishfarmForm = ({clientId, open, setOpen }: AddFishfarmProps) => {
                             />
                                 )}
                             />
-                            {/* {!!errors.image && errors.image.message} */}
+                            {!!errors.image && errors.image.message}
                             <Controller
                                 name='name'
                                 control={control}
