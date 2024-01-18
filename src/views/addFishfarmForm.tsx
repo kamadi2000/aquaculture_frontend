@@ -215,6 +215,7 @@ export const FishfarmForm = ({clientId, open, setOpen }: AddFishfarmProps) => {
 
                         </Box>
                         <Button sx={{ marginTop: 3 }} type='submit' variant="contained" color="primary">Add</Button>
+                        <Button sx={{marginTop : 3, marginLeft : 2}} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
 
                     </form>
                 </DialogContent>

@@ -203,7 +203,7 @@ export const EditClient = ({ id, open, setOpen }: EditAdminProps) => {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ padding: 10, width: 400 }}>
-                    <Typography sx={{ paddingBottom: 5 }} variant='h6'><b>Add admin</b></Typography>
+                    <Typography sx={{ paddingBottom: 5 }} variant='h6'><b>Edit client</b></Typography>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Box sx={{
                             display: 'flex',
@@ -245,6 +245,7 @@ export const EditClient = ({ id, open, setOpen }: EditAdminProps) => {
 
                         </Box>
                         <Button type='submit' variant="contained" color="primary">Save</Button>
+                        <Button sx={{marginTop : 3, marginLeft : 2}} onClick={handleClose} variant="outlined" color="primary">Cancel</Button>
                     </form>
                 </DialogContent>
                 {/* <DialogActions>
