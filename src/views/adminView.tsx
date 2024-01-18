@@ -39,7 +39,7 @@ export default function AdminTable() {
         setOpenAdminForm(true)
     }
     const handleDelete = (id: number) => {
-        confirm({ description: `This will permanently delete client admin.` })
+        confirm({ description: `This will permanently delete user.` })
             .then(() => handleDelUser(id))
             .catch(() => console.log("Deletion cancelled."))
     }

@@ -1,15 +1,16 @@
 import styled from "@emotion/styled";
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useAuth } from "../hooks/auth";
 import * as EmailValidator from 'email-validator';
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginData, LoginProps } from "../components/LoginSchemaComponent";
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 export const Login = () => {
     const { handleLogin } = useAuth();
-    
+    const [showPassword, setShowPassword] = useState(false);
     const { handleSubmit, control, formState: { errors } } = useForm({
         mode: 'all',
         defaultValues: {
@@ -18,30 +19,34 @@ export const Login = () => {
         },
         resolver: zodResolver(LoginData)
     })
-    
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
     const onSubmit = useCallback((values: LoginProps) => {
         const user = { email: values.email, password: values.password }
-        handleLogin(user)    
+        handleLogin(user)
     }, [])
-    
+
     return (
-        <>       
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}} >
-            <DIV>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack
-                    spacing={2}
-                >
-                    <h1>Login</h1>
-                    <Controller
+        <>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }} >
+                <DIV>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Stack
+                            spacing={2}
+                        >
+                            <h1>Login</h1>
+                            <Controller
                                 name='email'
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         error={!!errors.email}
                                         label='Email'
                                         type='text'
                                         size="small"
+                                        required
                                         variant='outlined'
                                         helperText={errors.email?.message}
                                         {...field}
@@ -51,24 +56,38 @@ export const Login = () => {
                             <Controller
                                 name='password'
                                 control={control}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <TextField
                                         error={!!errors.password}
                                         label='Password'
-                                        type='password'
+                                        type={showPassword ? "text" : "password"}
                                         size="small"
                                         variant='outlined'
                                         helperText={errors.password?.message}
+                                        required={true}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                         {...field}
                                     />
                                 )}
                             />
 
-                   <Button type="submit" variant="contained" color="primary">Login</Button>
+                            <Button type="submit" variant="contained" color="primary">Login</Button>
 
-                </Stack>
-            </form>
-            </DIV>
+                        </Stack>
+                    </form>
+                </DIV>
             </div>
         </>
     )

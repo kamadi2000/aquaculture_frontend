@@ -12,6 +12,7 @@ import {
     DialogContent,
     FormControl,
     FormHelperText,
+    InputAdornment,
     InputLabel,
     MenuItem,
     Select,
@@ -80,7 +81,7 @@ export const AdminForm = ({ open, setOpen }: AddAdminProps) => {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ padding: 10, width: 400 }}>
-                    <Typography sx={{paddingBottom : 5}} variant='h6'><b>Add admin</b></Typography>
+                    <Typography sx={{paddingBottom : 5}} variant='h6'><b>Add user</b></Typography>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Box sx={{
                             display: 'flex',
@@ -125,7 +126,7 @@ export const AdminForm = ({ open, setOpen }: AddAdminProps) => {
                                     <TextField
                                         error={!!errors.password}
                                         label='Password'
-                                        type='password'
+                                        type='password' 
                                         size="small"
                                         variant='outlined'
                                         helperText={errors.password?.message}
