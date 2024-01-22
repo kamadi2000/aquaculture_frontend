@@ -9,7 +9,6 @@ import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { admins } from '../utils/constants';
-import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../hooks/admin';
 import AdminNavBar from '../components/AdminNavBarComponent';
 import { useConfirm } from 'material-ui-confirm';
@@ -32,11 +31,9 @@ export default function AdminTable() {
     const { handleDelUser } = useAdmin()
     const { handleGetUsers } = useAdmin()
     const [adminId, setAdminId] = useState<number|null>()
-    const navigate = useNavigate();
-    const { data, isLoading, isError, error } = useQuery(admins, handleGetUsers);
+    const { data, isLoading } = useQuery(admins, handleGetUsers);
     console.log(data)
     const handleAdd = () => {
-        // navigate('/adminView/addAdminForm')
         setOpenAdminForm(true)
     }
     const handleDelete = (id: number) => {

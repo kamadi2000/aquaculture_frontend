@@ -36,10 +36,8 @@ type AddWorkerProps = {
     setOpen: (r: boolean) => void
 }
 export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
-    const [imageName, setImageName] = useState('');
-    const [imageFile, setImageFile] = useState<object | null>({});
-    const [imageSrc, setImageSrc] = useState('')
-    const { handleSubmit, control, setValue,reset, getValues , formState: { errors } } = useForm({
+    
+    const { handleSubmit, control, setValue,reset, formState: { errors } } = useForm({
         mode: 'all',
         defaultValues: {
             name: "",
@@ -60,20 +58,11 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            let files = event.target.files[0]
-            const reader = new FileReader()
-            reader.onload = x => {
-                setImageSrc(x.target?.result as string)
-            }
-            reader.readAsDataURL(files)
-            console.log(event.target.files)
+            let files = event.target.files[0]            
             setValue("image", event.target.files)
             setValue("imageName",files.name)
             console.log(event.target.files)
-        } else {
-            setImageFile(null)
-            setImageName('')
-        }
+        } 
     }
 
     const onSubmit = useCallback((values: WorkerFormDataProps) => {
@@ -89,7 +78,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
         setOpen(false)
         reset()
     }, [])
-    console.log(getValues())
+
     console.log({ errors })
 
     return (
@@ -120,10 +109,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
                             gap: "15px",
                             marginBottom: '15px'
                         }}>
-                            {/* {imageName ?
-                                (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={imageSrc} />)
-                                :
-                                (<img style={{ borderRadius: '50%', height: 150, width: 150, alignSelf: 'center' }} src={profileImage} />)} */}
+                        
                             <Controller
                                 name='image'
                                 control={control}
@@ -170,7 +156,7 @@ export const WorkerForm = ({ clientId, open, setOpen }: AddWorkerProps) => {
                             <Controller
                                 name='age'
                                 control={control}
-                                render={({ field: { onChange, value } }) => (
+                                render={({ field: { value } }) => (
                                     <TextField
                                         id="age"
                                         label="Age"

@@ -1,5 +1,4 @@
 // import { useWorker } from "../hooks/worker";
-// import profileImage from '../assets/images/profileImage.png'
 // import { useCallback, useEffect, useState } from "react"
 // import { styled } from '@mui/material/styles';
 // import IconButton from '@mui/material/IconButton';
@@ -11,7 +10,6 @@
 //     Dialog,
 //     DialogContent,
 //     FormControl,
-//     FormHelperText,
 //     InputLabel,
 //     MenuItem,
 //     Select,
@@ -19,9 +17,7 @@
 //     Typography
 // } from '@mui/material';
 // import { useForm, Controller } from 'react-hook-form';
-// import { EditWorkerFormData, EditWorkerFormDataProps, WorkerFormData, WorkerFormDataProps } from "../components/WorkerSchemaComponent";
-// import { number } from "yargs";
-// import { any } from "prop-types";
+// import { EditWorkerFormData, EditWorkerFormDataProps } from "../components/WorkerSchemaComponent";
 // import { useQuery } from "react-query";
 // import { workers } from "../utils/constants";
 
@@ -43,7 +39,6 @@
 //     const { handleGetWorkerById, handleEditWorker } = useWorker();
 //     const { data, isLoading } = useQuery([workers, Number(workerId)], () => handleGetWorkerById(Number(workerId)))
 //     const [imageName, setImageName] = useState('');
-//     const [imageFile, setImageFile] = useState<object | null>({});
 //     const [imageSrc, setImageSrc] = useState('')
 //     const { handleSubmit, control, setValue,reset, formState: { errors } } = useForm({
 //         mode: 'all',

@@ -9,7 +9,7 @@ import { OuterFrame } from '../components/OuterFrameComponent';
 import { Breadcrumbs, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useQuery } from 'react-query';
 import { workers } from '../utils/constants';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useWorker } from '../hooks/worker';
 import { useConfirm } from 'material-ui-confirm';
 import { useState } from 'react';
@@ -20,6 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { WorkerForm } from './addWorkerForm';
 import { EditWorkerForm } from './editWorkerForm';
+import { Loading } from '../components/LoadingComponent';
 
 interface Worker {
     id: number,
@@ -38,7 +39,6 @@ export default function WorkerTable() {
     const [openEditWorker, setOpenEditWorker] = useState(false)
     const [workerId, setWorkerId] = useState<number | null>(null);
     const { handleGetWorker, handleDelWorker } = useWorker();
-    const navigate = useNavigate();
     const { state } = useLocation();
     const { data, isLoading, isError, error } = useQuery(workers, () => handleGetWorker(Number(clientId)));
     console.log(data)
@@ -60,11 +60,10 @@ export default function WorkerTable() {
     }
     if (isLoading) {
         return (
-            <h1>Loading..</h1>
+            <Loading/>
         )
     }
     
-
     return (
         <OuterFrame>
             {workerId && <ViewWorker id={workerId} open={openViewWorker} setOpen={setOpenViewWorker} />}
@@ -79,15 +78,12 @@ export default function WorkerTable() {
                     </Breadcrumbs>
                 </Grid>
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'right' }}>
-
                     <Button
                         style={{ justifyItems: 'right' }}
                         variant="contained"
                         onClick={handleAdd}>
                         Add
                     </Button>
-
-
                 </Grid>
             </Grid>
             <Typography sx={{ flex: '1 1 100%', paddingBottom: 3 }} variant="h5"><b>Client Workers</b></Typography>
@@ -144,7 +140,6 @@ export default function WorkerTable() {
                                             </Tooltip>
                                         </Stack>
                                     </TableCell>
-
                                 </TableRow>
                             )))
                         }

@@ -4,13 +4,23 @@ import CustomizedDialogs from "./DialogBoxComponent"
 import { useState } from "react"
 import { OuterFrame } from "./OuterFrameComponent"
 import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom"
-import { FishfarmCard } from "../views/fishFarmView"
 import { clients, fishfarms } from "../utils/constants"
 import { useFishfarm } from "../hooks/fishfarm"
 import { useQuery } from "react-query"
 import { useClient } from "../hooks/client"
 import { FishfarmForm } from "../views/addFishfarmForm"
 import { EditFishfarmForm } from "../views/editFishfarmForm"
+
+export interface FishfarmCard {
+    id : number,
+    name : string,
+    has_barge : boolean,
+    num_of_cages : number,
+    longitude : number,
+    latitude : number,
+    imageName : string|null,
+    imageSrc : string
+}
 
 export const ClientInfo = () => {
     const [openWorkerDialog, setOpenWorkerDialog] = useState(false);
